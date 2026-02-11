@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router"
 import Deck from "../../../components/flashcardComponents/deck.tsx"
+import type { DeckType } from "../../../../../../shared-types/API.ts"
 
 export const Route = createFileRoute('/decks/$uid/$deckId')({
     component: DeckLoader,
     loader: async ({ params }) => {
-        debugger
+
         const raw = await fetch(`http://localhost:3000/decks/personalDecks/${params.uid}/${params.deckId}`)
         return await raw.json()
     }
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/decks/$uid/$deckId')({
 
 export default function DeckLoader() {
     
-    const data = Route.useLoaderData()
+    const data: DeckType = Route.useLoaderData()
 
     return (
         <Deck setIndex={null} loaderDeck={data}/>

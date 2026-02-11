@@ -13,6 +13,7 @@
         {
           "cardType": "image",
           "url": "beach.png",
+          "cardFront": "beach",
           "options": {
             "a": "mão",
             "b": "praia",
@@ -23,6 +24,7 @@
         {
           "cardType": "image",
           "url": "cat.png",
+          "cardFront": "cat",
           "options": {
             "a": "gato",
             "b": "cachorro",
