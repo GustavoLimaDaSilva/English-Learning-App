@@ -1,5 +1,5 @@
 import type { User } from "firebase/auth"
-import type { ProfileData } from "../../shared-types/API.ts"
+import type { ProfileData } from "../../../shared-types/API.ts"
 let LengthParamsTurple: [number, {error: string}]
 
 export function streamTextEffect(text: string) {

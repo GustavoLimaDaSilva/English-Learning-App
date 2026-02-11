@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router";
-import { isEmpty, postNewLevel, postProfile } from "../../utils.ts";
+import { isEmpty, postNewLevel, postProfile } from "../utils.ts";
 import type { ProfileData } from "../../../../shared-types/API.ts";
 import { useGoogleUser, useProfileData } from "../userStore.ts";
 import { isObjEmpty } from "../../../../typeGuards.ts";

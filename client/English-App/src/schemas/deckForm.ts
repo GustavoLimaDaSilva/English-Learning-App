@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { minLengthParams, maxLengthParams } from '../../utils.ts'
+import { minLengthParams, maxLengthParams } from '../utils.ts'
 import type { DeckType, FlashcardType } from '../../../../shared-types/API.d.ts'
 type FlaschcardSchemaType = Record<keyof Omit<FlashcardType, 'id' | 'cardType'>, z.ZodType> &
   Record<keyof Pick<DeckType, 'deckDescription'>, z.ZodNullable<z.ZodString>> &

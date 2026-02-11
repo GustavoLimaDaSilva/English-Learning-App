@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "build": "npm run build -w client && npm run build server"
-  },
   "dependencies": {
     "@imagekit/react": "^5.0.1",
     "firebase": "^12.6.0",

@@ -13,5 +13,8 @@
     "react": "^19.2.2",
     "typescript": "^5.9.3",
     "zustand": "^5.0.9"
-  }
+  },
+  "workspaces": [
+    "client/English-App"
+  ]
 }

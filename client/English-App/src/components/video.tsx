@@ -1,6 +1,6 @@
 import type {  ReactLessonProps } from "../types/index.ts"
 import useFormatText from "../hooks/useFormatText.tsx"
-import { speak } from '../../utils.ts'
+import { speak } from '../utils.ts'
 export default function Video({setIndex, lesson}: ReactLessonProps) {
 
     const formattedText = useFormatText(lesson.video_script, null, speak)
