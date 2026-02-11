@@ -1,6 +1,6 @@
 import { Link, Outlet, useLoaderData } from "react-router"
-import type { DecksType, DeckType } from "../../types/react"
-import { isEmpty } from "../../../utils"
+import type { DecksType, DeckType } from "../../types/index.ts"
+import { isEmpty } from "../../../utils.ts"
 
 export default function FlashCardsOverview() {
 

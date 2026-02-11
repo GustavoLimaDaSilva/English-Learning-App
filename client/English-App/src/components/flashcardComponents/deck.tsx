@@ -8,7 +8,7 @@ import AssignDifficulty from "../assignDifficulty.tsx"
 import { Link } from "@tanstack/react-router"
 import {IsCardSingleOption} from '../../../../../typeGuards.ts'
 type DeckProps = {
-    setIndex: StateSetter<number> | null,
+    setIndex?: StateSetter<number> | null,
     lesson?: LessonType,
     loaderDeck?: DeckType
 }

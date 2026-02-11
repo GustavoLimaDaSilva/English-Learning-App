@@ -1,5 +1,5 @@
 import { Link, useOutlet, useOutletContext } from "react-router"
-import type { DeckType, DecksType } from "../../types/react"
+import type { DeckType, DecksType } from "../../types/index.ts"
 
 export default function DecksHome() {
 

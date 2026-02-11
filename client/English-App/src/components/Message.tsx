@@ -1,5 +1,5 @@
-import type { ChatMessage } from "../types/react"
-import useFormatAIMessage from "../hooks/useFormatText"
+import type { ChatMessage } from "../types/index.ts"
+import useFormatAIMessage from "../hooks/useFormatText.tsx"
 
 export default function Message({ content, from }: ChatMessage) {
 

@@ -6,12 +6,12 @@ import {
     ImageKitUploadNetworkError,
     upload,
 } from "@imagekit/react";
-import type { StateSetter } from "../types/react";
+import type { StateSetter } from "../types/index.ts";
 
 export default function useStoreFile<T>(dataSetter: StateSetter<T[] | []>) {
 
     const [fileUrl, setFileUrl] = useState<string | undefined>();
-    const [file, setFile] = useState<File | {}>()
+    const [file, setFile] = useState<File | undefined>()
     const abortController = new AbortController()
 
     useEffect(() => {

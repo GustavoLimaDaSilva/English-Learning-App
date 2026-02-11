@@ -2,7 +2,7 @@ import { useEffect} from 'react'
 import './App.css'
 import { Outlet } from 'react-router-dom'
 import { useNavigate } from "react-router"
-import { useUserContext } from "./RouterProvider"
+import { useUserContext } from "./RouterProvider.tsx"
 
 export default function App() {
 

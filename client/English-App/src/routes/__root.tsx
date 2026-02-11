@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useGoogleUser } from '../userStore.ts'
 import type { User } from 'firebase/auth'
-import type { ProfileData, TanstackRouterContext } from '../types/react.ts'
+import type { ProfileData, TanstackRouterContext } from '../types/index.ts'
 
 export const Route = createRootRouteWithContext<TanstackRouterContext>()({
     component: RootComponent

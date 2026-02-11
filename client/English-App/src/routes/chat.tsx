@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useRef, useState } from "react"
 import { model } from "../../firebaseConfig.ts"
-import type { ChatMessage } from "../types/react.ts"
+import type { ChatMessage } from "../types/index.ts"
 import Message from '../components/Message.tsx'
 
 export const Route = createFileRoute('/chat')({

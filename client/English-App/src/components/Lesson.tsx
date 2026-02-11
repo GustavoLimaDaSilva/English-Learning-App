@@ -1,9 +1,9 @@
 import { useState } from "react"
-import Explanation from "./explanation"
-import Video from "./video"
+import Explanation from "./explanation.tsx"
+import Video from "./video.tsx"
 import { Outlet, useLoaderData } from "react-router"
-import type { LessonType } from "../types/react"
-import Deck from "./flashcardComponents/deck"
+import type { LessonType } from "../types/index.ts"
+import Deck from "./flashcardComponents/deck.tsx"
 
 export default function Lesson() {
 
