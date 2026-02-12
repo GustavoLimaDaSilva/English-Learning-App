@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
   "rimraf": "./node_modules/rimraf/bin.js",
-    "build": "npm run build -w client && npm run build -w server"
+    "build": "npm run build -w client"
   },
   "devDependencies": {
     "baseline-browser-mapping": "^2.9.6",
