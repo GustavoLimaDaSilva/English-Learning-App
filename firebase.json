@@ -18,7 +18,7 @@
     }
   ],
   "hosting": {
-    "dist": "client/English-App/dist",
+    "source": "client/English-App/dist",
     
     "ignore": [
       "firebase.json",
