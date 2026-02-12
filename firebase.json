@@ -18,7 +18,7 @@
     }
   ],
   "hosting": {
-    "source": "client/English-App/dist",
+    "public": "client/English-App/dist",
     
     "ignore": [
       "firebase.json",
