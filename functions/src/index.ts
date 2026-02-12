@@ -8,8 +8,7 @@
  */
 
 import {setGlobalOptions} from "firebase-functions";
-import {onRequest} from "firebase-functions/https";
-import * as logger from "firebase-functions/logger";
+
 import functions from 'firebase-functions/v1';
 
 // const { lessons, users } = (await import('./fileReader.js'))
