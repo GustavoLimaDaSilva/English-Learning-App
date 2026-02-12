@@ -18,7 +18,7 @@
     }
   ],
   "hosting": {
-    "public": "public",
+    "public": "client/English-App/dist",
     "rewrites": [
       {
         "source": "**",
