@@ -8,7 +8,7 @@ import {
 } from "@imagekit/react";
 import type { StateSetter } from "../types/index.ts";
 
-export default function useStoreFile<T>(dataSetter: StateSetter<T[] | []>) {
+export default function useStoreFile<T>(dataSetter: StateSetter<T[]>) {
 
     const [fileUrl, setFileUrl] = useState<string | undefined>();
     const [file, setFile] = useState<File | undefined>()
@@ -17,9 +17,10 @@ export default function useStoreFile<T>(dataSetter: StateSetter<T[] | []>) {
     useEffect(() => {
         if (!fileUrl) return
 
-        dataSetter(prev => [...prev.slice(0, prev.length - 1),
-        { ...prev[prev.length - 1], imageUrl: fileUrl }]
-        )
+        dataSetter(prev => [
+            ...prev.slice(0, prev.length - 1),
+            { ...(prev[prev.length - 1] as any), imageUrl: fileUrl } as any,
+        ])
 
         setFile(undefined)
         setFileUrl(undefined)

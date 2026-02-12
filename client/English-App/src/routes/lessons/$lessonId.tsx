@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from "react"
 import Explanation from "../../components/explanation.tsx"
 import Video from "../../components/video.tsx"
-import { useLoaderData } from "@tanstack/react-router"
+import { useLoaderData } from "react-router"
 import type { LessonType } from "../../types/index.ts"
 import Deck from "../../components/flashcardComponents/deck.tsx"
 
