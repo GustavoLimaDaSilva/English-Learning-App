@@ -64,11 +64,11 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatRoute
   '/login': typeof LoginRoute
   '/lessons/$lessonId': typeof LessonsLessonIdRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/decks/$uid/$deckId': typeof DecksUidDeckIdRoute
   '/decks/$uid/criarDeck': typeof DecksUidCriarDeckRoute
   '/decks/lessonDecks/$lessonId': typeof DecksLessonDecksLessonIdRoute
-  '/decks/$uid': typeof DecksUidIndexRoute
+  '/decks/$uid/': typeof DecksUidIndexRoute
 }
 export interface FileRoutesByTo {
   '/chat': typeof ChatRoute
@@ -97,11 +97,11 @@ export interface FileRouteTypes {
     | '/chat'
     | '/login'
     | '/lessons/$lessonId'
-    | '/dashboard'
+    | '/dashboard/'
     | '/decks/$uid/$deckId'
     | '/decks/$uid/criarDeck'
     | '/decks/lessonDecks/$lessonId'
-    | '/decks/$uid'
+    | '/decks/$uid/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/chat'
@@ -154,7 +154,7 @@ declare module '@tanstack/react-router' {
     '/dashboard/': {
       id: '/dashboard/'
       path: '/dashboard'
-      fullPath: '/dashboard'
+      fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -168,7 +168,7 @@ declare module '@tanstack/react-router' {
     '/decks/$uid/': {
       id: '/decks/$uid/'
       path: '/decks/$uid'
-      fullPath: '/decks/$uid'
+      fullPath: '/decks/$uid/'
       preLoaderRoute: typeof DecksUidIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
