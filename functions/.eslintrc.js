@@ -1,4 +1,3 @@
-const { shouldUseFlatConfig } = require("eslint/use-at-your-own-risk");
 
 module.exports = {
   root: true,
