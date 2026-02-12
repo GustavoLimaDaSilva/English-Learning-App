@@ -17,6 +17,7 @@ export type DeckLinks = {
 }
 
 import type { User } from "firebase/auth"
+import type { LessonType, ProfileData } from "../../../../shared-types/API.ts"
 export interface TanstackRouterContext {
     getUser: () => User | null,
     getProfileData: () => ProfileData
