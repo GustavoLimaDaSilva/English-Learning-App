@@ -50,5 +50,5 @@ jobs:
         env:
           # This environment variable tells the Firebase CLI to use the credentials
           # provided by the 'google-github-actions/auth' step.
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_HOPE_2033A }}
           # Make sure your project ID here matches the one you used for your service account.
