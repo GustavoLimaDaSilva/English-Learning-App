@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "rimraf": "./node_modules/rimraf/bin.js",
+  
     "build": "npm run build -w client && npm run build -w server"
   },
   "devDependencies": {
