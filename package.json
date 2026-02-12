@@ -2,7 +2,8 @@
   "type": "module",
   "scripts": {
   "rimraf": "./node_modules/rimraf/bin.js",
-    "build": "npm run build -w client"
+    "build": "npm run build -w client",
+    "deploy:functions": "firebase deploy --only functions"
   },
   "devDependencies": {
     "baseline-browser-mapping": "^2.9.6",
