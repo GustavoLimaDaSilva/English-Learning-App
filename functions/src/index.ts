@@ -9,37 +9,36 @@
 
 import {setGlobalOptions} from "firebase-functions";
 
-import functions from 'firebase-functions/v1';
+import functions from "firebase-functions/v1";
 
 // const { lessons, users } = (await import('./fileReader.js'))
-const express = (await import('express')).default
-const cors = (await import('cors')).default
-const usersRoute = (await import('./routes/users.js')).default
-const lessonsRoute = (await import('./routes/lessons.js')).default
-const decksRoute = (await import('./routes/decks.js')).default
-const imageAuthRoute = (await import('./routes/imageKitAuth.js')).default
-const app = express()
+const express = (await import("express")).default;
+const cors = (await import("cors")).default;
+const usersRoute = (await import("./routes/users.js")).default;
+const lessonsRoute = (await import("./routes/lessons.js")).default;
+const decksRoute = (await import("./routes/decks.js")).default;
+const imageAuthRoute = (await import("./routes/imageKitAuth.js")).default;
+const app = express();
 
-app.use(express.json())
-const port = 3000
+app.use(express.json());
+const port = 3000;
 
 app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true
-}))
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+}));
 
-app.use('/users', usersRoute)
-app.use('/lessons', lessonsRoute)
-app.use('/decks', decksRoute)
-app.use('/auth', imageAuthRoute)
+app.use("/users", usersRoute);
+app.use("/lessons", lessonsRoute);
+app.use("/decks", decksRoute);
+app.use("/auth", imageAuthRoute);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
+});
 
-})
-
-exports.app = functions.https.onRequest(app)
+exports.app = functions.https.onRequest(app);
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -54,7 +53,7 @@ exports.app = functions.https.onRequest(app)
 // functions should each use functions.runWith({ maxInstances: 10 }) instead.
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+setGlobalOptions({maxInstances: 10});
 
 // export const helloWorld = onRequest((request, response) => {
 //   logger.info("Hello logs!", {structuredData: true});

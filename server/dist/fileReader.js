@@ -1,5 +1,5 @@
 const fs = await import('fs');
-async function ReadFile(name) {
+async function readFile(name) {
     try {
         const parsedFile = await fs.promises.readFile(`./data/${name}.json`, 'utf-8');
         return parsedFile ? JSON.parse(parsedFile) : [];
@@ -9,7 +9,7 @@ async function ReadFile(name) {
         return [];
     }
 }
-const lessons = await ReadFile('lessons');
-const users = await ReadFile('users');
+const lessons = await readFile('lessons');
+const users = await readFile('users');
 export { lessons, users };
 //# sourceMappingURL=fileReader.js.map

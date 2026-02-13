@@ -1,28 +1,28 @@
-import { Router } from "express"
-import type { LessonType } from "../../../shared-types/API.js"
-import { lessons } from "../fileReader.js"
-const express = (await import('express')).default
+import {Router} from "express";
+import type {LessonType} from "../../../shared-types/API.js";
+import {lessons} from "../fileReader.js";
+const express = (await import("express")).default;
 
-const router = Router()
+// eslint-disable-next-line new-cap
+const router = Router();
 
-router.use('/videos', express.static('./lessons/videos'))
+router.use("/videos", express.static("./lessons/videos"));
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
+  res.json(lessons);
+});
 
-    res.json(lessons)
-})
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
 
-router.get('/:id', (req, res) => {
+  const lesson: LessonType | undefined = lessons
+    .find((l: LessonType) => l.id === id);
 
-    const id = req.params.id
+  if (lesson) {
+    res.json(lesson);
+  }
 
-    const lesson: LessonType | undefined = lessons.find((l: LessonType) => l.id === id)
+  res.status(404).json({message: "Lesson not found"});
+});
 
-    if (lesson) {
-    res.json(lesson)
-    } 
-
-    res.status(404).json({ message: 'Lesson not found' })
-})
-
-export default router
+export default router;
