@@ -14,7 +14,7 @@
   "engines": {
     "node": "24"
   },
-  "main": "lib/index.js",
+  "main": "lib/functions/src/index.js",
   "dependencies": {
     "@imagekit/nodejs": "^7.1.1",
     "@imagekit/react": "^5.0.1",
