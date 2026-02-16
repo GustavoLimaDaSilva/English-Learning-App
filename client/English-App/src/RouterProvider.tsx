@@ -38,7 +38,7 @@ export default function CreateCustomBrowserRouter() {
                     loader: async () => {
                         if (!user) return
 
-                        const raw = await fetch(`http://localhost:3000/users/${user.uid}`)
+                        const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/users/${user.uid}`)
                         return raw.ok ? await raw.json() : {}
                     },
                     children: [
@@ -47,7 +47,7 @@ export default function CreateCustomBrowserRouter() {
                             // Component: DashboardOverview,
                             loader: async () => {
 
-                                const raw = await fetch('http://localhost:3000/lessons')
+                                const raw = await fetch('https://default-o37g4y27ua-uc.a.run.app/lessons')
                                 const data = await raw.json()
                                 return data
                             }
@@ -71,7 +71,7 @@ export default function CreateCustomBrowserRouter() {
                             loader: async ({ params }) => {
 
                                 const id = params.id
-                                const raw = await fetch(`http://localhost:3000/lessons/${id}`)
+                                const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/lessons/${id}`)
 
                                 return await raw.json()
                             }
@@ -84,7 +84,7 @@ export default function CreateCustomBrowserRouter() {
                             path: 'flashcards',
                             Component: FlashCardsOverview,
                             loader: async () => {
-                                const raw = await fetch(`http://localhost:3000/decks/${user?.uid}?level=${profileData.level}`)
+                                const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/decks/${user?.uid}?level=${profileData.level}`)
                                 const data = await raw.json()
                                 return data
                             },
@@ -99,7 +99,7 @@ export default function CreateCustomBrowserRouter() {
                                     loader: async ({ params }) => {
 
                                         const id = params.id
-                                        const raw = await fetch(`http://localhost:3000/decks/${id}`)
+                                        const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/decks/${id}`)
 
                                         return await raw.json()
                                     }

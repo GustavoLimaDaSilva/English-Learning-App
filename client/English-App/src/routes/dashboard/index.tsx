@@ -19,10 +19,10 @@ export const Route = createFileRoute('/dashboard/')({
         if (!user) {
             return { storedProfile: null }
         }
-        const rawProfile = await fetch(`http://localhost:3000/users/${user.uid}`)
+        const rawProfile = await fetch(`https://default-o37g4y27ua-uc.a.run.app/users/${user.uid}`)
         const storedProfile = await rawProfile.json()
 
-        const rawLesson = await fetch('http://localhost:3000/lessons')
+        const rawLesson = await fetch('https://default-o37g4y27ua-uc.a.run.app/lessons')
         const lessons = rawProfile.ok ? await rawLesson.json() : []
         return { storedProfile: storedProfile, lessons: lessons }
     },

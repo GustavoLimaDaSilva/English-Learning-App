@@ -27,7 +27,7 @@ export async function postProfile(profileData: ProfileData | {}) {
 
     if (isEmpty(profileData)) return
 
-    await fetch(`http://localhost:3000/users`, {
+    await fetch(`https://default-o37g4y27ua-uc.a.run.app/users`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -43,7 +43,7 @@ export function postNewLevel(profileData: ProfileData) {
 
     if (isEmpty(profileData)) return
 
-    fetch(`http://localhost:3000/users/${profileData.uid}`, {
+    fetch(`https://default-o37g4y27ua-uc.a.run.app/users/${profileData.uid}`, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',

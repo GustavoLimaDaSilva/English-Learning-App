@@ -5,7 +5,7 @@ export const Route = createFileRoute('/decks/lessonDecks/$lessonId')({
     component: DeckLoader,
     loader: async ({ params }) => {
 
-        const raw = await fetch(`http://localhost:3000/decks/lessonDecks/${params.lessonId}`)
+        const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/decks/lessonDecks/${params.lessonId}`)
         return await raw.json()
     }
 })
