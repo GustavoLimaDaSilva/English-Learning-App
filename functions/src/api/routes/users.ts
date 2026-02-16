@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {users} from "../fileReader.js";
-import type {ProfileData} from "../../../shared-types/API.js";
+import {users} from "../../fileReader.js";
+import type {ProfileData} from "../../../../shared-types/API.js";
 const fs = await import("fs/promises");
 
 // eslint-disable-next-line new-cap

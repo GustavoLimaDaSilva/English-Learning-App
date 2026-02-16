@@ -1,6 +1,6 @@
 import {Router} from "express";
-import type {LessonType} from "../../../shared-types/API.js";
-import {lessons} from "../fileReader.js";
+import type {LessonType} from "../../../../shared-types/API.js";
+import {lessons} from "../../fileReader.js";
 const express = (await import("express")).default;
 
 // eslint-disable-next-line new-cap

@@ -1,6 +1,6 @@
 import type {DeckType} from "../../shared-types/API.js";
-import {users} from "./fileReader.js";
-import type {ServerUser} from "./types/index.js";
+import {users} from "./api/fileReader.js";
+import type {ServerUser} from "./api/types/index.js";
 const fs = await import("fs/promises");
 const crypto = await import("crypto");
 
