@@ -3,12 +3,13 @@ import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
 import {getAuth} from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDRmG2-aNGfQCRlPpoo1r3FuRg92TSMkBo",
-  authDomain: "english-learning-app-594f2.firebaseapp.com",
-  projectId: "english-learning-app-594f2",
-  storageBucket: "english-learning-app-594f2.firebasestorage.app",
-  messagingSenderId: "978123414075",
-  appId: "1:978123414075:web:4a3c543f63eb2eb690da1e"
+  apiKey: "AIzaSyDi2VgfukCM7z53qPlkHWchq3B99qATong",
+  authDomain: "hope-2033a.firebaseapp.com",
+  projectId: "hope-2033a",
+  storageBucket: "hope-2033a.firebasestorage.app",
+  messagingSenderId: "758504931798",
+  appId: "1:758504931798:web:7d4bcbf0b00e5832406477",
+  measurementId: "G-3JF7NYKR51"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
