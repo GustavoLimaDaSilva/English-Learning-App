@@ -9,7 +9,7 @@
 
 import {setGlobalOptions} from "firebase-functions";
 
-import functions from "firebase-functions/v1";
+import {onRequest} from "firebase-functions/https";
 
 // const { lessons, users } = (await import('./fileReader.js'))
 const express = (await import("express")).default;
@@ -38,7 +38,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-exports.app = functions.https.onRequest(app);
+export default onRequest(app);
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
