@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {lessons, users} from "../../fileReader.js";
+import {lessons, users} from "../fileReader.js";
 import {writePersonalDeck} from "../../utils.js";
 import type {DeckType} from "../../../../shared-types/API.js";
 
