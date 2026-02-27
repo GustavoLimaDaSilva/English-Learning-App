@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { lessons, users } from "../fileReader.js";
-import { updateDeck, writePersonalDeck } from "../../utils.js";
-import type { DeckType } from "../../../../shared-types/API.js";
-
+import {Router} from "express";
+import {lessons, users} from "../fileReader.js";
+import {updateDeck, writePersonalDeck} from "../../utils.js";
+import type {DeckType} from "../../../../shared-types/API.js";
+require("firebase-functions/logger/compat")
 // eslint-disable-next-line new-cap
 const router = Router();
 
@@ -17,7 +17,7 @@ router.get("/:uid", (req, res) => {
   const lessonDecksData: Data[] = [];
 
   for (const l of lessons) {
-    lessonDecksData.push({ name: l.name, id: l.id });
+    lessonDecksData.push({name: l.name, id: l.id});
     if (l.level === Number(level)) break;
   }
 
@@ -25,7 +25,7 @@ router.get("/:uid", (req, res) => {
   const user = users.find((u) => u.uid === uid);
 
   user?.flashcard_decks?.forEach((deck: DeckType) => {
-    userDecksData.push({ name: deck.name, id: deck.id });
+    userDecksData.push({name: deck.name, id: deck.id});
   }) ?? [];
 
   res.json({
@@ -71,18 +71,18 @@ router.post("/personalDecks/:uid", async (req, res) => {
 });
 
 router.put("/updateDeck/:id", (req, res) => {
-
   const id = req.params.id;
-  const updatedDeck: DeckType | undefined = req.body.updatedDeck
-
-  if (!updatedDeck) return
+  const updatedDeck: DeckType | undefined = req.body.updatedDeck;
+console.log('id: ', id)
+console.log('updatedDeck: ', updateDeck)
+  if (!updatedDeck) return;
 
   try {
-  updateDeck(updatedDeck, id)
-res.status(204).json({message: "updated successfully"})  
-} catch(err) {
-  console.error("couldn't update deck: ", err)
-}
-})
+    updateDeck(updatedDeck, id);
+    res.status(204).json({message: "updated successfully"});
+  } catch (err) {
+    console.error("couldn't update deck: ", err);
+  }
+});
 
 export default router;

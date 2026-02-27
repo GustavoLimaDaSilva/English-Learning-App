@@ -1,5 +1,5 @@
 import type {ServerUser} from "./types/index.js";
-import type {LessonType} from "../../shared-types/API.js";
+import type {LessonType} from "../../../shared-types/API.js";
 
 const fs = await import("fs");
 

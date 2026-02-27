@@ -1,6 +1,6 @@
-import type { DeckType, LessonType } from "../../shared-types/API.js";
-import { lessons, users } from "./api/fileReader.js";
-import type { ServerUser } from "./api/types/index.js";
+import type {DeckType, LessonType} from "../../shared-types/API.js";
+import {lessons, users} from "./api/fileReader.js";
+import type {ServerUser} from "./api/types/index.js";
 const fs = await import("fs/promises");
 const crypto = await import("crypto");
 
@@ -13,12 +13,12 @@ function createHexId() {
 }
 
 
-export async function writePersonalDeck(deck: Omit<DeckType, "id">, uid: string) {
+export async function writePersonalDeck(deck:Omit<DeckType, "id">, uid:string) {
   const userIndex: number = users.findIndex((u: ServerUser) => u.uid === uid);
   const user = users[userIndex];
 
   if (user) {
-    const newDeck = { ...deck, id: createHexId() } satisfies DeckType;
+    const newDeck = {...deck, id: createHexId()} satisfies DeckType;
 
     user.flashcard_decks ?
       user.flashcard_decks.push(newDeck) :
@@ -38,21 +38,22 @@ export async function writePersonalDeck(deck: Omit<DeckType, "id">, uid: string)
 }
 
 export async function updateDeck(updatedDeck: DeckType, id: string) {
+  const userIndex: number = users.findIndex((u: ServerUser) => u.uid === id);
 
-    const userIndex: number = users.findIndex((u: ServerUser) => u.uid === id);
-
-    if(userIndex) {
+  if (userIndex) {
     const user = users[userIndex];
-    const oldDeckIndex = user.flashcard_decks?.findIndex(deck => updatedDeck.id === deck.id)
+    const oldDeckIndex = user.flashcard_decks?.
+      findIndex((deck) => updatedDeck.id === deck.id);
 
     if (oldDeckIndex && user.flashcard_decks) {
-      user.flashcard_decks.splice(oldDeckIndex, 1, updatedDeck)
-      users.splice(userIndex, 1, user)
+      user.flashcard_decks.splice(oldDeckIndex, 1, updatedDeck);
+      users.splice(userIndex, 1, user);
 
       try {
-        await fs.writeFile("D:/dev/English-Learning-App/functions/data/users.json",
+        await fs.writeFile(
+          "D:/dev/English-Learning-App/functions/data/users.json",
           JSON.stringify(users));
-        return
+        return;
       } catch (err) {
         console.error("happened at writePersonalDeck: ", err);
         throw err;
@@ -61,21 +62,24 @@ export async function updateDeck(updatedDeck: DeckType, id: string) {
   }
 
   const lessonIndex: number = lessons.findIndex((l: LessonType) => l.id === id);
-    const lesson = lessons[lessonIndex];
-    const oldLessonDeckIndex = lesson.flashcard_decks?.findIndex((deck: DeckType) => updatedDeck.id === deck.id)
+  const lesson = lessons[lessonIndex];
+  const oldLessonDeckIndex = lesson.flashcard_deck;
 
-    if (oldLessonDeckIndex) {
-      lesson.flashcard_decks.splice(oldLessonDeckIndex, 1, updatedDeck)
-      lessons.splice(lessonIndex, 1, lesson)
 
-      try {
-        await fs.writeFile("D:/dev/English-Learning-App/functions/data/lessons.json",
-          JSON.stringify(users));
-        return
-      } catch (err) {
-        console.error("happened at writePersonalDeck: ", err);
-        throw err;
-      }
+  if (oldLessonDeckIndex) {
+    lesson.flashcard_deck = updatedDeck;
+
+    lessons.splice(lessonIndex, 1, lesson);
+
+    try {
+      await fs.writeFile(
+        "D:/dev/English-Learning-App/functions/data/lessons.json",
+        JSON.stringify(users));
+      return;
+    } catch (err) {
+      console.error("happened at writePersonalDeck: ", err);
+      throw err;
     }
+  }
 }
 
