@@ -77,7 +77,7 @@ export default function useStoreFile<T>(dataSetter: StateSetter<T[]>) {
 async function authenticator() {
     try {
 
-        const response = await fetch("https://default-o37g4y27ua-uc.a.run.app/auth/imageKit");
+        const response = await fetch("https://api-o37g4y27ua-uc.a.run.app/auth/imageKit");
 
         if (!response.ok) {
 

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/decks/$uid/')({
 
         if (level === undefined || level === null) return
 
-        const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/decks/${params.uid}?level=${level}`)
+        const raw = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/${params.uid}?level=${level}`)
         const data = await raw.json()
 
         return data

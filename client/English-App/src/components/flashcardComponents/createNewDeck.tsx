@@ -47,7 +47,7 @@ export default function CreateNewDeck() {
 
         if (flashcardData.length === 0) return
 
-        const res = await fetch(`https://default-o37g4y27ua-uc.a.run.app/decks/personalDecks/${profileData.uid}`, {
+        const res = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/personalDecks/${profileData.uid}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

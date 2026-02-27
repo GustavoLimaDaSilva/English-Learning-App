@@ -27,7 +27,7 @@ export async function postProfile(profileData: ProfileData | {}) {
 
     if (isEmpty(profileData)) return
 
-    await fetch(`https://default-o37g4y27ua-uc.a.run.app/users`, {
+    await fetch(`https://api-o37g4y27ua-uc.a.run.app/users`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -43,7 +43,7 @@ export function postNewLevel(profileData: ProfileData) {
 
     if (isEmpty(profileData)) return
 
-    fetch(`https://default-o37g4y27ua-uc.a.run.app/users/${profileData.uid}`, {
+    fetch(`https://api-o37g4y27ua-uc.a.run.app/users/${profileData.uid}`, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -57,7 +57,7 @@ export function postNewLevel(profileData: ProfileData) {
 
 export async function putUpdatedDeck(updatedDeck: DeckType['cards'], id: string) {
 
-    const req = await fetch(`https://default-o37g4y27ua-uc.a.run.app/updateDeck/${id}`, {
+    const req = await fetch(`https://api-o37g4y27ua-uc.a.run.app/updateDeck/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
             updatedDeck: updatedDeck

@@ -8,7 +8,7 @@ const profileData = useProfileData.getState().profileData
 export const Route = createFileRoute('/flashcards/')({
     component: FlashcardsIndex,
     loader: () => async () => {
-        const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/decks/${user?.uid}?level=${profileData.level}`)
+        const raw = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/${user?.uid}?level=${profileData.level}`)
         const data = await raw.json()
         return data
     }

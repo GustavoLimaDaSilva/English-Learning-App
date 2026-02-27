@@ -9,7 +9,7 @@ export const Route = createFileRoute('/lessons/$lessonId')({
   component: Lesson,
   loader: async ({params}) => {
 
-    const raw = await fetch(`https://default-o37g4y27ua-uc.a.run.app/lessons/${params.lessonId}`)
+    const raw = await fetch(`https://api-o37g4y27ua-uc.a.run.app/lessons/${params.lessonId}`)
     return await raw.json()
   },
 })
