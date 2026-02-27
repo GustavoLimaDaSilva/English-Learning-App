@@ -1,6 +1,7 @@
 import {Router} from "express";
-import {users} from "../../fileReader.js";
+import {users} from "../fileReader.js";
 import type {ProfileData} from "../../../../shared-types/API.js";
+import {ServerUser} from "../types/index.js";
 const fs = await import("fs/promises");
 
 // eslint-disable-next-line new-cap
@@ -12,7 +13,7 @@ router.get("/:uid", (req, res) => {
     return;
   }
   const uid = req.params.uid;
-  const user = users.find((u) => u.uid === uid);
+  const user = users.find((u: ServerUser) => u.uid === uid);
   user ? res.json(user) : res.json({});
 });
 
@@ -21,7 +22,7 @@ router.post("/", async (req, res) => {
   const newUser: ProfileData | undefined = req.body?.profile_data;
   if (!newUser) return;
 
-  if (users.some((u) => u.uid === newUser.uid)) {
+  if (users.some((u: ServerUser) => u.uid === newUser.uid)) {
     res.status(409).json({message: "User already exists"});
     return;
   }
@@ -37,12 +38,13 @@ router.put("/:uid", async (req, res) => {
   if (!newLevel) return;
 
   const uid = req.params.uid;
-  const index = users.findIndex((u) => u.uid === uid);
+  const index = users.findIndex((u: ServerUser) => u.uid === uid);
 
   if (users[index]) {
     users[index].level = newLevel;
 
-    await fs.writeFile("D:/dev/English-Learning-App/server/data/users.json",
+    await fs.writeFile(
+      "D:/dev/English-Learning-App/server/data/users.json",
       JSON.stringify(users));
     res.status(201).json({message: "User updated successfully"});
   }

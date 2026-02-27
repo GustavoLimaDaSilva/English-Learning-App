@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { lessons, users } from "../fileReader.js";
-import { updateDeck, writePersonalDeck } from "../../utils.js";
-import type { DeckType } from "../../../../shared-types/API.js";
+import {Router} from "express";
+import {lessons, users} from "../../fileReader.js";
+import {writePersonalDeck} from "../../utils.js";
+import type {DeckType} from "../../../../shared-types/API.js";
 
 // eslint-disable-next-line new-cap
 const router = Router();
@@ -16,17 +16,17 @@ router.get("/:uid", (req, res) => {
 
   const lessonDecksData: Data[] = [];
 
-  for (const l of lessons) {
-    lessonDecksData.push({ name: l.name, id: l.id });
-    if (l.level === Number(level)) break;
-  }
+    for (const l of lessons) {
+      lessonDecksData.push({name: l.name, id: l.id});
+      if (l.level === Number(level)) break;
+    }
 
   const userDecksData: Data[] = [];
   const user = users.find((u) => u.uid === uid);
 
-  user?.flashcard_decks?.forEach((deck: DeckType) => {
-    userDecksData.push({ name: deck.name, id: deck.id });
-  }) ?? [];
+    user?.flashcard_decks?.forEach((deck: DeckType) => {
+      userDecksData.push({name: deck.name, id: deck.id});
+    }) ?? [];
 
   res.json({
     lessonDecksData: lessonDecksData,
@@ -69,20 +69,5 @@ router.post("/personalDecks/:uid", async (req, res) => {
     res.status(500).json("Internal Server Error");
   //   res.status(201).json("Deck created successfully");
 });
-
-router.put("/updateDeck/:id", (req, res) => {
-
-  const id = req.params.id;
-  const updatedDeck: DeckType | undefined = req.body.updatedDeck
-
-  if (!updatedDeck) return
-
-  try {
-  updateDeck(updatedDeck, id)
-res.status(204).json({message: "updated successfully"})  
-} catch(err) {
-  console.error("couldn't update deck: ", err)
-}
-})
 
 export default router;
