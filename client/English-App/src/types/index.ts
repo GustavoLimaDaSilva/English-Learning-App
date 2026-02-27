@@ -1,7 +1,7 @@
 import type React from "react"
 export type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>
 
-export type { ProfileData, LessonType, DecksType, DeckType, FlashcardType, SingleOptionCard } from "../../../../shared-types/API.ts"
+export type { ProfileData, LessonType, DecksType, DeckType, FlashcardType } from "../../../../shared-types/API.ts"
 export { Opts } from "../../../../shared-types/API.ts"
 
 export type MessageOrigin = 'user' | 'AI'
