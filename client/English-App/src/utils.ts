@@ -1,5 +1,5 @@
 import type { User } from "firebase/auth"
-import type { ProfileData } from "../../../shared-types/API.ts"
+import type { DeckType, ProfileData } from "../../../shared-types/API.ts"
 let LengthParamsTurple: [number, {error: string}]
 
 export function streamTextEffect(text: string) {
@@ -53,6 +53,19 @@ export function postNewLevel(profileData: ProfileData) {
             profile_level: profileData.level
         })
     })
+}
+
+export async function putUpdatedDeck(updatedDeck: DeckType['cards'], id: string) {
+
+    const req = await fetch(`https://default-o37g4y27ua-uc.a.run.app/updateDeck/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            updatedDeck: updatedDeck
+        })
+    })
+    const res = await req.json()
+    console.log(res)
+    return res
 }
 
 export function minLengthParams(min: number = 4) {

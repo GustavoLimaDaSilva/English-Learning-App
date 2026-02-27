@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import type { StateSetter } from "../../types/index.ts";
+import type { DeckType, FlashcardType, StateSetter } from "../../types/index.ts";
+import { putUpdatedDeck } from "../../utils.ts";
 
 type SkipToNextProps = {
     isCorrect: boolean | null,
@@ -7,10 +8,12 @@ type SkipToNextProps = {
     skipToNext: (() => void) | undefined,
     updateLevel: (() => void) | undefined,
     isLastCard: boolean,
+    cards: DeckType['cards'],
+    setCards: StateSetter<FlashcardType[]>
     resetSelectedOpt: (() => void)
 }
 
-export default function SkipToNext({ isCorrect, setIsCorrect, skipToNext, isLastCard, updateLevel, resetSelectedOpt }: SkipToNextProps) {
+export default function SkipToNext({ isCorrect, setIsCorrect, skipToNext, isLastCard, updateLevel, resetSelectedOpt, cards }: SkipToNextProps) {
 
     return (
         <div>
@@ -19,7 +22,13 @@ export default function SkipToNext({ isCorrect, setIsCorrect, skipToNext, isLast
                 :
                 isCorrect ? 'Correto' : 'Errado'}!</p>
             {isLastCard ?
-                <Link to={'/dashboard'} onClick={updateLevel && updateLevel()}>Finalizar</Link>
+                <Link to={'/dashboard'} onClick={() => {
+                    const updatedDeck = cards.map(card => {
+                        return { ...card, lastReviewedAt: new Date().toLocaleString('pt-br', { day: "numeric", month: "numeric", year: "numeric" }) }
+                    })
+                    putUpdatedDeck(updatedDeck, 'wqfewd')
+                    if (updateLevel) updateLevel()
+                }}>Finalizar</Link>
                 :
                 <button onClick={() => {
                     if (skipToNext) skipToNext()

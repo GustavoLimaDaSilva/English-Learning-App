@@ -1,11 +1,9 @@
-import { Link } from "@tanstack/react-router"
-import type { SingleOptionCard } from "../../../../shared-types/API.ts"
-import type { StateSetter } from "../types/index.ts"
+import type { FlashcardType, StateSetter } from "../types/index.ts"
 import { IsCardSingleOption } from "../../../../typeGuards.ts"
 
 type props = {
-    cards: SingleOptionCard[],
-    setCards: StateSetter<SingleOptionCard[]>
+    cards: [],
+    setCards: StateSetter<FlashcardType[]>
     offset: number,
     toLastSlot: () => void,
     skipToNext: (() => void) | undefined
@@ -13,13 +11,13 @@ type props = {
 
 export default function assignDifficulty({ offset, setCards, skipToNext, toLastSlot, }: props) {
 
-    const addDifficulty = (diff: SingleOptionCard["difficulty"]) => {
+    const addDifficulty = (diff: FlashcardType["difficulty"]) => {
 
         setCards(prev => {
 
             const copy = [...prev]
             if (IsCardSingleOption(copy[offset]))
-            copy[offset] = { ...(copy[offset]), difficulty: diff, addedAt: (copy[offset] as SingleOptionCard).addedAt ?? Date.now() }
+            copy[offset] = { ...(copy[offset]), difficulty: diff, addedAt: (copy[offset] as FlashcardType).addedAt ?? Date.now() }
 
             return copy
         })

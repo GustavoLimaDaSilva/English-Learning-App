@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
-import {getAuth} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDi2VgfukCM7z53qPlkHWchq3B99qATong",
@@ -16,6 +16,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
 
-export const model = getGenerativeModel(ai, { model: "gemini-2.5-flash" });
+export const model = getGenerativeModel(ai, { 
+  model: "gemini-2.5-flash", 
+  systemInstruction: "You are a kind english teacher who offers conversation classes. Reply with basic vocabulary unless you notice the user is in a more advacend english level. If they make some mistake, correct them in a kind, constructive way." });
 
 export const auth = getAuth(firebaseApp)

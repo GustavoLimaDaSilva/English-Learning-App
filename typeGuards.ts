@@ -1,8 +1,8 @@
-import { Opts, type FlashcardType, type SingleOptionCard } from "./shared-types/API.ts"
+import { Opts, type FlashcardType,  } from "./shared-types/API.ts"
 
-export function IsCardSingleOption(card: SingleOptionCard | FlashcardType | undefined): card is SingleOptionCard {
+export function IsCardSingleOption(card: FlashcardType | undefined): card is FlashcardType {
 
-    if ((card as SingleOptionCard).difficulty) return true
+    if ((card as FlashcardType).difficulty) return true
     else return false
 }
 

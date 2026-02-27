@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useProfileData } from "../../userStore.ts"
 import type { StateSetter } from "../../types/index.ts"
-import type {  LessonType, DeckType, SingleOptionCard, FlashcardType } from "../../../../../shared-types/API.ts"
+import type {  LessonType, DeckType } from "../../../../../shared-types/API.ts"
 import Flashcard from "./flashcard.tsx"
 import SkipToNext from "./skipToNext.tsx"
 import AssignDifficulty from "../assignDifficulty.tsx"
@@ -12,7 +12,7 @@ type DeckProps = {
     lesson?: LessonType,
     loaderDeck?: DeckType
 }
-
+type Cards = DeckType['cards']
 export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
 
     if (!lesson && !loaderDeck) return
@@ -22,7 +22,7 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
     const [offset, setOffset] = useState(0)
     const [selectedOption, setSelectedOption] = useState<HTMLButtonElement | null>(null)
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
-    const [cards, setCards] = useState<FlashcardType[] | SingleOptionCard[]>(lesson?.flashcard_deck.cards ?? (loaderDeck!.cards))
+    const [cards, setCards] = useState<Cards>(lesson?.flashcard_deck.cards ?? (loaderDeck!.cards))
     const [showAnswer, setShowAnswer] = useState(false)
     const isMultipleOption = cards[offset]?.options ? Object.keys(cards[offset]?.options).length > 1 : false
 
@@ -58,17 +58,20 @@ return (<>
                         <SkipToNext skipToNext={cards[offset + 1] ? () => setOffset(prev => prev + 1) : undefined} isLastCard={offset === (cards.length - 1)}
                             isCorrect={isCorrect} setIsCorrect={setIsCorrect}
                             updateLevel={profileData.level === lesson?.level ? updatelevel : undefined}
-                            resetSelectedOpt={() => setSelectedOption(null)} />
+                            resetSelectedOpt={() => setSelectedOption(null)} cards={cards} setCards={setCards}/>
                     }
                 </>
                 :
                 showAnswer &&
-                <AssignDifficulty cards={cards as SingleOptionCard[]} setCards={setCards as StateSetter<SingleOptionCard[]>} offset={offset}
+                <AssignDifficulty cards={cards as Cards} setCards={setCards as StateSetter<Cards>} offset={offset}
                     skipToNext={cards[offset + 1] ? () => setOffset(prev => prev + 1) : undefined} toLastSlot={() => setOffset(cards.length - 1)}
                     />
             }
-            {IsCardSingleOption(cards[offset]) ? <Link to='/dashboard'>Finalizar</Link> : null}
+            {IsCardSingleOption(cards[offset]) ? <Link to='/dashboard' onClick={() => {
+                console.log(cards)
+            }}>Finalizar</Link> : null}
         </div>
     </>
     )
 }
+//usar onClick, executando a ação necessária e só depois navegando

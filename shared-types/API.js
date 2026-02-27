@@ -1,3 +1,5 @@
+"use strict";
 /// <reference lib="dom" />
-export const Opts = ['a', 'b', 'c', 'd'];
-//# sourceMappingURL=API.js.map
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Opts = void 0;
+exports.Opts = ['a', 'b', 'c', 'd'];

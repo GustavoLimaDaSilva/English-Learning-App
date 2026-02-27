@@ -5,7 +5,7 @@ import type { ChatMessage } from "../types/index.ts"
 import Message from '../components/Message.tsx'
 
 export const Route = createFileRoute('/chat')({
-  component: ChatWithAI,
+    component: ChatWithAI,
 })
 
 export default function ChatWithAI() {
@@ -40,7 +40,15 @@ export default function ChatWithAI() {
 
     async function reply(prompt: string) {
 
-        const result = await model.generateContent(prompt)
+        const result = await model.generateContent({
+            contents: [{
+                role: 'user',
+                parts: [{ text: prompt }]
+            }],
+            generationConfig: {
+                responseMimeType: ""
+            }
+        })
 
         const response = result.response
         const text = response.text()
