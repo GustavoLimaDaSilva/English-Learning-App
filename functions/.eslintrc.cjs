@@ -4,7 +4,6 @@ module.exports = {
   env: {
     es6: true,
     node: true,
-    
   },
   extends: [
     "eslint:recommended",
@@ -16,14 +15,14 @@ module.exports = {
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: true,
+    project: false,
     sourceType: "module",
     tsconfigRootDir: __dirname,
   },
   ignorePatterns: [
     "/lib/**/*", // Ignore built files.
     "/generated/**/*", // Ignore generated files.
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
     // '.eslintrc.js'
   ],
   plugins: [
