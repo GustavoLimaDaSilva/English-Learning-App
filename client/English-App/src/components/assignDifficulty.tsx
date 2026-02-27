@@ -2,7 +2,7 @@ import type { FlashcardType, StateSetter } from "../types/index.ts"
 import { IsCardSingleOption } from "../../../../typeGuards.ts"
 
 type props = {
-    cards: [],
+    cards: FlashcardType[],
     setCards: StateSetter<FlashcardType[]>
     offset: number,
     toLastSlot: () => void,
