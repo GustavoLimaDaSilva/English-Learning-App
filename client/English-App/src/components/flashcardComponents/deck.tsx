@@ -62,7 +62,7 @@ return (<>
                 </>
                 :
                 showAnswer &&
-                <AssignDifficulty cards={cards as FlashcardType[]} setCards={setCards as StateSetter<Cards>} offset={offset}
+                <AssignDifficulty cards={cards as FlashcardType[]} setCards={setCards as StateSetter<FlashcardType[]>} offset={offset}
                     skipToNext={cards[offset + 1] ? () => setOffset(prev => prev + 1) : undefined} toLastSlot={() => setOffset(cards.length - 1)}
                     />
             }
