@@ -39,7 +39,6 @@ function DashBoardOverview() {
 
     const data = localStorage.getItem('toastFired')
     const toastFired = data ? JSON.parse(data) : false
-
     return (
         <DashboardLogic storedProfile={storedProfile}>
             <div>

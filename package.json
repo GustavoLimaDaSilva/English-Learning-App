@@ -1,9 +1,10 @@
 {
   "type": "module",
   "scripts": {
-  "rimraf": "./node_modules/rimraf/bin.js",
+    "rimraf": "./node_modules/rimraf/bin.js",
     "build": "npm run build -w client",
-    "deploy:functions": "firebase deploy --only functions"
+    "deploy:functions": "firebase deploy --only functions",
+    "compile": "tsc"
   },
   "devDependencies": {
     "baseline-browser-mapping": "^2.9.6",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/react-router-devtools": "^1.141.1",
+    "firebase-functions": "^7.2.0",
     "git-filter-repo": "^0.0.30",
     "react": "^19.2.2",
     "typescript": "^5.9.3",

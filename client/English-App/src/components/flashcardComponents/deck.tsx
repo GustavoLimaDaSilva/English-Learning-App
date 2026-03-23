@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { useProfileData } from "../../userStore.ts"
 import type { StateSetter } from "../../types/index.ts"
-import type {  LessonType, DeckType, FlashcardType } from "../../../../../shared-types/API.ts"
+import type { LessonType, DeckType, FlashcardType } from "../../../../../shared-types/API.ts"
 import Flashcard from "./flashcard.tsx"
 import SkipToNext from "./skipToNext.tsx"
 import AssignDifficulty from "../assignDifficulty.tsx"
 import { Link } from "@tanstack/react-router"
-import {IsCardSingleOption} from '../../../../../typeGuards.ts'
+import { IsCardSingleOption } from '../../../../../typeGuards.ts'
+import { putUpdatedDeck } from "../../utils.ts"
+import DisplayFeedback from "./displayFeedback.tsx"
 type DeckProps = {
     setIndex?: StateSetter<number> | null,
     lesson?: LessonType,
@@ -25,7 +27,9 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
     const [showAnswer, setShowAnswer] = useState(false)
     const isMultipleOption = cards[offset]?.options ? Object.keys(cards[offset]?.options).length > 1 : false
 
-    const updatelevel = () => localStorage.setItem('new_level', JSON.stringify(profileData.level + 1))
+    const updateLevel = () => localStorage.setItem('new_level', JSON.stringify(profileData.level + 1))
+    const skip = () => setOffset(prev => prev + 1)
+    const isLastCard = offset === (cards.length - 1)
 
     useEffect(() => {
 
@@ -35,42 +39,68 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
         }
     }, [isCorrect])
 
-return (<>
+    useEffect(() => {
+
+        setIsCorrect(null)
+        setSelectedOption(null)
+    }, [offset])
+
+    return (<>
         <div onClick={(e) => {
             const clickedEl = e.target as HTMLElement
             if (clickedEl.tagName === 'BUTTON') setSelectedOption(clickedEl as HTMLButtonElement)
         }}>
-            <Flashcard card={cards[offset]} isMultipleOption={isMultipleOption} selectedOption={selectedOption} 
-            isCorrect={isCorrect} showAnswer={showAnswer} setShowAnswer={setShowAnswer} />
+            <Flashcard card={cards[offset]} isMultipleOption={isMultipleOption} selectedOption={selectedOption}
+                isCorrect={isCorrect} showAnswer={showAnswer} setShowAnswer={setShowAnswer} />
         </div>
         <div>
-            {isMultipleOption ?
+            {isMultipleOption &&
                 <>
                     <button disabled={!selectedOption ? true : false} onClick={() => {
-
                         if (cards[offset] && selectedOption) {
-
                             setIsCorrect(cards[offset].correct_answer === selectedOption.dataset.key)
                         }
                     }}>Confirmar</button>
-                    {isCorrect !== null &&
-                        <SkipToNext skipToNext={cards[offset + 1] ? () => setOffset(prev => prev + 1) : undefined} isLastCard={offset === (cards.length - 1)}
-                            isCorrect={isCorrect} setIsCorrect={setIsCorrect}
-                            updateLevel={profileData.level === lesson?.level ? updatelevel : undefined}
-                            resetSelectedOpt={() => setSelectedOption(null)} cards={cards} setCards={setCards}/>
+                </>
+            }
+            {showAnswer || isCorrect !== null ?
+                <>
+                    <DisplayFeedback isCorrect={isCorrect as boolean} isLastCard={isLastCard} />
+                    {
+                        isCorrect ?
+                            <AssignDifficulty
+                                cards={cards}
+                                setCards={setCards}
+                                offset={offset}
+                                skip={!isLastCard ? () => setOffset(prev => prev + 1) : undefined}
+                                toLastSlot={() => setOffset(cards.length - 1)}
+                            />
+                            :
+                            <SkipToNext skip={skip} />
                     }
                 </>
                 :
-                showAnswer &&
-                <AssignDifficulty cards={cards as FlashcardType[]} setCards={setCards as StateSetter<FlashcardType[]>} offset={offset}
-                    skipToNext={cards[offset + 1] ? () => setOffset(prev => prev + 1) : undefined} toLastSlot={() => setOffset(cards.length - 1)}
-                    />
+                null
             }
-            {IsCardSingleOption(cards[offset]) ? <Link to='/dashboard' onClick={() => {
-                console.log(cards)
-            }}>Finalizar</Link> : null}
+            {isLastCard && (isCorrect || showAnswer) ?
+                <Link to={'/dashboard'} onClick={() => {
+                    const updatedDeck = cards.reduce((acc: FlashcardType[], curr) => {
+
+                        const outdatedCardIndex = acc.findIndex(card => card.id === curr.id)
+                        if (outdatedCardIndex >= 0) {
+                            acc.splice(outdatedCardIndex, 1)
+                        }
+                        const copy = { ...curr }
+                        copy.lastReviewedAt = new Date()
+                            .toLocaleString('pt-br', { day: "numeric", month: "numeric", year: "numeric" })
+                        acc.push(copy)
+
+                        return acc
+                    }, [])
+                    putUpdatedDeck(updatedDeck, 'wqfewd')
+                    updateLevel()
+                }}>Finalizar</Link> : null}
         </div>
     </>
     )
 }
-//usar onClick, executando a ação necessária e só depois navegando

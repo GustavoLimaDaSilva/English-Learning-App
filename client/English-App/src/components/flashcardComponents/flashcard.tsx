@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { FlashcardType } from "../../../../../shared-types/API.d.ts";
 import type { StateSetter } from "../../types/index.ts";
 import { isCardOptions } from "../../../../../typeGuards.ts";
@@ -15,7 +14,6 @@ type flashcardProps = {
 export default function Flashcard({ card, selectedOption, isCorrect, isMultipleOption, showAnswer, setShowAnswer }: flashcardProps) {
 
     if (!card) return
-
 
     return (
         <>

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useUserContext } from '../RouterProvider.tsx'
-import { auth } from '../../firebaseConfig.ts'
+import { auth } from '../../../../firebaseConfig.ts'
 import { useGoogleUser } from '../userStore.ts'
 
 export const Route = createFileRoute('/login')({

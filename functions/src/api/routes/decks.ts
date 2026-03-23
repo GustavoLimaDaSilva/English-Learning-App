@@ -1,8 +1,7 @@
 import {Router} from "express";
 import {lessons, users} from "../fileReader.js";
-import {writePersonalDeck} from "../../utils.js";
+import {updateDeck, writePersonalDeck} from "../../utils.js";
 import type {DeckType} from "../../../../shared-types/API.js";
-
 // eslint-disable-next-line new-cap
 const router = Router();
 
@@ -16,17 +15,17 @@ router.get("/:uid", (req, res) => {
 
   const lessonDecksData: Data[] = [];
 
-    for (const l of lessons) {
-      lessonDecksData.push({name: l.name, id: l.id});
-      if (l.level === Number(level)) break;
-    }
+  for (const l of lessons) {
+    lessonDecksData.push({name: l.name, id: l.id});
+    if (l.level === Number(level)) break;
+  }
 
   const userDecksData: Data[] = [];
   const user = users.find((u) => u.uid === uid);
 
-    user?.flashcard_decks?.forEach((deck: DeckType) => {
-      userDecksData.push({name: deck.name, id: deck.id});
-    }) ?? [];
+  user?.flashcard_decks?.forEach((deck: DeckType) => {
+    userDecksData.push({name: deck.name, id: deck.id});
+  }) ?? [];
 
   res.json({
     lessonDecksData: lessonDecksData,
@@ -39,9 +38,9 @@ router.get("/lessonDecks/:id", (req, res) => {
   const deck = lessons.find((l) => l.id === id)?.flashcard_deck;
 
   if (deck) {
-    res.json(deck);
+    return res.json(deck);
   }
-  res.json([]);
+  return res.json([]);
 });
 
 router.get("/personalDecks/:uid/:deckId", async (req, res) => {
@@ -52,9 +51,9 @@ router.get("/personalDecks/:uid/:deckId", async (req, res) => {
     ?.find((d: DeckType) => d.id === deckId);
 
   if (deck) {
-    res.json(deck);
+    return res.json(deck);
   }
-  res.json([]);
+  return res.json([]);
 });
 
 router.post("/personalDecks/:uid", async (req, res) => {
@@ -68,6 +67,20 @@ router.post("/personalDecks/:uid", async (req, res) => {
     res.status(201).json("Deck created successfully") :
     res.status(500).json("Internal Server Error");
   //   res.status(201).json("Deck created successfully");
+});
+
+router.put("/updateDeck/:id", (req, res) => {
+  const id = req.params.id;
+  const updatedDeck: DeckType | undefined = req.body.updatedDeck;
+
+  if (!updatedDeck) return res.json({message: "No deck was sent!"});
+
+  try {
+    updateDeck(updatedDeck, id);
+    return res.json({message: "updated successfully"});
+  } catch (err) {
+    return res.json({error: err})
+  }
 });
 
 export default router;

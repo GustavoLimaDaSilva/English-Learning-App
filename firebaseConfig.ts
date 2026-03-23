@@ -12,7 +12,7 @@ const firebaseConfig = {
   measurementId: "G-3JF7NYKR51"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 
 const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
 

@@ -1,55 +1,65 @@
-import {Router} from "express";
-import {users} from "../fileReader.js";
-import type {ProfileData} from "../../../../shared-types/API.js";
-import {ServerUser} from "../types/index.js";
-const fs = await import("fs/promises");
-
+import { Router } from "express";
+import type { ProfileData } from "../../../../shared-types/API.js";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 // eslint-disable-next-line new-cap
 const router = Router();
 
-router.get("/:uid", (req, res) => {
-  if (users.length === 0) {
-    res.json([]);
-    return;
-  }
+router.get("/:uid", async (req, res) => {
+
   const uid = req.params.uid;
-  const user = users.find((u: ServerUser) => u.uid === uid);
-  user ? res.json(user) : res.json({});
+
+  try {
+    const user = (await getDoc(doc(req.db, "users", uid))).data()
+    if (user) {
+      return res.json(user)
+    } else {
+      return res.status(404).json({ message: user })
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err })
+  }
 });
 
-
 router.post("/", async (req, res) => {
+
   const newUser: ProfileData | undefined = req.body?.profile_data;
   if (!newUser) return;
 
-  if (users.some((u: ServerUser) => u.uid === newUser.uid)) {
-    res.status(409).json({message: "User already exists"});
-    return;
+  const userRef = doc(req.db, "users", newUser.uid);
+  const userExists = (await getDoc(userRef)).exists()
+  if (userExists) {
+    return res.status(409).json({ message: "User already exists" });
   }
-  users.push(newUser);
-  await fs.writeFile("D:/dev/English-Learning-App/server/data/users.json",
-    JSON.stringify(users));
-  res.status(201).json({message: "User created successfully"});
+
+  try {
+    await setDoc(userRef, newUser);
+    return res.json({ message: "User created successfully" });
+  } catch (err) {
+    return res.json({ error: err })
+  }
 });
 
-
 router.put("/:uid", async (req, res) => {
+
   const newLevel = req.body.profileLevel;
-  if (!newLevel) return;
+  const uid = req.params.uid
 
-  const uid = req.params.uid;
-  const index = users.findIndex((u: ServerUser) => u.uid === uid);
+  const userRef = doc(req.db, "users", uid);
+  const userExists = (await getDoc(userRef)).exists()
 
-  if (users[index]) {
-    users[index].level = newLevel;
-
-    await fs.writeFile(
-      "D:/dev/English-Learning-App/server/data/users.json",
-      JSON.stringify(users));
-    res.status(201).json({message: "User updated successfully"});
+  if (!userExists) {
+    return res.status(409).json({ message: "User already exists" });
   }
 
-  res.status(404).json({message: "User not found"});
+  try {
+    await updateDoc(userRef, {
+      level: newLevel
+    });
+    return res.status(201).json({ message: "User updated successfully" });
+  } catch (err) {
+
+    return res.status(404).json({ message: "User not found", err });
+  }
 });
 
 export default router;

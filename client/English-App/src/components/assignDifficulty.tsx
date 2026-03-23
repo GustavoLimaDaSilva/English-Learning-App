@@ -1,27 +1,25 @@
 import type { FlashcardType, StateSetter } from "../types/index.ts"
-import { IsCardSingleOption } from "../../../../typeGuards.ts"
 
 type props = {
     cards: FlashcardType[],
     setCards: StateSetter<FlashcardType[]>
     offset: number,
     toLastSlot: () => void,
-    skipToNext: (() => void) | undefined
+    skip: (() => void) | undefined
 }
 
-export default function assignDifficulty({ offset, setCards, skipToNext, toLastSlot, }: props) {
+export default function assignDifficulty({offset, setCards, skip, toLastSlot}: props) {
 
     const addDifficulty = (diff: FlashcardType["difficulty"]) => {
 
         setCards(prev => {
 
             const copy = [...prev]
-            if (IsCardSingleOption(copy[offset]))
-            copy[offset] = { ...(copy[offset]), difficulty: diff, addedAt: (copy[offset] as FlashcardType).addedAt ?? Date.now() }
+            copy[offset] = { ...copy[offset] as FlashcardType, difficulty: diff }
 
             return copy
         })
-        if (skipToNext) skipToNext()
+        if (skip) skip()
     }
 
     return (
