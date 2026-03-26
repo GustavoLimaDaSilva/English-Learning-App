@@ -101,7 +101,7 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
                     }, [])
                     
                     putUpdatedDeck({...loaderDeck!, cards: updatedCards}, user?.uid)
-                    updateLevel()
+                    if (lesson?.requiredLevel && lesson.requiredLevel > profileData.level) updateLevel()
                 }}>Finalizar</Link> : null}
         </div>
     </>
