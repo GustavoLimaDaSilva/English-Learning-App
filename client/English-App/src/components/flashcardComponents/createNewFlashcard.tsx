@@ -20,7 +20,7 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
     })
     
     const { handleSubmit, control, register, reset, formState: { errors } } = form
-    const hasBeenSelected = useWatch({ name: 'correct_answer', control })
+    const hasBeenSelected = useWatch({ name: 'correctAnswer', control })
     const options = useWatch({ name: 'options', control })
 
     const optionInputs = Opts.map((o, index) => {
@@ -46,7 +46,7 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
             const safeSetFile = setFile as React.Dispatch<React.SetStateAction<File | undefined>>
             safeSetFile(data.imageFile[0])
         }
-        setFlashcardData(prev => [...prev, { ...data, addedAt: Date.now() }])
+        setFlashcardData(prev => [...prev, { ...data, addedAt: new Date().toLocaleString('pt-br', { day: "numeric", month: "numeric", year: "numeric" }) }])
         reset()
     }
 
@@ -72,11 +72,11 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
                         <input type="checkbox" onClick={() => setMultipleOptions(prev => !prev)} />
                         <span className="slider round"></span>
                     </label>
-                    {multipleOptions && <input type="radio" id="a" value="a" {...register('correct_answer', { required: multipleOptions && !hasBeenSelected ? true : false })} />}
+                    {multipleOptions && <input type="radio" id="a" value="a" {...register('correctAnswer', { required: multipleOptions && !hasBeenSelected ? true : false })} />}
                     <input id="back1" placeholder="escreva a parte de trás" {...register('options.a')} />
                     {errors.options?.['a']?.message && <p style={{ color: 'red' }}>{errors.options?.['a']?.message}</p>}
                     {multipleOptions && optionInputs}
-                    {errors.correct_answer?.message && <span>{errors.correct_answer?.message}</span>}
+                    {errors.correctAnswer?.message && <span>{errors.correctAnswer?.message}</span>}
                 </form>
             }
         </>

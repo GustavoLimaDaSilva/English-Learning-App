@@ -43,7 +43,7 @@ export default function CreateNewDeck() {
             <CreateNewFlashcard setFlashcardData={setFlashcardData} cardForm={cardForm} setCardForm={setCardForm} />
         </>
     )
-    async function postPersonalDeck(form_data: object) {
+    async function postPersonalDeck(formData: object) {
 
         if (flashcardData.length === 0) return
 
@@ -54,7 +54,7 @@ export default function CreateNewDeck() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                form_data: { ...form_data, cards: flashcardData }
+                formData: { ...formData, cards: flashcardData }
             })
         })
 

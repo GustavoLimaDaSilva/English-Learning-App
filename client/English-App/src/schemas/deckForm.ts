@@ -23,7 +23,7 @@ const deckFormSchemaShape = {
     d: z.string().min(1, { error: 'faltou aqui' }).optional()
   }),
 
-  correct_answer: z.string()
+  correctAnswer: z.string()
     .nullable()
     .optional().check(
       z.refine(option => option !== null, { error: 'selecione alguma resposta como correta' }),
@@ -40,7 +40,7 @@ export const flashcardSchema = deckFormSchema.pick({
   cardFront: true,
   options: true,
   imageFile: true,
-  correct_answer: true
+  correctAnswer: true
 })
 
 export type FlashcardSchema = z.infer<typeof flashcardSchema> 

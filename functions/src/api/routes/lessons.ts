@@ -1,6 +1,5 @@
-import {Router} from "express";
-import type {LessonType} from "../../../../shared-types/API.js";
-import {lessons} from "../fileReader.js";
+import { Router } from "express";
+import { getDoc, doc, query, collection, getDocs, DocumentData } from "firebase/firestore";
 const express = (await import("express")).default;
 
 // eslint-disable-next-line new-cap
@@ -8,21 +7,35 @@ const router = Router();
 
 router.use("/videos", express.static("./lessons/videos"));
 
-router.get("/", (req, res) => {
-  res.json(lessons);
+router.get("/", async (req, res) => {
+
+  const lessons: DocumentData[] = []
+
+  try {
+
+    const q = query(collection(req.db, "lessons"))
+    const snapshot = await getDocs(q)
+    snapshot.forEach((doc) => lessons.push(doc.data()))
+    return res.json(lessons)
+
+  } catch (err) {
+    return res.status(500).json({ error: err })
+  }
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
-  const lesson: LessonType | undefined = lessons
-    .find((l: LessonType) => l.id === id);
-
-  if (lesson) {
-    res.json(lesson);
+  try {
+    const lesson = (await getDoc(doc(req.db, "lessons", id))).data()
+    if (lesson) {
+      return res.json(lesson)
+    } else {
+      return res.status(404).json({ message: "Couldn't find lesson" })
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err })
   }
-
-  res.status(404).json({message: "Lesson not found"});
 });
 
 export default router;

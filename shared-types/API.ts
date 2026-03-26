@@ -16,7 +16,7 @@ export interface LessonType extends ApiResponse {
     video_url: string,
     explanation: string,
     video_script: string,
-    level: number,
+    requiredLevel: number,
     flashcard_deck: DeckType
 }
 
@@ -41,6 +41,6 @@ export interface FlashcardType {
     lastReviewedAt?: string
     imageFile?: FileList | {} | undefined,
     imageUrl?: string | undefined,
-    correct_answer?: typeof Opts[number] | undefined,
+    correctAnswer?: typeof Opts[number] | undefined,
     difficulty?: 'easy' | 'medium' | 'hard' | undefined,
 }
