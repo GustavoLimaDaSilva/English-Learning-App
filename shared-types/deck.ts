@@ -1,4 +1,4 @@
-import { ApiResponse } from "./index.js"
+import type { ApiResponse } from "./index.js"
 
 export interface DecksType {
     lesson_decks: DeckType[],

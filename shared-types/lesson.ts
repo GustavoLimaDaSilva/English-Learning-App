@@ -1,5 +1,5 @@
-import { ApiResponse } from ".";
-import { DeckType } from "./deck";
+import type { ApiResponse } from "./index.js";
+import type { DeckType } from "./deck.js";
 
 export interface LessonType extends ApiResponse {
 

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen.ts'
 import { useGoogleUser, useProfileData } from './userStore.ts'
-import type { TanstackRouterContext } from './types/index.ts'
+import type { TanstackRouterContext } from './types/Tanstack.ts'
 
 const router = createRouter({
   routeTree,

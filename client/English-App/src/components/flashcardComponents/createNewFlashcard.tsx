@@ -6,7 +6,7 @@ import type { StateSetter } from "../../types/index.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
-import { Opts } from "../../../../../shared-types/index.ts";
+import { Opts } from "../../../../../shared-types/deck.ts";
 import AnswerOption from "./answerOption.tsx";
 import useStoreFile from "../../hooks/useStoreFile.tsx";
 

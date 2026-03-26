@@ -1,5 +1,5 @@
 import { useEffect, useRef, type JSX, type Ref, type RefObject } from "react"
-import type { MessageOrigin } from "../types/index.ts"
+import type { MessageOrigin } from "../types/AI.ts"
 
 export default function useFormatText(raw: string, from: MessageOrigin | null, callback: Function | null) {
 

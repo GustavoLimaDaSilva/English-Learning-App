@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useOutletContext } from "react-router"
-import type { ReactLessonProps } from "../types/index.ts";
+import type { ReactLessonProps } from "../types/lesson.ts";
 import useFormatText from "../hooks/useFormatText.tsx";
 
 export default function Explanation(props: any) {

@@ -1,4 +1,4 @@
-import type {  ReactLessonProps } from "../types/index.ts"
+import type {  ReactLessonProps } from "../types/lesson.ts"
 import useFormatText from "../hooks/useFormatText.tsx"
 import { speak } from '../utils.ts'
 import { useOutletContext } from "react-router"
