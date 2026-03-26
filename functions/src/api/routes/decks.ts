@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createHexId } from "../../utils.js";
-import type { DeckType } from "../../../../shared-types/API.js";
+import type { DeckType } from "../types/index.js";
 import { query, collection, getDocs, where, doc, getDoc, updateDoc } from "firebase/firestore";
 // eslint-disable-next-line new-cap
 const router = Router();

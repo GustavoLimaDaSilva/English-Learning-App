@@ -1,5 +1,4 @@
-import type { FlashcardType } from "../../../../../shared-types/API.d.ts";
-import type { StateSetter } from "../../types/index.ts";
+import type { FlashcardType, StateSetter } from "../../types/index.ts";
 import { isCardOptions } from "../../../../../typeGuards.ts";
 
 type flashcardProps = {

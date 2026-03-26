@@ -1,6 +1,5 @@
 import type { UseFormRegister } from "react-hook-form"
 import { Opts } from "../../types/index.ts";
-import type { FlashcardType } from "../../types/index.ts";
 import { useRef } from "react";
 
 type MultipleOptionsProps = {

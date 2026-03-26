@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { ProfileData } from "../../../../shared-types/API.js";
+import type { ProfileData } from "../types/index.js";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 // eslint-disable-next-line new-cap
 const router = Router();

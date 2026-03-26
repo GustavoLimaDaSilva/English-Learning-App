@@ -1,5 +1,4 @@
-import type { User } from "firebase/auth"
-import type { DeckType, ProfileData } from "../../../shared-types/API.ts"
+import type { DeckType, ProfileData} from "./types/index.ts"
 let LengthParamsTurple: [number, { error: string }]
 
 export function streamTextEffect(text: string) {

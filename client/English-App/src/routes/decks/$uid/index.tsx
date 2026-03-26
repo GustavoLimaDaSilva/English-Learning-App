@@ -1,7 +1,11 @@
-import { Link, createFileRoute, useLoaderData, useParams } from "@tanstack/react-router"
-import type { DeckLinks } from "../../../types/index.ts"
-import { useGoogleUser, useProfileData } from "../../../userStore.ts";
+import { Link, createFileRoute } from "@tanstack/react-router"
 import { decksSearchSchema } from "../../../schemas/searchParams.ts";
+
+type linkProps = { name: string, id: string }
+type DeckLinks = {
+    lessonDecksData: linkProps[],
+    personalDecksData: linkProps[]
+}
 
 export const Route = createFileRoute('/decks/$uid/')({
     component: FlashcardsIndex,

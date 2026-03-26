@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import Deck from "../../../components/flashcardComponents/deck.tsx"
-import type { DeckType } from "../../../../../../shared-types/API.ts"
+import type { DeckType } from "../../../types/index.ts"
 
 export const Route = createFileRoute('/decks/$uid/$deckId')({
     component: DeckLoader,

@@ -1,11 +1,10 @@
 import * as React from 'react'
-import { Outlet, createRootRoute, Link, ErrorComponent, createRootRouteWithContext } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useGoogleUser } from '../userStore.ts'
-import type { User } from 'firebase/auth'
-import type { ProfileData, TanstackRouterContext } from '../types/index.ts'
+import type { TanstackRouterContext } from '../types/tanstack.ts'
 
 export const Route = createRootRouteWithContext<TanstackRouterContext>()({
     component: RootComponent

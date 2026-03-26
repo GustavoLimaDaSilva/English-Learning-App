@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { isEmpty, postNewLevel, postProfile } from "../utils.ts";
-import type { ProfileData } from "../../../../shared-types/API.ts";
+import { postNewLevel, postProfile } from "../utils.ts";
+import type { ProfileData } from "../types/index.ts";
 import { useGoogleUser, useProfileData } from "../userStore.ts";
-import { isObjEmpty } from "../../../../typeGuards.ts";
 
 export default function DashboardLogic({ children, storedProfile }: { children: React.ReactNode, storedProfile: ProfileData | null }) {
 

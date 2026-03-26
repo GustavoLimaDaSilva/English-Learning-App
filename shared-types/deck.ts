@@ -1,24 +1,4 @@
-/// <reference lib="dom" />
-
-export interface ProfileData {
-    uid: string,
-    level: number
-}
-
-interface ApiResponse {
-
-    name: string,
-    id: string,
-}
-
-export interface LessonType extends ApiResponse {
-
-    videoUrl: string,
-    explanation: string,
-    videoScript: string,
-    requiredLevel: number,
-    flashcardDeck: DeckType
-}
+import { ApiResponse } from "./index.js"
 
 export interface DecksType {
     lesson_decks: DeckType[],

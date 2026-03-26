@@ -1,4 +1,4 @@
-import { Opts, type FlashcardType,  } from "./shared-types/API.ts"
+import { Opts, type FlashcardType,  } from "./shared-types/deck.ts"
 
 export function IsCardSingleOption(card: FlashcardType | undefined): card is FlashcardType {
 

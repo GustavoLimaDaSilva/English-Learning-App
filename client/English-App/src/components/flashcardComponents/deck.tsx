@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useProfileData, useGoogleUser } from "../../userStore.ts"
 import type { StateSetter } from "../../types/index.ts"
-import type { LessonType, DeckType, FlashcardType } from "../../../../../shared-types/API.ts"
+import type { DeckType, FlashcardType } from "../../types/index.ts"
+import type { LessonType } from "../../types/index.ts"
 import Flashcard from "./flashcard.tsx"
 import SkipToNext from "./skipToNext.tsx"
 import AssignDifficulty from "../assignDifficulty.tsx"
 import { Link } from "@tanstack/react-router"
-import { IsCardSingleOption } from '../../../../../typeGuards.ts'
 import { putUpdatedDeck } from "../../utils.ts"
 import DisplayFeedback from "./displayFeedback.tsx"
 type DeckProps = {

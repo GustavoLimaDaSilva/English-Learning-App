@@ -1,9 +1,9 @@
 import { z } from 'zod'
 import { minLengthParams, maxLengthParams } from '../utils.ts'
-import type { DeckType, FlashcardType } from '../../../../shared-types/API.d.ts'
+import type { DeckType, FlashcardType } from '../types/index.ts'
 type FlaschcardSchemaType = Record<keyof Omit<FlashcardType, 'id' | 'cardType' | 'lastReviewedAt' | "addedAt" | "difficulty">, z.ZodType> &
   Record<keyof Pick<DeckType, 'deckDescription'>, z.ZodNullable<z.ZodString>> &
-  Record<keyof Pick<DeckType, 'name'>, z.ZodString>;
+  Record<keyof Pick<DeckType, "name">, z.ZodString>;
 
 const deckFormSchemaShape = {
   name: z.string()
