@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useProfileData } from "../../userStore.ts"
+import { useProfileData, useGoogleUser } from "../../userStore.ts"
 import type { StateSetter } from "../../types/index.ts"
 import type { LessonType, DeckType, FlashcardType } from "../../../../../shared-types/API.ts"
 import Flashcard from "./flashcard.tsx"
@@ -19,11 +19,12 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
     if (!lesson && !loaderDeck) return
 
     const profileData = useProfileData((state) => state.profileData)
+    const user = useGoogleUser((state) => state.googleUser)
 
     const [offset, setOffset] = useState(0)
     const [selectedOption, setSelectedOption] = useState<HTMLButtonElement | null>(null)
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
-    const [cards, setCards] = useState<FlashcardType[]>(lesson?.flashcard_deck.cards ?? (loaderDeck!.cards))
+    const [cards, setCards] = useState<FlashcardType[]>(lesson?.flashcardDeck.cards ?? (loaderDeck!.cards))
     const [showAnswer, setShowAnswer] = useState(false)
     const isMultipleOption = cards[offset]?.options ? Object.keys(cards[offset]?.options).length > 1 : false
 
@@ -58,7 +59,8 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
                 <>
                     <button disabled={!selectedOption ? true : false} onClick={() => {
                         if (cards[offset] && selectedOption) {
-                            setIsCorrect(cards[offset].correct_answer === selectedOption.dataset.key)
+                            console.log()
+                            setIsCorrect(cards[offset].correctAnswer === selectedOption.dataset.key)
                         }
                     }}>Confirmar</button>
                 </>
@@ -67,7 +69,7 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
                 <>
                     <DisplayFeedback isCorrect={isCorrect as boolean} isLastCard={isLastCard} />
                     {
-                        isCorrect ?
+                        isCorrect || showAnswer?
                             <AssignDifficulty
                                 cards={cards}
                                 setCards={setCards}
@@ -84,7 +86,7 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
             }
             {isLastCard && (isCorrect || showAnswer) ?
                 <Link to={'/dashboard'} onClick={() => {
-                    const updatedDeck = cards.reduce((acc: FlashcardType[], curr) => {
+                    const updatedCards = cards.reduce((acc: FlashcardType[], curr) => {
 
                         const outdatedCardIndex = acc.findIndex(card => card.id === curr.id)
                         if (outdatedCardIndex >= 0) {
@@ -97,7 +99,8 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
 
                         return acc
                     }, [])
-                    putUpdatedDeck(updatedDeck, 'wqfewd')
+                    
+                    putUpdatedDeck({...loaderDeck!, cards: updatedCards}, user?.uid)
                     updateLevel()
                 }}>Finalizar</Link> : null}
         </div>

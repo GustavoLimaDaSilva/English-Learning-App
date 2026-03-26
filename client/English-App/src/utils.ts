@@ -55,9 +55,9 @@ export function postNewLevel(profileData: ProfileData) {
     })
 }
 
-export async function putUpdatedDeck(updatedDeck: DeckType['cards'], id: string) {
+export async function putUpdatedDeck(updatedDeck: DeckType, uid: string) {
 
-    const req = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/updateDeck/${id}`, {
+    const req = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/updateDeck/${uid}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -67,7 +67,6 @@ export async function putUpdatedDeck(updatedDeck: DeckType['cards'], id: string)
         })
     })
     const res = await req.json()
-    console.log(res)
     return res
 }
 

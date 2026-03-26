@@ -1,41 +1,57 @@
-import {Router} from "express";
-import {lessons, users} from "../fileReader.js";
-import {updateDeck, writePersonalDeck} from "../../utils.js";
-import type {DeckType} from "../../../../shared-types/API.js";
+import { Router } from "express";
+import { createHexId } from "../../utils.js";
+import type { DeckType } from "../../../../shared-types/API.js";
+import { query, collection, getDocs, where, doc, getDoc, updateDoc } from "firebase/firestore";
 // eslint-disable-next-line new-cap
 const router = Router();
 
-router.get("/:uid", (req, res) => {
+router.get("/:uid", async (req, res) => {
   if (!req.query) return;
   const level = req.query.level;
   if (!level) return;
 
   const uid = req.params.uid;
-  type Data = { name: string, id: string }
+  type DeckData = Pick<DeckType, "id" | "name">
 
-  const lessonDecksData: Data[] = [];
+  const userDecksData: DeckData[] = [];
+  const lessonDecksData: DeckData[] = [];
 
-  for (const l of lessons) {
-    lessonDecksData.push({name: l.name, id: l.id});
-    if (l.level === Number(level)) break;
+  try {
+
+    const q = query(collection(req.db, "lessons"),
+      where("requiredLevel", "<=", Number(level)))
+    const snapshot = await getDocs(q)
+    snapshot.forEach((doc) => {
+      const lesson = doc.data()
+      lessonDecksData.push({ name: lesson.flashcardDeck.name, id: lesson.id })
+    })
+
+  } catch (err) {
+    return res.status(500).json({ error: "Couldn't get any lesson decks. ", err })
   }
 
-  const userDecksData: Data[] = [];
-  const user = users.find((u) => u.uid === uid);
+  try {
 
-  user?.flashcard_decks?.forEach((deck: DeckType) => {
-    userDecksData.push({name: deck.name, id: deck.id});
-  }) ?? [];
+    const userRef = doc(req.db, "users", uid);
+    const user = (await getDoc(userRef)).data()
+    user?.flashcardDecks?.forEach((deck: DeckType) => {
+      userDecksData.push({ name: deck.name, id: deck.id })
+    }) ?? []
 
-  res.json({
+  } catch (err) {
+    return res.status(500).json({ error: "Couldn't get any user decks. ", err })
+  }
+  return res.status(200).json({
     lessonDecksData: lessonDecksData,
     personalDecksData: userDecksData,
   });
 });
 
-router.get("/lessonDecks/:id", (req, res) => {
-  const id = req.params.id;
-  const deck = lessons.find((l) => l.id === id)?.flashcard_deck;
+router.get("/lessonDecks/:lessonId", async (req, res) => {
+  const lessonId = req.params.lessonId
+
+  const lessonRef = doc(req.db, "lessons", lessonId);
+  const deck = (await getDoc(lessonRef)).data()?.flashcardDeck
 
   if (deck) {
     return res.json(deck);
@@ -46,8 +62,11 @@ router.get("/lessonDecks/:id", (req, res) => {
 router.get("/personalDecks/:uid/:deckId", async (req, res) => {
   const uid = req.params.uid;
   const deckId = req.params.deckId;
-  const deck = users.find((u) => (u.uid === uid))
-    ?.flashcard_decks
+
+  const userRef = doc(req.db, "users", uid);
+  const user = (await getDoc(userRef)).data()
+
+  const deck = user?.flashcardDecks
     ?.find((d: DeckType) => d.id === deckId);
 
   if (deck) {
@@ -57,29 +76,58 @@ router.get("/personalDecks/:uid/:deckId", async (req, res) => {
 });
 
 router.post("/personalDecks/:uid", async (req, res) => {
-  const formData = req.body?.formData;
+  const formData: Omit<DeckType, "id"> | undefined = req.body?.formData;
   const uid = req.params.uid;
-  if (!formData) return;
-
-  const success = await writePersonalDeck(formData, uid);
-
-  success ?
-    res.status(201).json("Deck created successfully") :
-    res.status(500).json("Internal Server Error");
-  //   res.status(201).json("Deck created successfully");
-});
-
-router.put("/updateDeck/:id", (req, res) => {
-  const id = req.params.id;
-  const updatedDeck: DeckType | undefined = req.body.updatedDeck;
-
-  if (!updatedDeck) return res.json({message: "No deck was sent!"});
+  if (!formData) return res.json({ message: "no data was sent!" });
 
   try {
-    updateDeck(updatedDeck, id);
-    return res.json({message: "updated successfully"});
+
+    const userRef = doc(req.db, "users", uid);
+    const user = (await getDoc(userRef)).data()
+    const existingDecks = user?.flashcardDecks
+
+    await updateDoc(doc(req.db, "users", uid), {
+      flashcardDecks: [...existingDecks, { ...formData, id: createHexId() }]
+    });
+    return res.status(201).json("Deck created successfully")
+
   } catch (err) {
-    return res.json({error: err})
+    return res.status(500).json({ error: err });
+  }
+});
+
+router.put("/updateDeck/:uid", async (req, res) => {
+  const uid = req.params.uid
+  const updatedDeck: DeckType | undefined = req.body.updatedDeck;
+
+  if (!updatedDeck) return res.json({ message: "No deck was sent!" });
+
+  try {
+  
+    const userRef = doc(req.db, "users", uid);
+    const user = (await getDoc(userRef)).data()
+    if (!user) {
+      return res.status(404).json(
+        { message: "no user with this id was found." }
+      )
+    }
+    const existingDecks = user?.flashcardDecks
+    const outdatedDeckIndex = existingDecks
+      .findIndex((d: DeckType) => d.id === updatedDeck.id)
+
+    if (outdatedDeckIndex === -1) {
+      return res.status(404).json(
+        { message: "no deck with this ID was found." }
+      )
+    }
+    
+    await updateDoc(doc(req.db, "users", uid), {
+      flashcardDecks: existingDecks.toSpliced(outdatedDeckIndex, 1, updatedDeck)
+    });
+    return res.status(200).json({ message: "updated successfully" });
+  
+  } catch (err) {
+    return res.json({ error: err })
   }
 });
 
