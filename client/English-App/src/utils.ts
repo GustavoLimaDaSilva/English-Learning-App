@@ -55,7 +55,9 @@ export function postNewLevel(profileData: ProfileData) {
     })
 }
 
-export async function putUpdatedDeck(updatedDeck: DeckType, uid: string) {
+export async function putUpdatedDeck(updatedDeck: DeckType, uid: string | undefined) {
+
+    if (!uid) return
 
     const req = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/updateDeck/${uid}`, {
         method: 'PUT',

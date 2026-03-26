@@ -13,11 +13,11 @@ interface ApiResponse {
 
 export interface LessonType extends ApiResponse {
 
-    video_url: string,
+    videoUrl: string,
     explanation: string,
-    video_script: string,
+    videoScript: string,
     requiredLevel: number,
-    flashcard_deck: DeckType
+    flashcardDeck: DeckType
 }
 
 export interface DecksType {
