@@ -20,7 +20,6 @@ router.get("/imageKit", async function(req, res) {
   const {token, expire, signature} = client
     .helper
     .getAuthenticationParameters();
-  console.log(signature);
   res.send(
     {
       token,

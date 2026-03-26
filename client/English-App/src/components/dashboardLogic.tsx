@@ -22,12 +22,9 @@ export default function DashboardLogic({ children, storedProfile }: { children: 
         initializeProfile()
     }, [storedProfile])
 
-        console.log(profileData)
-
     useEffect(() => {
         if (!newLevel) return
-        console.log(newLevel)
-        console.log(profileData)
+       
         if (newLevel > profileData.level) {
 
             setProfileData({ uid: profileData.uid, level: newLevel })
@@ -53,7 +50,6 @@ export default function DashboardLogic({ children, storedProfile }: { children: 
             await postProfile(newProfile)
             return
         }
-        setProfileData(storedProfile as ProfileData)
-
+        setProfileData(storedProfile)
     }
 }
