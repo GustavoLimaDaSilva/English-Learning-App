@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { createHexId } from "../../utils.js";
 import type { DeckType } from "../types/index.js";
-import { query, collection, getDocs, where, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  query,
+  collection, getDocs,
+  where, doc,
+  getDoc, updateDoc
+} from "firebase/firestore";
 // eslint-disable-next-line new-cap
 const router = Router();
 
@@ -103,7 +108,7 @@ router.put("/updateDeck/:uid", async (req, res) => {
   if (!updatedDeck) return res.json({ message: "No deck was sent!" });
 
   try {
-  
+
     const userRef = doc(req.db, "users", uid);
     const user = (await getDoc(userRef)).data()
     if (!user) {
@@ -120,12 +125,12 @@ router.put("/updateDeck/:uid", async (req, res) => {
         { message: "no deck with this ID was found." }
       )
     }
-    
+
     await updateDoc(doc(req.db, "users", uid), {
       flashcardDecks: existingDecks.toSpliced(outdatedDeckIndex, 1, updatedDeck)
     });
     return res.status(200).json({ message: "updated successfully" });
-  
+
   } catch (err) {
     return res.json({ error: err })
   }
