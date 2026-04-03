@@ -49,9 +49,11 @@ button {
   background-color: rgb(234, 233, 233);
   width: 100vw;
   height: 100vh;
+overflow: hidden;
 }
 
 .login-wrapper {
+  overflow: hidden;
   width: 95vw;
   height: 90vh;
   display: grid;
