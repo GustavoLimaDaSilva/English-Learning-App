@@ -11,7 +11,7 @@ export default function useAnimate(elements: Array<Record<string, React.ReactNod
                 
         const currentEl = elements[offset]
         const JSXchildren = []
-        const intervalID = setInterval(() => setOffset(prev => prev + 1), 5000)
+        const intervalID = setInterval(() => setOffset(prev => prev + 1), 9000)
 
         for (const key in currentEl) {
 
