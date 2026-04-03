@@ -47,6 +47,8 @@ button {
 
 .body-wrapper {
   background-color: rgb(234, 233, 233);
+  width: 100vw;
+  height: 100vh;
 }
 
 .login-wrapper {
@@ -58,7 +60,8 @@ button {
   top: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 3px 3px 5px gray;
-background-image: linear-gradient(120deg, rgb(105, 197, 233), white, rgb(233, 142, 109))
+  border-radius: 10px;
+  background-image: linear-gradient(120deg, rgb(105, 197, 233), white, rgb(233, 142, 109))
 }
 
 .login-wrapper>div {

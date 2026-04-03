@@ -4,6 +4,7 @@ import { auth } from '../../../../firebaseConfig.ts'
 import { useGoogleUser } from '../userStore.ts'
 import useAnimate from '../hooks/useAnimate.tsx'
 import loginElements from '../toBeAnimated/loginElements.tsx'
+import googleIcon from "../assets/icons8-google.svg"
 
 export const Route = createFileRoute('/login')({
     component: Login
@@ -22,7 +23,7 @@ console.log(animatedEl)
                 <small className='disclaimer'>Priorizamos seu conforto.</small>
                 <small>Apenas entre com sua conta Google para iniciarmos.</small>
                 <small> Não se preocupe, não teremos acesso a nenhum dado sensível</small>
-                <button className='login-button' onClick={loginGoogle}>Entrar com o Google<img src="../../assets/icons8-google.svg" /></button>
+                <button className='login-button' onClick={loginGoogle}>Entrar com o Google<img src={googleIcon} /></button>
             </div>
             <div className="images-background">
                 {animatedEl}
