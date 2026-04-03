@@ -53,6 +53,7 @@ button {
 
 .login-wrapper {
   width: 95vw;
+  height: 95vh;
   display: grid;
   position: absolute;
   grid-template-columns: 1fr 1fr;
@@ -71,10 +72,6 @@ button {
   text-align: center;
 }
 
-/* .login-actions {
-  
-  background-color: white;
-} */
 
 .login-actions h1 {
   margin-bottom: 5rem;
@@ -97,7 +94,12 @@ button {
   gap: .3em;
   padding: .8em;
   border-radius: 5px;
-  border: #6e7f95 3px solid;
+  background-color: rgb(230, 232, 232);
+  border: #c4cbd3 3px solid;
+}
+
+.login-button:hover {
+  background-color: #d8dfe7;
 }
 
 .login-button img {
