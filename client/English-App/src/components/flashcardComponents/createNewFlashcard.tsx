@@ -1,5 +1,4 @@
 import { useForm, useWatch, type UseFormRegister } from "react-hook-form";
-import { z } from "zod"
 import { flashcardSchema } from "../../schemas/deckForm.ts";
 import type { FlashcardSchema } from "../../schemas/deckForm.ts";
 import type { StateSetter } from "../../types/index.ts";
@@ -11,7 +10,7 @@ import AnswerOption from "./answerOption.tsx";
 import useStoreFile from "../../hooks/useStoreFile.tsx";
 
 type keys = { [key: string]: string | undefined }
-export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCardForm }: { setFlashcardData: StateSetter<FlashcardSchema[] | []>, cardForm: boolean, setCardForm: StateSetter<boolean> }) {
+export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCardForm }: { setFlashcardData: StateSetter<FlashcardSchema[]>, cardForm: boolean, setCardForm: StateSetter<boolean> }) {
 
     const [multipleOptions, setMultipleOptions] = useState(false)
     const [file, setFile] = useStoreFile<FlashcardSchema>(setFlashcardData)

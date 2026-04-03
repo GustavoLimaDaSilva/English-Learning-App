@@ -1,5 +1,133 @@
 :root {
-  --AI-msg-width:
+  --AI-msg-width: unset;
+  --login-animation-duration: 1.5s;
+  --login-animation-iteration: 1;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Chiron Hei HK", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@keyframes slideup {
+
+  from {
+    transform: translateY(30vh);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+.body-wrapper {
+  background-color: rgb(234, 233, 233);
+}
+
+.login-wrapper {
+  width: 95vw;
+  display: grid;
+  position: absolute;
+  grid-template-columns: 1fr 1fr;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 3px 3px 5px gray;
+background-image: linear-gradient(120deg, rgb(105, 197, 233), white, rgb(233, 142, 109))
+}
+
+.login-wrapper>div {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-block: 3rem;
+  text-align: center;
+}
+
+/* .login-actions {
+  
+  background-color: white;
+} */
+
+.login-actions h1 {
+  margin-bottom: 5rem;
+}
+
+.login-actions small {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+
+
+.login-button {
+  font-family: "Chiron Hei HK", sans-serif;
+  margin-top: 7vh;
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .3em;
+  padding: .8em;
+  border-radius: 5px;
+  border: #6e7f95 3px solid;
+}
+
+.login-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.images-background {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.images-background p {
+  margin-top: 3.5rem;
+  font-weight: 460;
+  opacity: 0;
+  animation: fade-in ease-in-out forwards;
+  animation-duration: calc(var(--login-animation-duration));
+  animation-delay: var(--login-animation-duration);
+  animation-iteration-count: var(--login-animation-iteration);
+}
+
+.sliding-image {
+  height: 40%;
+  width: 70%;
+  object-fit: contain;
+  object-position: top;
+  animation: slideup ease-in-out forwards;
+  animation-duration: var(--login-animation-duration);
+  animation-iteration-count: var(--login-animation-iteration);
+
 }
 
 .user-msg {
@@ -28,12 +156,12 @@
 }
 
 .flashcard-btn:focus {
-  background-color:aqua;
+  background-color: aqua;
   border: rgb(255, 163, 178);
 }
 
 .correct {
-  
+
   background-color: green;
 }
 

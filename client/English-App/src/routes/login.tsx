@@ -1,20 +1,34 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { useUserContext } from '../RouterProvider.tsx'
 import { auth } from '../../../../firebaseConfig.ts'
 import { useGoogleUser } from '../userStore.ts'
+import useAnimate from '../hooks/useAnimate.tsx'
+import loginElements from '../toBeAnimated/loginElements.tsx'
 
 export const Route = createFileRoute('/login')({
-component: Login})
+    component: Login
+})
 
 function Login() {
 
     const setUser = useGoogleUser((state) => state.setGoogleUser)
-
+    const [animatedEl] = useAnimate(loginElements)
+console.log(animatedEl)
     return (
-        <>
-            <button onClick={loginGoogle}>Sign in</button>
-        </>
+        <div className='body-wrapper'>
+        <div className='login-wrapper'>
+            <div className='login-actions'>
+                <h1>Login</h1>
+                <small className='disclaimer'>Priorizamos seu conforto.</small>
+                <small>Apenas entre com sua conta Google para iniciarmos.</small>
+                <small> Não se preocupe, não teremos acesso a nenhum dado sensível</small>
+                <button className='login-button' onClick={loginGoogle}>Entrar com o Google<img src="../../assets/icons8-google.svg" /></button>
+            </div>
+            <div className="images-background">
+                {animatedEl}
+            </div>
+        </div>
+        </div>
     )
 
     async function loginGoogle() {
