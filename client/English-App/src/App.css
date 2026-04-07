@@ -1,6 +1,6 @@
 :root {
   --AI-msg-width: unset;
-  --login-animation-duration: 1.5s;
+  --login-animation-duration: 1.2s;
   --login-animation-iteration: 1;
 }
 
@@ -20,7 +20,7 @@ body {
 @keyframes slideup {
 
   from {
-    transform: translateY(30vh);
+    transform: translateY(15vh);
     opacity: 0;
   }
 
@@ -49,55 +49,65 @@ button {
   background-color: rgb(234, 233, 233);
   width: 100vw;
   height: 100vh;
-overflow: hidden;
+  overflow: hidden;
 }
 
 .login-wrapper {
   overflow: hidden;
-  width: 95vw;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   display: grid;
   position: absolute;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 8rem 47vh 1fr;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 3px 3px 5px gray;
+  box-shadow: 1px 1px 2px 1px gray;
   border-radius: 10px;
-  background-image: linear-gradient(120deg, rgb(105, 197, 233), white, rgb(233, 142, 109))
+  background-image: linear-gradient(to right, #6dc8e9, white, #e98e6d)
 }
 
 .login-wrapper>div {
   display: flex;
   flex-flow: column nowrap;
-  padding-block: 3rem;
-  text-align: center;
+  color: rgb(52 52 52);
 }
 
+.login-actions {
+  grid-column: 1;
+  text-align: center;
+  grid-row: 2
+}
 
 .login-actions h1 {
   margin-bottom: 5rem;
+  font-weight: 500;
 }
 
 .login-actions small {
   display: inline-block;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
 }
 
 
 
 .login-button {
   font-family: "Chiron Hei HK", sans-serif;
-  margin-top: 7vh;
   margin-inline: auto;
   display: flex;
+  width: fit-content;
+  height: fit-content;
   justify-content: center;
   align-items: center;
   gap: .3em;
   padding: .8em;
   border-radius: 5px;
-  background-color: rgb(230, 232, 232);
-  border: #c4cbd3 3px solid;
+  background-color: #8ae96d;
+  color: white;
+border: none; 
+box-shadow: 1px 1px 3px gray;
+  grid-row: 3;
 }
 
 .login-button:hover {
@@ -109,32 +119,31 @@ overflow: hidden;
   height: 20px;
 }
 
-.images-background {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-
-.images-background p {
-  margin-top: 3.5rem;
+.flowing-text {
+  text-align: center;
+  margin-inline: auto;
+  margin-bottom: 0;
+  grid-row: 3;
   font-weight: 460;
   opacity: 0;
   animation: fade-in ease-in-out forwards;
-  animation-duration: calc(var(--login-animation-duration));
-  animation-delay: var(--login-animation-duration);
+  animation-duration: calc(var(--login-animation-duration) - .4s);
+  animation-delay: calc(var(--login-animation-duration) + .4s);
   animation-iteration-count: var(--login-animation-iteration);
 }
 
 .sliding-image {
-  height: 40%;
-  width: 70%;
+  height: 100%;
+  margin: auto;
+  grid-column: 2;
+  grid-row: 2;
+  width: fit-content;
   object-fit: contain;
   object-position: top;
   animation: slideup ease-in-out forwards;
   animation-duration: var(--login-animation-duration);
   animation-iteration-count: var(--login-animation-iteration);
-
 }
 
 .user-msg {
