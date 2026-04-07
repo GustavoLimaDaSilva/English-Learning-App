@@ -4,7 +4,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen.ts'
 import { useGoogleUser, useProfileData } from './userStore.ts'
 import type { TanstackRouterContext } from './types/tanstack.ts'
-ServiceWorkerRegistration.unregister();
+// ServiceWorkerRegistration.unregister();
 const router = createRouter({
   routeTree,
   context: {
