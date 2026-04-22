@@ -14,7 +14,7 @@ function Login() {
 
     const setUser = useGoogleUser((state) => state.setGoogleUser)
     const [animatedEl] = useAnimate(loginElements)
-console.log(animatedEl)
+
     return (
         <div className='body-wrapper'>
         <div className='login-wrapper'>

@@ -4,8 +4,9 @@ import Toast from "../../components/toast.tsx"
 import DashboardLogic from "../../components/dashboardLogic.tsx"
 import { createFileRoute } from "@tanstack/react-router"
 import { useGoogleUser, useProfileData } from "../../userStore.ts"
-import type z from "zod"
+import { nanoid } from "nanoid"
 import type { decksSearchSchema } from "../../schemas/searchParams.ts"
+import type z from "zod"
 
 export const Route = createFileRoute('/dashboard/')({
     component: DashBoardOverview,
@@ -39,17 +40,33 @@ function DashBoardOverview() {
     const toastFired = data ? JSON.parse(data) : false
     return (
         <DashboardLogic storedProfile={storedProfile}>
-            <div>
-                {profileData.level === 1 && !toastFired ? <Toast toastFired={toastFired} className="toast" msg="agora você já pode encontrar o deck da sua lição na área de flashcards!" /> : null}
-                <p>hello </p>
-                <Link to={`/decks/${user.uid}`} search={{level: profileData.level} satisfies z.infer<typeof decksSearchSchema>} >Ver flashcards</Link>
-                <Link to={'/chat'}>
-                    <div>
-                        Converse com a nossa IA em inglês
-                    </div>
-                </Link>
-                {lessons && lessons.map((l, index) => <Link to={`/lessons/${l.id}`} key={index}>{l.name}</Link>)}
+            <div className="dashboard-wrapper">
+            {profileData.level === 1 && !toastFired ? <Toast toastFired={toastFired} className="toast" msg="agora você já pode encontrar o deck da sua lição na área de flashcards!" /> : null}
+            <div className="welcome">
+                <p><span className="message">Welcome,</span><br /> <span className="name">{user.displayName?.slice(0, user.displayName.indexOf(' '))}!</span></p>
             </div>
-        </DashboardLogic>
+            <main className="main">
+                    <div key={nanoid()} className="card studying-illustration">
+                        <Link to={`/decks/${user.uid}`} search={{level: profileData.level ?? 0} satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
+                    </div>
+                    <div key={nanoid()} className="card AI-illustration">
+                        <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>
+                    </div>
+                <section className="lessons-container">
+                    <h2>Lições</h2>
+                    <ul>
+                        {lessons && lessons.map((l, index) => <li className="lesson"><Link to={`/lessons/${l.id}`} key={index}>{l.name}</Link></li>)}
+                        <li className="lesson"><a href="#">futuro do indicativo</a></li>
+                        <li className="lesson"><a>present continuous</a></li>
+                        <li className="lesson"><a>past actions</a></li>
+                        <li className="lesson"><a>past actions</a></li>
+                        <li className="lesson"><a>past actions</a></li>
+                        <li className="lesson"><a>past actions</a></li>
+                        <li className="lesson"><a>past actions</a></li>
+                    </ul>
+                </section>
+            </main>
+            </div>
+            </DashboardLogic>
     )
 }
