@@ -1,18 +1,19 @@
+import { useContext } from "react"
+import type { DeckContextType } from "../../types/deck.ts"
+import { DeckContext } from "./deck.tsx"
 
-type props = {
-    isCorrect: boolean,
-    isLastCard: boolean
-}
+export default function DisplayFeedback() {
 
-export default function DisplayFeedback({ isCorrect, isLastCard }: props) {
+    if (!DeckContext) return
+    const { isCorrect, isLastCard } = useContext(DeckContext) as DeckContextType
 
     return (
-        <p>{isLastCard ? 'Muito bem' 
+        <h2 className={isCorrect ? 'green-highlight' : 'red-highlight'}>{isLastCard ? 'Muito bem'
             :
-            isCorrect ?  'Correto'
-            :
-                         'Errado' 
-            }!
-        </p>
+            isCorrect ? 'Correto'
+                :
+                'Errado'
+        }!
+        </h2>
     )
 }

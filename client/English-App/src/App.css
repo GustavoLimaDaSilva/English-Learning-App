@@ -2,6 +2,17 @@
   --AI-msg-width: unset;
   --login-animation-duration: 1.2s;
   --login-animation-iteration: 1;
+  --dark-contrast: #343434;
+  --light-contrast: #efeeee;
+  --primary-color: #6dc8e9;
+  --secondary-color: #D04E1F;
+  --tertiary-color: #ffffff;
+  --accent-color: #44952b;
+  --incorrect-color: #972020;
+  --welcome-size: 2.5rem;
+  --border-radius-average: 10px;
+  --frutiger-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 html,
@@ -15,7 +26,20 @@ body {
   font-family: "Chiron Hei HK", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  color: var(--dark-contrast)
 }
+
+#root {
+
+  height: 100vh;
+  overflow: hidden;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 
 @keyframes slideup {
 
@@ -43,7 +67,50 @@ body {
 
 button {
   cursor: pointer;
+  border-radius: 15px;
+  color: #efeeee;
+  background-color: var(--accent-color);
+  border: none;
+  padding: 1em;
+  transition: background-color .3s ease-in-out;
+  /* Depth shadows */
+  box-shadow: var(--frutiger-shadow)
 }
+
+button:hover {
+  background-color: #56bd36;
+}
+
+button a {
+  color: var(--light-contrast);
+  text-decoration: none;
+}
+
+.nav {
+  background-color: var(--light-contrast);
+  width: 100%;
+  padding: 2em;
+  box-shadow: var(--frutiger-shadow);
+  position: relative;
+  z-index: 10;
+}
+
+
+.nav li {
+  list-style: none;
+  display: inline-block;
+  margin-inline: 2vw;
+}
+
+.nav a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline var(--accent-color) 2px;
+}
+
 
 .body-wrapper {
   background-color: rgb(234, 233, 233);
@@ -65,8 +132,9 @@ button {
   transform: translate(-50%, -50%);
   box-shadow: 1px 1px 2px 1px gray;
   border-radius: 10px;
-  background-image: linear-gradient(to right, #6dc8e9, white, #e98e6d)
+  background-image: linear-gradient(to left, #6dc8e9, var(--light-contrast), var(--secondary-color))
 }
+
 
 .login-wrapper>div {
   display: flex;
@@ -87,7 +155,7 @@ button {
 
 .login-actions small {
   display: inline-block;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 
@@ -101,18 +169,12 @@ button {
   justify-content: center;
   align-items: center;
   gap: .3em;
-  padding: .8em;
-  border-radius: 5px;
-  background-color: #8ae96d;
-  color: white;
-border: none; 
-box-shadow: 1px 1px 3px gray;
+  background-color: var(--accent-color);
+  color: var(--light-contrast);
+  border: none;
   grid-row: 3;
 }
 
-.login-button:hover {
-  background-color: #d8dfe7;
-}
 
 .login-button img {
   width: 20px;
@@ -146,9 +208,145 @@ box-shadow: 1px 1px 3px gray;
   animation-iteration-count: var(--login-animation-iteration);
 }
 
-.user-msg {
+.welcome {
+  padding: 4vh;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  background-color: var(--secondary-color);
+}
 
-  background-color: rgb(88, 198, 88);
+.welcome .message {
+  font-size: var(--welcome-size);
+}
+
+.welcome .name {
+  font-size: calc(var(--welcome-size) * 2);
+}
+
+.main {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background-image: linear-gradient(to bottom, var(--tertiary-color), var(--primary-color));
+  padding: 5vh 15vw;
+  gap: 3vw;
+}
+
+
+.card {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  aspect-ratio: 4/2;
+  border-radius: 10px;
+  list-style: none;
+  position: relative;
+  transition: .3s background-color ease-in-out, transform .3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.studying-illustration {
+  background-image: url(./assets/Study.png);
+  background-color: #edbead;
+}
+
+.studying-illustration:hover {
+  background-color: var(--secondary-color);
+}
+
+.AI-illustration {
+  background-image: url(./assets/Robot.png);
+  background-color: #9ddbf1af;
+}
+
+.AI-illustration:hover {
+  background-color: var(--primary-color);
+}
+
+.card a {
+  text-decoration: none;
+  color: var(--light-contrast);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card:hover a {
+  text-decoration: underline;
+}
+
+.card:before {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.373);
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+}
+
+
+.lessons-container {
+  /* width: 50vw; */
+  background-color: var(--light-contrast);
+  box-shadow: 1px 1px 2px gray;
+  border-radius: var(--border-radius-average);
+  overflow-y: scroll;
+  padding-inline: 1rem;
+  border: 1px solid var(--dark-contrast);
+  height: 25vh;
+  grid-column: span 2;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+
+.lessons-container::-webkit-scrollbar-track {
+  /* background: rgb(76, 76, 76);  */
+  border-radius: var(--border-radius-average);
+  padding: 1px;
+}
+
+
+.lessons-container::-webkit-scrollbar-thumb {
+  background: rgb(156, 156, 156);
+  height: 10px;
+  border-radius: var(--border-radius-average);
+}
+
+.lessons-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.lesson {
+  border: gray;
+  list-style: none;
+  padding-block: 1rem;
+}
+
+.lesson:not(:last-of-type) {
+  border-bottom: 1px solid var(--dark-contrast);
+
+}
+
+.lesson a {
+  color: var(--dark-contrast);
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+}
+
+.user-msg {
+  background-color: var(--accent-color);
   padding: 10px;
   border-radius: 20px;
   margin-block: 5%;
@@ -171,16 +369,169 @@ box-shadow: 1px 1px 3px gray;
   opacity: 1;
 }
 
+
+.flashcard-wrapper {
+  background-color: var(--primary-color);
+  position: absolute;
+  inset: 0;
+  align-content: center;
+}
+
+
+.flashcard {
+  position: relative;
+  background-color: var(--light-contrast);
+  margin-inline: auto;
+  border-radius: 10px;
+  width: 30%;
+  box-shadow: var(--frutiger-shadow);
+  transition: .8s ease-in-out transform;
+  transform-style: preserve-3d;
+}
+
+
+.flashcard p {
+  font-weight: 600;
+  margin-block: 5vh 3vh
+}
+
+.flashcard img {
+  width: 15vw;
+  max-width: 40%;
+}
+
+.flashcard-btn {
+  border: none;
+  padding: 1em;
+  margin-block: 7vh;
+  background-color: var(--accent-color);
+}
+
 .flashcard-btn:focus {
   background-color: aqua;
   border: rgb(255, 163, 178);
 }
 
+.rotate {
+  transform: rotateY(180deg);
+}
+
+.back,
+.front {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  backface-visibility: hidden;
+}
+
+.back {
+  display: none;
+  transform: rotateY(180deg);
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+
+.rotate .back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opts-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  margin-inline: 5%;
+  /* border:1px solid blue */
+}
+
+.flashcard-opts {
+  color: var(--dark-contrast);
+  background-color: var(--light-contrast);
+  border: 2px solid rgb(151, 151, 151);
+  box-shadow: 1px 2px 3px gray;
+  width: 25%;
+}
+
+.confirm:disabled {
+  cursor: auto;
+  background-color: gray;
+}
+
+.flashcard .confirm {
+
+  margin-block: 5vh 0;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.selected {
+
+  background-color: aqua;
+}
+
+.feedback-wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 30%;
+  padding: 6vh 0;
+  background-color: #7b929aa0
+}
+
+.feedback-wrapper>* {
+  margin-inline: auto;
+}
+
+.feedback-wrapper button {
+
+  width: 10%;
+}
+
+
+.difficulty-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10%;
+  min-width: 20%;
+}
+
+.difficulty-options button {
+  width: fit-content;
+  padding-inline: 1.5em;
+}
+
+.easy {
+  background-color: rgb(17, 141, 141);
+}
+
+.medium {
+  background-color: var(--secondary-color);
+}
+
+.hard {
+  background-color: var(--incorrect-color);
+}
+
 .correct {
 
-  background-color: green;
+  background-color: var(--accent-color);
+}
+
+.green-highlight {
+  color: var(--accent-color)
+}
+
+.red-highlight {
+  color: var(--incorrect-color)
 }
 
 .wrong {
-  background-color: red;
+  background-color: var(--incorrect-color);
 }

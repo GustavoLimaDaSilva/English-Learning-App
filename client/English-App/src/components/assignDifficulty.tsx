@@ -1,14 +1,13 @@
+import { useContext } from "react"
+import type { DeckContextType } from "../types/deck.ts"
 import type { FlashcardType, StateSetter } from "../types/index.ts"
+import { DeckContext } from "./flashcardComponents/deck.tsx"
 
-type props = {
-    cards: FlashcardType[],
-    setCards: StateSetter<FlashcardType[]>
-    offset: number,
-    toLastSlot: () => void,
-    skip: (() => void) | undefined
-}
+export default function assignDifficulty({ setHasFinished }: { setHasFinished: StateSetter<boolean> }) {
 
-export default function assignDifficulty({offset, setCards, skip, toLastSlot}: props) {
+    if (!DeckContext) return
+    const { offset, setCards, setOffset, cards, isLastCard } = useContext(DeckContext) as DeckContextType
+
 
     const addDifficulty = (diff: FlashcardType["difficulty"]) => {
 
@@ -19,17 +18,18 @@ export default function assignDifficulty({offset, setCards, skip, toLastSlot}: p
 
             return copy
         })
-        if (skip) skip()
+        if (!isLastCard) setOffset(prev => prev + 1)
+        else setHasFinished(true)
     }
 
     return (
-                    <>
-                        <button onClick={() => addDifficulty('easy')}>fácil</button>
-                        <button onClick={() => addDifficulty('medium')}>médio</button>
-                        <button onClick={() => {
-                            addDifficulty('hard')
-                            toLastSlot()
-                        }}>difícil</button>
-                    </>
+        <div className="difficulty-options">
+            <button className="easy" onClick={() => addDifficulty('easy')}>fácil</button>
+            <button className="medium" onClick={() => addDifficulty('medium')}>médio</button>
+            <button className="hard" onClick={() => {
+                addDifficulty('hard')
+                setOffset(cards.length - 1)
+            }}>difícil</button>
+        </div>
     )
 }

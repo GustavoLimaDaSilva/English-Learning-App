@@ -54,7 +54,7 @@ export function postNewLevel(profileData: ProfileData) {
     })
 }
 
-export async function putUpdatedDeck(updatedDeck: DeckType, uid: string | undefined) {
+export async function putDeck(updatedDeck: DeckType, uid: string | undefined) {
 
     if (!uid) return
 
@@ -82,4 +82,5 @@ export function maxLengthParams(max: number = 80) {
     LengthParamsTurple = [max, { error: 'muito longo' }]
     return LengthParamsTurple
 }
+
 

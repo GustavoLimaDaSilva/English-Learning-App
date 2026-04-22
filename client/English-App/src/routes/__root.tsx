@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useGoogleUser } from '../userStore.ts'
 import type { TanstackRouterContext } from '../types/tanstack.ts'
+import Nav from '../components/nav.tsx'
 
 export const Route = createRootRouteWithContext<TanstackRouterContext>()({
     component: RootComponent
@@ -18,11 +19,11 @@ function RootComponent() {
 
     useEffect(() => {
         user ? navigate({ to: '/dashboard' }) : navigate({ to: '/login' })
-
     }, [user])
 
     return (
         <React.Fragment>
+            <Nav/>
             <Outlet />
             <TanStackRouterDevtools />
         </React.Fragment>
