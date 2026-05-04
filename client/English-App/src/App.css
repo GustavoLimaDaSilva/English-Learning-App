@@ -40,6 +40,51 @@ ul {
   padding: 0;
 }
 
+label {
+  display: inline-block;
+}
+
+input {
+  padding: 1em .2em;
+  border-radius: 10px;
+  border: 1px rgb(132, 131, 131) solid;
+  width: 100%;
+}
+
+input[type=file] {
+  border: none;
+  padding: 0;
+}
+
+.fit-all {
+  height: 100vh;
+}
+
+.opts-wrapper:has(.option) {
+  width: 100%;
+  margin: 0;
+}
+
+.option {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.option-upper {
+  display: flex;
+  align-items: start;
+  white-space: nowrap;
+  margin-bottom: .2em;
+}
+
+.option-upper input[type=radio] {
+  margin-right: auto;
+}
+
+input:focus {
+  outline: none;
+  border-width: 2px;
+}
 
 @keyframes slideup {
 
@@ -84,6 +129,21 @@ button:hover {
 button a {
   color: var(--light-contrast);
   text-decoration: none;
+}
+
+
+button:disabled {
+  background-color: gray;
+  cursor: auto;
+}
+
+.grandient-background {
+
+  background-image: linear-gradient(to bottom, var(--tertiary-color), var(--primary-color));
+}
+
+.blue-background {
+  background-color: var(--primary-color)
 }
 
 .nav {
@@ -227,18 +287,83 @@ button a {
   flex-grow: 1;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  background-image: linear-gradient(to bottom, var(--tertiary-color), var(--primary-color));
   padding: 5vh 15vw;
   gap: 3vw;
 }
 
 
+
+a:has(.add-symbol) {
+  text-decoration: none;
+  color: var(--dark-contrast);
+  background-color: #efeeee7f;
+  border-radius: 10px;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20%;
+  transition: transform .3s ease-in-out, color .3s ease-in-out;
+}
+
+a:has(.add-symbol):hover {
+  transform: scale(1.1);
+  color: #6d6d6d;
+}
+
+a:has(.add-symbol):hover .add-symbol {
+  color: #6d6d6d
+}
+
+.add-symbol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(208, 207, 207, 0.763);
+  color:var(--dark-contrast);
+  height: 50%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  font-size: 5vw;
+  transition: color .3s ease-in-out;
+}
+
+.inline-elements {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 4%;
+}
+
+.section-margin {
+  margin: 3rem;
+}
+
+.deck-link {
+  aspect-ratio: 1/1;
+  padding: 1em 1em 0 1em;
+  box-shadow: var(--frutiger-shadow);
+}
+
+.deck-link p {
+  font-size: .9rem;
+}
+
+.deck-link .inline-elements p {
+  margin-block: .5rem;
+}
+
+.deck-link-description {
+  margin-block: 10%;
+}
+
+.deck-link a {
+  color: var(--dark-contrast)
+}
+
 .card {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 100%;
-  aspect-ratio: 4/2;
+  width: 18%;
+  background-color: var(--light-contrast);
   border-radius: 10px;
   list-style: none;
   position: relative;
@@ -269,7 +394,6 @@ button a {
 
 .card a {
   text-decoration: none;
-  color: var(--light-contrast);
   position: absolute;
   inset: 0;
   display: flex;
@@ -282,7 +406,19 @@ button a {
   text-decoration: underline;
 }
 
-.card:before {
+.has-background {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  aspect-ratio: 4/2;
+  width: 100%;
+}
+
+.has-background a {
+  color: var(--light-contrast);
+}
+
+.has-background:before {
   content: "";
   background-color: rgba(0, 0, 0, 0.373);
   position: absolute;
@@ -371,7 +507,6 @@ button a {
 
 
 .flashcard-wrapper {
-  background-color: var(--primary-color);
   position: absolute;
   inset: 0;
   align-content: center;
@@ -389,6 +524,128 @@ button a {
   transform-style: preserve-3d;
 }
 
+
+.form-wrapper {
+  position: absolute;
+  inset: 0;
+  align-content: center;
+}
+
+.form-wrapper form {
+  margin-inline: auto;
+  background-color: var(--light-contrast);
+  height: 60vh;
+  width: 30vw;
+  padding: 2em 2em 0 2em;
+  box-shadow: var(--frutiger-shadow);
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  transition: .8s transform ease-in-out;
+}
+
+.deck-form h1,
+.flashcard-form h2 {
+  margin-block: 0 1rem;
+}
+
+.card-count {
+  margin-block: .2rem 2rem;
+}
+
+.deck-form {
+  position: relative;
+  z-index: 1;
+}
+
+.flashcard-form {
+  z-index: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bottom-btn {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+}
+
+.form-error {
+  color: var(--incorrect-color);
+  font-size: .7rem;
+  margin-block: 0;
+}
+
+.translate-left {
+  transform: translateX(-20vw);
+}
+
+.align-buttons {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+
+.align-buttons button:last-child {
+  margin-left: auto;
+}
+
+.translate-right {
+  opacity: 1;
+  transform: translate(0%, -50%);
+}
+
+label:has(.switch) {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  height: fit-content;
+  padding-top: 1em;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  gap: 20%;
+  background-color: rgb(156, 155, 155);
+  border-radius: 20px;
+  height: 40px;
+  width: 80px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.slider {
+  display: inline-block;
+  position: absolute;
+  left: 4%;
+  top: 10%;
+  background-color: var(--light-contrast);
+  border-radius: inherit;
+  height: 80%;
+  aspect-ratio: 1/1;
+  transition: transform .3s ease-in-out;
+}
+
+.turn-on {
+  transform: translateX(130%);
+}
+
+.turn-on-background {
+  background-color: var(--accent-color);
+}
+
+.switch+input {
+  opacity: 0;
+  position: absolute;
+}
 
 .flashcard p {
   font-weight: 600;
@@ -454,11 +711,6 @@ button a {
   border: 2px solid rgb(151, 151, 151);
   box-shadow: 1px 2px 3px gray;
   width: 25%;
-}
-
-.confirm:disabled {
-  cursor: auto;
-  background-color: gray;
 }
 
 .flashcard .confirm {

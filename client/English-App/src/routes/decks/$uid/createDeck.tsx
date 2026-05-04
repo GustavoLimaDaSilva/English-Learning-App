@@ -1,17 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { isEmpty } from "../../../utils.ts"
+import { postPersonalDeck } from "../../../utils.ts"
 import { deckSchema } from "../../../schemas/deckForm.ts"
 import { useNavigate } from "@tanstack/react-router"
 import type { DeckSchema, FlashcardSchema } from "../../../schemas/deckForm.ts"
 import { useProfileData } from "../../../userStore.ts"
 import CreateNewFlashcard from "../../../components/flashcardComponents/createNewFlashcard.tsx"
-import type z from "zod"
-import type { decksSearchSchema } from "../../../schemas/searchParams.ts"
 
-export const Route = createFileRoute('/decks/$uid/criarDeck')({
+
+export const Route = createFileRoute('/decks/$uid/createDeck')({
     component: CreateNewDeck,
 
 }
@@ -30,9 +29,11 @@ export default function CreateNewDeck() {
     const hasInput = useWatch({ name: 'deckDescription', control })
 
     return (
-        <>
-            <p>{flashcardData.length} cartões</p>
-            <form id="form" onSubmit={handleSubmit(postPersonalDeck)}>
+        <main className="grandient-background form-wrapper">
+            <form className={cardForm ? "translate-left deck-form" : "deck-form"} id="form" onSubmit={handleSubmit((formData) => postPersonalDeck(formData, profileData, flashcardData, navigate))}>
+                <h1>Deck</h1>
+                <p className="card-count">{
+                }</p>
                 <label htmlFor="name">Nome do deck</label>
                 <br />
                 <input type="text" id="name" placeholder="coloque um nome" {...register("name")} />
@@ -42,32 +43,12 @@ export default function CreateNewDeck() {
                 <br />
                 <input type="text" id="descrição" placeholder="coloque uma descrição"  {...register("deckDescription", { required: hasInput ? true : false })} />
                 <br />
-                <button onClick={() => setCardForm(true)} form="cardForm">adicionar cartão</button>
-                <button type="submit" disabled={isEmpty(flashcardData)}>Salvar deck</button>
+                <div className="align-buttons">
+                    <button onClick={() => setCardForm(true)} form="cardForm">adicionar cartão</button>
+                    <button type="submit" disabled={flashcardData.length === 0}>Salvar deck</button>
+                </div>
             </form>
             <CreateNewFlashcard setFlashcardData={setFlashcardData} cardForm={cardForm} setCardForm={setCardForm} />
-        </>
+        </main>
     )
-    async function postPersonalDeck(formData: object) {
-
-        if (flashcardData.length === 0) return
-
-        const res = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/personalDecks/${profileData.uid}`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                formData: { ...formData, cards: flashcardData }
-            })
-        })
-
-        if (res.status === 201) {
-            navigate({
-                to: '..',
-                search: () => ({ level: profileData.level } satisfies z.infer<typeof decksSearchSchema>)
-            })
-        }
-    }
 }

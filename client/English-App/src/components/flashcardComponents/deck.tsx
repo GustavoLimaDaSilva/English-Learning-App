@@ -52,9 +52,9 @@ export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
 
         return () => selectedOption.classList.remove('selected')
     }, [selectedOption])
-console.log(showAnswer)
+
     return (
-        <div className="flashcard-wrapper">
+        <div className="flashcard-wrapper blue-background">
             <DeckContext value={{
                 isCorrect: isCorrect,
                 setIsCorrect: setIsCorrect,

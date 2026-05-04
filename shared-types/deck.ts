@@ -8,7 +8,7 @@ export interface DecksType {
 export interface DeckType extends ApiResponse {
 
     deckDescription?: string,
-    cards: FlashcardType[] 
+    cards: FlashcardType[]
 }
 
 
@@ -23,4 +23,9 @@ export interface FlashcardType {
     imageUrl?: string | undefined,
     correctAnswer?: typeof Opts[number] | undefined,
     difficulty?: 'easy' | 'medium' | 'hard' | undefined,
+}
+
+export interface DeckCardType extends Omit<DeckType, "cards"> {
+    lastSeen: string,
+    cardLength: number
 }

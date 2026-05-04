@@ -45,11 +45,11 @@ function DashBoardOverview() {
             <div className="welcome">
                 <p><span className="message">Welcome,</span><br /> <span className="name">{user.displayName?.slice(0, user.displayName.indexOf(' '))}!</span></p>
             </div>
-            <main className="main">
-                    <div key={nanoid()} className="card studying-illustration">
+            <main className="main grandient-background">
+                    <div key={nanoid()} className="card has-background studying-illustration">
                         <Link to={`/decks/${user.uid}`} search={{level: profileData.level ?? 0} satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
                     </div>
-                    <div key={nanoid()} className="card AI-illustration">
+                    <div key={nanoid()} className="card has-background AI-illustration">
                         <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>
                     </div>
                 <section className="lessons-container">

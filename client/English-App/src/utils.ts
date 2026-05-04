@@ -1,4 +1,8 @@
-import type { DeckType, ProfileData} from "./types/index.ts"
+import type { UseNavigateResult } from "@tanstack/react-router"
+import type { decksSearchSchema } from "./schemas/searchParams.ts"
+import type { DeckType, FlashcardType, ProfileData } from "./types/index.ts"
+import type { FlashcardSchema } from "./schemas/deckForm.ts"
+import type z from "zod"
 let LengthParamsTurple: [number, { error: string }]
 
 export function streamTextEffect(text: string) {
@@ -84,3 +88,34 @@ export function maxLengthParams(max: number = 80) {
 }
 
 
+export async function postPersonalDeck(formData: { deckDescription: string | null; name: string; }, profileData: ProfileData, flashcardData: FlashcardSchema[], navigate: UseNavigateResult<string>) {
+
+    if (flashcardData.length === 0) return
+
+    const res = await fetch(`https://api-o37g4y27ua-uc.a.run.app/decks/personalDecks/${profileData.uid}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            formData: { ...formData, cards: flashcardData }
+        })
+    })
+
+    if (res.status === 201) {
+        navigate({
+            to: '..',
+            search: () => ({ level: profileData.level } satisfies z.infer<typeof decksSearchSchema>)
+        })
+    }
+}
+
+export function rightPhraseCartao(cardLength: number) {
+
+        if(cardLength === 0) return "nenhum cartão ainda!"
+        
+        if(cardLength === 1) return `${cardLength} cartão`
+        
+        if(cardLength > 1) return `${cardLength} cartões`        
+}
