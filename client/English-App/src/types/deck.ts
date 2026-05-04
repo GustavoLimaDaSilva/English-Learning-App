@@ -1,4 +1,4 @@
-import type { DeckType, FlashcardType } from "../../../../shared-types/deck.ts";
+import type { DeckCardType, DeckType, FlashcardType } from "../../../../shared-types/deck.ts";
 import type { StateSetter } from "./index.ts";
 
 export interface DeckContextType {
@@ -15,4 +15,9 @@ export interface DeckContextType {
     offset: number,
     setOffset: StateSetter<number>,
     saveNewLevel: (() => void) | null
+}
+
+export type DeckLinks = {
+    lessonDecksData: DeckCardType[],
+    personalDecksData: DeckCardType[]
 }

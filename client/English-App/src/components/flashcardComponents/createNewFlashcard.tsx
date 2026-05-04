@@ -1,4 +1,4 @@
-import { useForm, useWatch, type UseFormRegister } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { flashcardSchema } from "../../schemas/deckForm.ts";
 import type { FlashcardSchema } from "../../schemas/deckForm.ts";
 import type { StateSetter } from "../../types/index.ts";
@@ -17,14 +17,14 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
     const form = useForm<FlashcardSchema>({
         resolver: zodResolver(flashcardSchema)
     })
-    
     const { handleSubmit, control, register, reset, formState: { errors } } = form
     const hasBeenSelected = useWatch({ name: 'correctAnswer', control })
     const options = useWatch({ name: 'options', control })
+    const imageFile = useWatch({ name: "imageFile", control })
+    
+    console.log(imageFile)
 
     const optionInputs = Opts.map((o, index) => {
-        if (o === 'a') return
-
         return <AnswerOption key={index} index={index} hasBeenSelected={hasBeenSelected} register={register} value={o} />
 
     })
@@ -33,7 +33,7 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
 
         if (!multipleOptions) {
 
-            for (let key in options) {
+            for (const key in options) {
 
                 if (key !== 'a') {
                     delete (data.options as keys)[key]
@@ -50,34 +50,37 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
     }
 
     return (
-        <>
-            <h2>Flashcards</h2>
-            <button onClick={() => setCardForm(true)} type="submit" form="cardForm">Adicionar cartão</button>
-            {cardForm &&
-                <form onSubmit={handleSubmit(setData)} id="cardForm">
-                    <label htmlFor="front">Parte da frente</label>
-                    <br />
-                    <input id="front" placeholder="escreva a parte da frente" {...register('cardFront')} />
-                    {errors.cardFront?.message && <p style={{ color: 'red' }}>{errors.cardFront?.message}</p>}
-                    <br />
-                    <label htmlFor="image">Coloque uma imagem (fortemente recomendado)</label>
-                    <br />
-                    <input type="file" id="image" placeholder="uma imagem" {...register('imageFile')} />
-                    <br />
-                    <label htmlFor="back">Parte de trás</label>
-                    <br />
-                    <label className="switch">
-                        modo mútipla escolha
-                        <input type="checkbox" onClick={() => setMultipleOptions(prev => !prev)} />
-                        <span className="slider round"></span>
-                    </label>
-                    {multipleOptions && <input type="radio" id="a" value="a" {...register('correctAnswer', { required: multipleOptions && !hasBeenSelected ? true : false })} />}
-                    <input id="back1" placeholder="escreva a parte de trás" {...register('options.a')} />
-                    {errors.options?.['a']?.message && <p style={{ color: 'red' }}>{errors.options?.['a']?.message}</p>}
+            <form onSubmit={handleSubmit(setData)} id="cardForm" className={cardForm ? "translate-right flashcard-form" : "flashcard-form"}>
+                <h2>Flashcards</h2>
+                <label htmlFor="front">Parte da frente</label>
+                <br />
+                <input id="front" placeholder="escreva a parte da frente" {...register('cardFront')} />
+                {errors.cardFront?.message && <p className="form-error">{errors.cardFront?.message}</p>}
+                <br />
+                <label htmlFor="image">Coloque uma imagem <small>(fortemente recomendado)</small></label>
+                <br />
+                <input type="file" id="image" placeholder="uma imagem" {...register('imageFile')} />
+                <br />
+                {!multipleOptions &&
+                    <>
+                        <label htmlFor="back1">Parte de trás</label>
+                        <br />
+                        <input id="back1" placeholder="escreva a parte de trás" {...register('options.a')} />
+                        {errors.options?.['a']?.message && <p className="form-error">{errors.options?.['a']?.message}</p>}
+                    </>
+                }
+                <label>modo mútipla escolha
+                    <div className={multipleOptions ? "switch turn-on-background" : "switch"} onClick={() => setMultipleOptions(prev => !prev)}>
+                        <span className={multipleOptions ? "slider turn-on" : "slider"}></span>
+                    </div>
+                    <input type="checkbox" />
+                </label>
+                {/* {multipleOptions && <input type="radio" id="a" value="a" {...register('correctAnswer', { required: multipleOptions && !hasBeenSelected ? true : false })} />} */}
+                <div className="opts-wrapper">
                     {multipleOptions && optionInputs}
-                    {errors.correctAnswer?.message && <span>{errors.correctAnswer?.message}</span>}
-                </form>
-            }
-        </>
+                </div>
+                {errors.correctAnswer?.message && <p className="form-error">{errors.correctAnswer?.message}</p>}
+                <button className="bottom-btn" onClick={() => setCardForm(true)} type="submit" form="cardForm">Adicionar cartão</button>
+            </form>
     )
 }

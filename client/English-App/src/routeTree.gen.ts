@@ -15,7 +15,7 @@ import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as LessonsLessonIdRouteImport } from './routes/lessons/$lessonId'
 import { Route as DecksUidIndexRouteImport } from './routes/decks/$uid/index'
 import { Route as DecksLessonDecksLessonIdRouteImport } from './routes/decks/lessonDecks/$lessonId'
-import { Route as DecksUidCriarDeckRouteImport } from './routes/decks/$uid/criarDeck'
+import { Route as DecksUidCreateDeckRouteImport } from './routes/decks/$uid/createDeck'
 import { Route as DecksUidDeckIdRouteImport } from './routes/decks/$uid/$deckId'
 
 const LoginRoute = LoginRouteImport.update({
@@ -49,9 +49,9 @@ const DecksLessonDecksLessonIdRoute =
     path: '/decks/lessonDecks/$lessonId',
     getParentRoute: () => rootRouteImport,
   } as any)
-const DecksUidCriarDeckRoute = DecksUidCriarDeckRouteImport.update({
-  id: '/decks/$uid/criarDeck',
-  path: '/decks/$uid/criarDeck',
+const DecksUidCreateDeckRoute = DecksUidCreateDeckRouteImport.update({
+  id: '/decks/$uid/createDeck',
+  path: '/decks/$uid/createDeck',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DecksUidDeckIdRoute = DecksUidDeckIdRouteImport.update({
@@ -66,7 +66,7 @@ export interface FileRoutesByFullPath {
   '/lessons/$lessonId': typeof LessonsLessonIdRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/decks/$uid/$deckId': typeof DecksUidDeckIdRoute
-  '/decks/$uid/criarDeck': typeof DecksUidCriarDeckRoute
+  '/decks/$uid/createDeck': typeof DecksUidCreateDeckRoute
   '/decks/lessonDecks/$lessonId': typeof DecksLessonDecksLessonIdRoute
   '/decks/$uid/': typeof DecksUidIndexRoute
 }
@@ -76,7 +76,7 @@ export interface FileRoutesByTo {
   '/lessons/$lessonId': typeof LessonsLessonIdRoute
   '/dashboard': typeof DashboardIndexRoute
   '/decks/$uid/$deckId': typeof DecksUidDeckIdRoute
-  '/decks/$uid/criarDeck': typeof DecksUidCriarDeckRoute
+  '/decks/$uid/createDeck': typeof DecksUidCreateDeckRoute
   '/decks/lessonDecks/$lessonId': typeof DecksLessonDecksLessonIdRoute
   '/decks/$uid': typeof DecksUidIndexRoute
 }
@@ -87,7 +87,7 @@ export interface FileRoutesById {
   '/lessons/$lessonId': typeof LessonsLessonIdRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/decks/$uid/$deckId': typeof DecksUidDeckIdRoute
-  '/decks/$uid/criarDeck': typeof DecksUidCriarDeckRoute
+  '/decks/$uid/createDeck': typeof DecksUidCreateDeckRoute
   '/decks/lessonDecks/$lessonId': typeof DecksLessonDecksLessonIdRoute
   '/decks/$uid/': typeof DecksUidIndexRoute
 }
@@ -99,7 +99,7 @@ export interface FileRouteTypes {
     | '/lessons/$lessonId'
     | '/dashboard/'
     | '/decks/$uid/$deckId'
-    | '/decks/$uid/criarDeck'
+    | '/decks/$uid/createDeck'
     | '/decks/lessonDecks/$lessonId'
     | '/decks/$uid/'
   fileRoutesByTo: FileRoutesByTo
@@ -109,7 +109,7 @@ export interface FileRouteTypes {
     | '/lessons/$lessonId'
     | '/dashboard'
     | '/decks/$uid/$deckId'
-    | '/decks/$uid/criarDeck'
+    | '/decks/$uid/createDeck'
     | '/decks/lessonDecks/$lessonId'
     | '/decks/$uid'
   id:
@@ -119,7 +119,7 @@ export interface FileRouteTypes {
     | '/lessons/$lessonId'
     | '/dashboard/'
     | '/decks/$uid/$deckId'
-    | '/decks/$uid/criarDeck'
+    | '/decks/$uid/createDeck'
     | '/decks/lessonDecks/$lessonId'
     | '/decks/$uid/'
   fileRoutesById: FileRoutesById
@@ -130,7 +130,7 @@ export interface RootRouteChildren {
   LessonsLessonIdRoute: typeof LessonsLessonIdRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DecksUidDeckIdRoute: typeof DecksUidDeckIdRoute
-  DecksUidCriarDeckRoute: typeof DecksUidCriarDeckRoute
+  DecksUidCreateDeckRoute: typeof DecksUidCreateDeckRoute
   DecksLessonDecksLessonIdRoute: typeof DecksLessonDecksLessonIdRoute
   DecksUidIndexRoute: typeof DecksUidIndexRoute
 }
@@ -179,11 +179,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DecksLessonDecksLessonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/decks/$uid/criarDeck': {
-      id: '/decks/$uid/criarDeck'
-      path: '/decks/$uid/criarDeck'
-      fullPath: '/decks/$uid/criarDeck'
-      preLoaderRoute: typeof DecksUidCriarDeckRouteImport
+    '/decks/$uid/createDeck': {
+      id: '/decks/$uid/createDeck'
+      path: '/decks/$uid/createDeck'
+      fullPath: '/decks/$uid/createDeck'
+      preLoaderRoute: typeof DecksUidCreateDeckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/decks/$uid/$deckId': {
@@ -202,7 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   LessonsLessonIdRoute: LessonsLessonIdRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DecksUidDeckIdRoute: DecksUidDeckIdRoute,
-  DecksUidCriarDeckRoute: DecksUidCriarDeckRoute,
+  DecksUidCreateDeckRoute: DecksUidCreateDeckRoute,
   DecksLessonDecksLessonIdRoute: DecksLessonDecksLessonIdRoute,
   DecksUidIndexRoute: DecksUidIndexRoute,
 }

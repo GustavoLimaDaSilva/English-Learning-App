@@ -1,11 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
 import { decksSearchSchema } from "../../../schemas/searchParams.ts";
+import DeckCard from "../../../components/deckCard.tsx";
+import type { DeckLinks } from "../../../types/deck.ts";
 
-type linkProps = { name: string, id: string }
-type DeckLinks = {
-    lessonDecksData: linkProps[],
-    personalDecksData: linkProps[]
-}
+
 
 export const Route = createFileRoute('/decks/$uid/')({
     component: FlashcardsIndex,
@@ -27,17 +25,23 @@ export const Route = createFileRoute('/decks/$uid/')({
 
 export default function FlashcardsIndex() {
 
-    const decksData : DeckLinks = Route.useLoaderData()
+    const decksData: DeckLinks = Route.useLoaderData()
     const { uid } = Route.useParams()
 
     return (
-        <>
-            <h2>Decks desbloqueados</h2>
-            {decksData.lessonDecksData.map((d, index: number) => <Link to={`../lessonDecks/${d.id}`} key={index}>{d.name}</Link>)}
-            <h2>Seus decks personalizados</h2>
-            {decksData.personalDecksData.map((d, index: number) => <Link to={`../${uid}/${d.id}`} key={index}>{d.name}</Link>)}
-            <div>
-                <Link to={`criarDeck`}>+ criar deck</Link>
-            </div>
-        </>)
+        <div className="grandient-background fit-all">
+            <section className="section-margin">
+                <h2>Decks desbloqueados</h2>
+                <div className="inline-elements">
+                    {decksData.lessonDecksData.map(d => <DeckCard deckInfo={d} />)}
+                </div>
+            </section>
+            <section className="section-margin">
+                <h2>Seus decks personalizados</h2>
+                <div className="inline-elements">
+                        <Link to={`createDeck`}><span className="add-symbol">+</span> criar deck</Link>
+                    {decksData.personalDecksData.map(d => <DeckCard deckInfo={d} uid={uid} />)}
+                </div>
+            </section>
+        </div>)
 }
