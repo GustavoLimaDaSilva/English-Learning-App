@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createHexId } from "../../utils.js";
+import { createHexId, getMostRecent } from "../../utils.js";
 import type { DeckType } from "../types/index.js";
 import {
   query,
@@ -7,6 +7,7 @@ import {
   where, doc,
   getDoc, updateDoc
 } from "firebase/firestore";
+import { DeckCardType } from "../../../../shared-types/deck.js";
 // eslint-disable-next-line new-cap
 const router = Router();
 
@@ -16,10 +17,10 @@ router.get("/:uid", async (req, res) => {
   if (!level) return;
 
   const uid = req.params.uid;
-  type DeckData = Pick<DeckType, "id" | "name">
 
-  const userDecksData: DeckData[] = [];
-  const lessonDecksData: DeckData[] = [];
+
+  const userDecksData: DeckCardType[] = [];
+  const lessonDecksData: DeckCardType[] = [];
 
   try {
 
@@ -28,7 +29,17 @@ router.get("/:uid", async (req, res) => {
     const snapshot = await getDocs(q)
     snapshot.forEach((doc) => {
       const lesson = doc.data()
-      lessonDecksData.push({ name: lesson.flashcardDeck.name, id: lesson.id })
+
+      const mostRecentDate = lesson.flashcardDeck
+        .cards.reduce(getMostRecent, [0, 0, 0])
+
+      lessonDecksData.push({
+        name: lesson.flashcardDeck.name,
+        id: lesson.id,
+        deckDescription: lesson.flashcardDeck.deckDescription,
+        lastSeen: mostRecentDate.join("/"),
+        cardLength: lesson.flashcardDeck.cards.length
+      })
     })
 
   } catch (err) {
@@ -40,7 +51,17 @@ router.get("/:uid", async (req, res) => {
     const userRef = doc(req.db, "users", uid);
     const user = (await getDoc(userRef)).data()
     user?.flashcardDecks?.forEach((deck: DeckType) => {
-      userDecksData.push({ name: deck.name, id: deck.id })
+
+      const mostRecent = deck.cards
+        .reduce(getMostRecent, [0, 0, 0])
+
+      userDecksData.push({
+        name: deck.name,
+        id: deck.id,
+        deckDescription: deck.deckDescription,
+        lastSeen: mostRecent.join("/"),
+        cardLength: deck.cards.length
+      })
     }) ?? []
 
   } catch (err) {
