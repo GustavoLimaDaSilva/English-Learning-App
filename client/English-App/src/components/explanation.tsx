@@ -4,7 +4,7 @@ import type { ReactLessonProps } from "../types/lesson.ts";
 import useFormatText from "../hooks/useFormatText.tsx";
 
 type ExplanationProps = ReactLessonProps & {
-    ids: { videoId: string, playlistId: string }
+    ids?: { videoId: string, playlistId: string } 
 
 }
 

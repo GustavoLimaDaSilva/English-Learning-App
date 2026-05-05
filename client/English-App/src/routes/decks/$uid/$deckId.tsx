@@ -16,6 +16,6 @@ export default function DeckLoader() {
     const data: DeckType = Route.useLoaderData()
 
     return (
-        <Deck setIndex={null} loaderDeck={data}/>
+        <Deck setIndex={null} loaderDeck={data} />
     )
 }
