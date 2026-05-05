@@ -3,7 +3,12 @@ import { useOutletContext } from "react-router"
 import type { ReactLessonProps } from "../types/lesson.ts";
 import useFormatText from "../hooks/useFormatText.tsx";
 
-export default function Explanation(props: any) {
+type ExplanationProps = ReactLessonProps & {
+    ids: { videoId: string, playlistId: string }
+
+}
+
+export default function Explanation(props: ExplanationProps) {
 
     const outletLesson = useOutletContext<any>()
     const lesson = props?.lesson ?? outletLesson

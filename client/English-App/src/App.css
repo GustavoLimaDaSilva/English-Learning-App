@@ -321,7 +321,7 @@ a:has(.add-symbol):hover .add-symbol {
   justify-content: center;
   align-items: center;
   background-color: rgba(208, 207, 207, 0.763);
-  color:var(--dark-contrast);
+  color: var(--dark-contrast);
   height: 50%;
   aspect-ratio: 1/1;
   border-radius: 50%;
@@ -477,8 +477,18 @@ a:has(.add-symbol):hover .add-symbol {
   border-radius: 10px;
   font-weight: bold;
   text-decoration: none;
-  display: inline-block;
   width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.lesson>a>span {
+  width: 90%;
+}
+
+.lesson>a>img {
+  width: 10%;  
+  border-radius: 10px;
 }
 
 .user-msg {

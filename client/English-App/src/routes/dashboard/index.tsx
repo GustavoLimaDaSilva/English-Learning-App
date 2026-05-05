@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import type { LessonType, ProfileData } from "../../types/index.ts"
+import type { LessonType, LessonVideo, PlaylistType, ProfileData } from "../../types/index.ts"
 import Toast from "../../components/toast.tsx"
 import DashboardLogic from "../../components/dashboardLogic.tsx"
 import { createFileRoute } from "@tanstack/react-router"
@@ -23,17 +23,19 @@ export const Route = createFileRoute('/dashboard/')({
 
         const rawLesson = await fetch('https://api-o37g4y27ua-uc.a.run.app/lessons')
         const lessons = rawProfile.ok ? await rawLesson.json() : []
-        return { storedProfile: storedProfile, lessons: lessons }
+
+        const res = await fetch("https://api-o37g4y27ua-uc.a.run.app/lessons/allVideos")
+        const {lessonVideos, playlistId} = await res.json()
+        return { storedProfile: storedProfile, lessons: lessons, lessonVideos: lessonVideos, playlistId }
     },
 })
 
 function DashBoardOverview() {
 
-    const { storedProfile, lessons } = Route.useLoaderData() satisfies { storedProfile: ProfileData, lessons: LessonType[] }
-
+    const { storedProfile, lessons, lessonVideos, playlistId } = Route.useLoaderData() satisfies { storedProfile: ProfileData, lessons: LessonType[], lessonVideos: LessonVideo[], playlistId: string }
     const profileData = useProfileData((state) => state.profileData)
     const user = useGoogleUser((state) => state.googleUser)
-
+console.log(lessonVideos)
     if (!user) return
 
     const data = localStorage.getItem('toastFired')
@@ -41,32 +43,34 @@ function DashBoardOverview() {
     return (
         <DashboardLogic storedProfile={storedProfile}>
             <div className="dashboard-wrapper">
-            {profileData.level === 1 && !toastFired ? <Toast toastFired={toastFired} className="toast" msg="agora você já pode encontrar o deck da sua lição na área de flashcards!" /> : null}
-            <div className="welcome">
-                <p><span className="message">Welcome,</span><br /> <span className="name">{user.displayName?.slice(0, user.displayName.indexOf(' '))}!</span></p>
-            </div>
-            <main className="main grandient-background">
+                {profileData.level === 1 && !toastFired ? <Toast toastFired={toastFired} className="toast" msg="agora você já pode encontrar o deck da sua lição na área de flashcards!" /> : null}
+                <div className="welcome">
+                    <p><span className="message">Welcome,</span><br /> <span className="name">{user.displayName?.slice(0, user.displayName.indexOf(' '))}!</span></p>
+                </div>
+                <main className="main grandient-background">
                     <div key={nanoid()} className="card has-background studying-illustration">
-                        <Link to={`/decks/${user.uid}`} search={{level: profileData.level ?? 0} satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
+                        <Link to={`/decks/${user.uid}`} search={{ level: profileData.level ?? 0 } satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
                     </div>
                     <div key={nanoid()} className="card has-background AI-illustration">
                         <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>
                     </div>
-                <section className="lessons-container">
-                    <h2>Lições</h2>
-                    <ul>
-                        {lessons && lessons.map((l, index) => <li className="lesson"><Link to={`/lessons/${l.id}`} key={index}>{l.name}</Link></li>)}
-                        <li className="lesson"><a href="#">futuro do indicativo</a></li>
-                        <li className="lesson"><a>present continuous</a></li>
-                        <li className="lesson"><a>past actions</a></li>
-                        <li className="lesson"><a>past actions</a></li>
-                        <li className="lesson"><a>past actions</a></li>
-                        <li className="lesson"><a>past actions</a></li>
-                        <li className="lesson"><a>past actions</a></li>
-                    </ul>
-                </section>
-            </main>
+                    <section className="lessons-container">
+                        <h2>Lições</h2>
+                        <ul>
+                            {lessons && lessons.map((l, index) => {
+                                const thisVideo = lessonVideos[index]?.snippet
+                                return <li className="lesson" >
+                                    <Link to={`/lessons/${l.id}`} search={{ videoId: thisVideo?.resourceId.videoId, playlistId: playlistId }} key={nanoid()}>
+                                        <span>{l.name}</span>
+                                        <img src={thisVideo?.thumbnails.medium?.url ?? undefined} />
+                                    </Link>
+                                </li>
+                            }
+                            )}
+                        </ul>
+                    </section>
+                </main>
             </div>
-            </DashboardLogic>
+        </DashboardLogic >
     )
 }

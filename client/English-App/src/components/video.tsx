@@ -1,9 +1,13 @@
-import type {  ReactLessonProps } from "../types/lesson.ts"
+import type { ReactLessonProps } from "../types/lesson.ts"
 import useFormatText from "../hooks/useFormatText.tsx"
 import { speak } from '../utils.ts'
 import { useOutletContext } from "react-router"
 
-export default function Video(props: any) {
+type VideoProps = ReactLessonProps & {
+    ids: { videoId: string, playlistId: string }
+}
+
+export default function Video(props: VideoProps) {
 
     const outletLesson = useOutletContext<any>()
     const lesson = props?.lesson ?? outletLesson
@@ -13,10 +17,7 @@ export default function Video(props: any) {
 
     return (
         <div>
-            <video width='400' height='400' controls muted>
-                <source src={lesson?.video_url} type="video/mp4"></source>
-                Your broswer does not support videos.
-            </video>
+            <iframe src={`https://www.youtube.com/embed/${props.ids.videoId}?list=${props.ids.playlistId}`} frameborder="0"></iframe>
             <div>{formattedText}</div>
             <button onClick={() => setIndex ? setIndex((prev: number) => prev - 1) : undefined}>Voltar</button>
             <button onClick={() => setIndex ? setIndex((prev: number) => prev + 1) : undefined}>Revisar Lição</button>

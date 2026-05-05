@@ -10,16 +10,16 @@ const router = Router();
 
 router.get("/allVideos", async (req, res) => {
 
-    try {
-        const lessonVideos = await getPlaylistVideos(API_KEY, LESSONS_PLAYLIST_ID)
-        if (lessonVideos) {
-            return res.json({ lessonVideo: lessonVideos })
-        }
-        return res.json({ error: "couldn't get playlist!" })
+  try {
+    const lessonVideos = await getPlaylistVideos(API_KEY, LESSONS_PLAYLIST_ID)
+    if (lessonVideos) {
+      return res.status(200).json({lessonVideos: lessonVideos, playlistId: LESSONS_PLAYLIST_ID})
     }
-    catch (err) {
-        return res.json({ error: err })
-    }
+    return res.status(404).json({ error: "couldn't find playlist!" })
+  }
+  catch (err) {
+    return res.status(500).json({ error: err })
+  }
 })
 
 

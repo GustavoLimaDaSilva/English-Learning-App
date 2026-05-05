@@ -16,7 +16,7 @@ export const Opts = ['a', 'b', 'c', 'd'] as const
 export interface FlashcardType {
     cardFront: string,
     options: { [prop in typeof Opts[number]]: string },
-    addedAt: string,
+    addedAt?: string,
     id: string
     lastReviewedAt?: string
     imageFile?: FileList | {} | undefined,
