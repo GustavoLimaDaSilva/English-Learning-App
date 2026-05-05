@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import CreateNewFlashcard from "./createNewFlashcard.tsx"
-import { z } from "zod"
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { isEmpty } from "../../utils.ts"
 import { deckSchema } from "../../schemas/deckForm.ts"
 import type { DeckSchema, FlashcardSchema } from "../../schemas/deckForm.ts"
 import { useNavigate } from "react-router"
+import { useProfileData } from "../../userStore.ts"
 // import { postPersonalDeck } from "../../../utils"
 
 export default function CreateNewDeck() {
-
-    const context = useUserContext()
-    if (!context) return
-    const { profileData } = context
+    const profileData = useProfileData((state) => state.profileData)
     const [flashcardData, setFlashcardData] = useState<FlashcardSchema[]>([])
     const [cardForm, setCardForm] = useState(false)
     const navigate = useNavigate()
