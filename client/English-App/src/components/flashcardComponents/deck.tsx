@@ -11,7 +11,7 @@ type DeckProps = {
     setIndex?: StateSetter<number> | null,
     lesson?: LessonType,
     loaderDeck?: DeckType,
-    ids: {videoId: string, playlistId: string}
+    ids?: {videoId: string, playlistId: string} | undefined
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
