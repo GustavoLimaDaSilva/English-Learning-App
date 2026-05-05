@@ -1,11 +1,27 @@
 import { Router } from "express";
 import { getDoc, doc, query, collection, getDocs, DocumentData } from "firebase/firestore";
-const express = (await import("express")).default;
+
+const LESSONS_PLAYLIST_ID = process.env.LESSONS_PLAYLIST_ID
+const API_KEY = process.env.API_KEY
+import { getPlaylistVideos } from "../../utils.js";
 
 // eslint-disable-next-line new-cap
 const router = Router();
 
-router.use("/videos", express.static("./lessons/videos"));
+router.get("/allVideos", async (req, res) => {
+
+  try {
+    const lessonVideos = await getPlaylistVideos(API_KEY, LESSONS_PLAYLIST_ID)
+    if (lessonVideos) {
+      return res.status(200).json({lessonVideos: lessonVideos, playlistId: LESSONS_PLAYLIST_ID})
+    }
+    return res.status(404).json({ error: "couldn't find playlist!" })
+  }
+  catch (err) {
+    return res.status(500).json({ error: err })
+  }
+})
+
 
 router.get("/", async (req, res) => {
 

@@ -10,13 +10,14 @@ import type { DeckContextType } from "../../types/deck.ts"
 type DeckProps = {
     setIndex?: StateSetter<number> | null,
     lesson?: LessonType,
-    loaderDeck?: DeckType
+    loaderDeck?: DeckType,
+    ids: {videoId: string, playlistId: string}
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const DeckContext = createContext<DeckContextType | null>(null)
 
-export default function Deck({ setIndex, lesson, loaderDeck }: DeckProps) {
+export default function Deck({ setIndex, lesson, loaderDeck, ids }: DeckProps) {
 
     if (!lesson && !loaderDeck) return
 
