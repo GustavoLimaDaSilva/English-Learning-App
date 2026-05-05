@@ -4,3 +4,8 @@ export type ReactLessonProps = {
     setIndex: StateSetter<number>,
     lesson: LessonType
 }
+
+export type Ids = {
+    videoId: string,
+    playlistId: string
+}

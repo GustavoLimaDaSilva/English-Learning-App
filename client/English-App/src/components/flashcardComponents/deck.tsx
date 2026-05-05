@@ -6,12 +6,13 @@ import type { LessonType } from "../../types/index.ts"
 import Flashcard from "./flashcard.tsx"
 import DeckFooter from "./deckFooter.tsx"
 import type { DeckContextType } from "../../types/deck.ts"
+import type { Ids } from "../../types/lesson.ts"
 
 type DeckProps = {
     setIndex?: StateSetter<number> | null,
     lesson?: LessonType,
     loaderDeck?: DeckType,
-    ids?: {videoId: string, playlistId: string} | undefined
+    ids?: Ids | undefined
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

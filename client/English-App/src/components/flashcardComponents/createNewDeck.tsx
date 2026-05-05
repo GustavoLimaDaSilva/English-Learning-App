@@ -11,8 +11,6 @@ import { useNavigate } from "react-router"
 
 export default function CreateNewDeck() {
 
-    const context = useUserContext()
-    if (!context) return
     const { profileData } = context
     const [flashcardData, setFlashcardData] = useState<FlashcardSchema[]>([])
     const [cardForm, setCardForm] = useState(false)

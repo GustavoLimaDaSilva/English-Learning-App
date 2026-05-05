@@ -4,6 +4,7 @@ import Explanation from "../../components/explanation.tsx"
 import Video from "../../components/video.tsx"
 import Deck from "../../components/flashcardComponents/deck.tsx"
 import type { LessonType } from "../../types/index.ts"
+import type { Ids } from '../../types/lesson.ts'
 
 export const Route = createFileRoute('/lessons/$lessonId')({
   component: Lesson,
@@ -19,7 +20,7 @@ export const Route = createFileRoute('/lessons/$lessonId')({
 export default function Lesson() {
 
   const lesson: LessonType = Route.useLoaderData()
-  const ids: {videoId: string, playistId: string} = Route.useSearch()
+  const ids: Ids = Route.useSearch()
 
   const children = [Explanation, Video, Deck]
   const [index, setIndex] = useState(0)

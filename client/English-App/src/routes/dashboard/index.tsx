@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import type { LessonType, LessonVideo, PlaylistType, ProfileData } from "../../types/index.ts"
+import type { LessonType, ProfileData } from "../../types/index.ts"
 import Toast from "../../components/toast.tsx"
 import DashboardLogic from "../../components/dashboardLogic.tsx"
 import { createFileRoute } from "@tanstack/react-router"
@@ -35,7 +35,6 @@ function DashBoardOverview() {
     const { storedProfile, lessons, lessonVideos, playlistId } = Route.useLoaderData() satisfies { storedProfile: ProfileData, lessons: LessonType[], lessonVideos: LessonVideo[], playlistId: string }
     const profileData = useProfileData((state) => state.profileData)
     const user = useGoogleUser((state) => state.googleUser)
-console.log(lessonVideos)
     if (!user) return
 
     const data = localStorage.getItem('toastFired')
