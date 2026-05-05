@@ -1,4 +1,5 @@
 import { FlashcardType } from "../../shared-types/deck.js";
+import { LessonVideo } from "../../shared-types/lesson.js";
 
 const crypto = await import("crypto");
 
@@ -35,4 +36,19 @@ export function getMostRecent(acc: number[], curr: FlashcardType) {
     return acc
   }
   return acc
+}
+
+
+export async function getPlaylistVideos(apiKey: string | undefined, playlistId: string | undefined): Promise<LessonVideo[] | undefined> {
+
+  if (!apiKey || !playlistId) return
+
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${apiKey}`)
+    const data = await res.json()
+    return data.items as LessonVideo[]
+  } catch (err) {
+    console.error(err)
+    return
+  }
 }

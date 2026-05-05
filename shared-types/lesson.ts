@@ -9,3 +9,29 @@ export interface LessonType extends ApiResponse {
     requiredLevel: number,
     flashcardDeck: DeckType
 }
+
+export interface LessonVideo {
+    kind: "youtube#playlistItem";
+    etag: string;
+    id: string;
+    snippet: {
+        publishedAt: string;
+        channelId: string;
+        title: string;
+        description: string;
+        thumbnails: {
+            [key: string]: {
+                url: string;
+                width: number;
+                height: number;
+            };
+        };
+        channelTitle: string;
+        playlistId: string;
+        position: number;
+        resourceId: {
+            kind: string;
+            videoId: string;
+        };
+    };
+}
