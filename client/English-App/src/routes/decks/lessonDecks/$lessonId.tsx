@@ -1,5 +1,5 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import Deck from "../../../components/flashcardComponents/deck.tsx";
+import { createFileRoute } from "@tanstack/react-router";
+import DeckContext from "../../../components/flashcardComponents/DeckContext.tsx";
 
 export const Route = createFileRoute('/decks/lessonDecks/$lessonId')({
     component: DeckLoader,
@@ -11,10 +11,10 @@ export const Route = createFileRoute('/decks/lessonDecks/$lessonId')({
 })
 
 export default function DeckLoader() {
-    
+
     const data = Route.useLoaderData()
 
     return (
-        <Deck setIndex={null} loaderDeck={data} />
+        <DeckContext setIndex={null} loaderDeck={data} />
     )
 }

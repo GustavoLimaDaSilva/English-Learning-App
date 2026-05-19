@@ -1,14 +1,16 @@
 import { isCardOptions } from "../../../../../typeGuards.ts";
+import { useNavigate } from "@tanstack/react-router"
 import { useContext, type RefObject } from "react";
 import type { DeckContextType } from "../../types/deck.ts";
-import { DeckContext } from "./deck.tsx";
+import { DeckReactContext } from "./DeckContext.tsx";
+import ConfirmButton from "./ConfirmButton.tsx";
 
 
 export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HTMLDivElement | null> }) {
 
-    if (!DeckContext) return
-    const { cards, offset, isCorrect, setIsCorrect, setShowAnswer, selectedOption, isMultipleOption } = useContext(DeckContext) as DeckContextType
+    const { cards, offset, lesson, isCorrect, setShowAnswer, selectedOption, isMultipleOption } = useContext(DeckReactContext) as DeckContextType
     const card = cards[offset]
+    const navigate = useNavigate({})
     if (!card) return
 
     return (
@@ -26,11 +28,14 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
                     <div className="opts-wrapper">
                         {renderOptions()}
                     </div>
-                    <button className="confirm" disabled={!selectedOption ? true : false} onClick={() => {
-                        if (card && selectedOption) {
-                            setIsCorrect(card.correctAnswer === selectedOption.dataset.key)
-                        }
-                    }}>Confirmar</button>
+                    {lesson ?
+                        <div className="align-buttons">
+                            <button onClick={() => navigate({ to: '/' })}>Voltar</button>
+                            <ConfirmButton />
+                        </div>
+                        :
+                        <ConfirmButton />
+                    }
                 </>
                 :
                 <div className="back">

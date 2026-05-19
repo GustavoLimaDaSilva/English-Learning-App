@@ -33,7 +33,7 @@ export default function FlashcardsIndex() {
             <section className="section-margin">
                 <h2>Decks desbloqueados</h2>
                 <div className="inline-elements">
-                    {decksData.lessonDecksData.map(d => <DeckCard deckInfo={d} />)}
+                    {decksData.lessonDecksData.map(d => <DeckCard deckInfo={d}/>)}
                 </div>
             </section>
             <section className="section-margin">

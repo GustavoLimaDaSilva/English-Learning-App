@@ -12,7 +12,7 @@ export default function DeckCard({ deckInfo, uid }: props) {
 
     return (
         <div className="card deck-link">
-            <Link to={`../${uid}/${deckInfo.id}`} key={nanoid()}></Link>
+            <Link to={`../${uid ? uid : "lessonDecks"}/${deckInfo.id}`} key={nanoid()}></Link>
             <h3>{deckInfo.name}</h3>
             <p className="deck-link-description">{deckInfo.deckDescription}</p>
             <hr />
