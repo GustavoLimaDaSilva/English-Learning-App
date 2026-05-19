@@ -2,7 +2,6 @@ import { useEffect, useState, createContext } from "react"
 import type { DeckType, FlashcardType, LessonType, StateSetter } from "../../types/index.ts"
 import { useProfileData } from "../../userStore.ts"
 import type { DeckContextType } from "../../types/deck.ts"
-import type { Ids } from "../../types/lesson.ts"
 import Deck from "./deck.tsx"
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -11,6 +10,7 @@ export const DeckReactContext = createContext<DeckContextType | null>(null)
 type DeckProps = {
     lesson?: LessonType,
     loaderDeck?: DeckType,
+    setIndex: StateSetter<number> | null
 }
 
 export default function DeckContext({ loaderDeck, lesson }: DeckProps) {

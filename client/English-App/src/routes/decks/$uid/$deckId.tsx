@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router"
-import Deck from "../../../components/flashcardComponents/deck.tsx"
 import type { DeckType } from "../../../types/index.ts"
 import DeckContext from "../../../components/flashcardComponents/DeckContext.tsx"
 

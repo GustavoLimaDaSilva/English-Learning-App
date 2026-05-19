@@ -10,7 +10,7 @@ export const Route = createFileRoute('/chat')({
 
 export default function ChatWithAI() {
 
-    const promptRef = useRef<null | HTMLTextAreaElement>(null)
+    const promptRef = useRef<null | HTMLInputElement>(null)
     const [messages, setMessages] = useState<ChatMessage[]>([])
     const [inputIsEmpty, setInputIsEmpty] = useState(true)
 
