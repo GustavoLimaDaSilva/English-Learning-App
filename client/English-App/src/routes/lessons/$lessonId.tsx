@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from "react"
 import Explanation from "../../components/explanation.tsx"
 import Video from "../../components/video.tsx"
-import Deck from "../../components/flashcardComponents/deck.tsx"
 import type { LessonType } from "../../types/index.ts"
 import type { Ids } from '../../types/lesson.ts'
+import DeckContext from '../../components/flashcardComponents/DeckContext.tsx'
 
 export const Route = createFileRoute('/lessons/$lessonId')({
   component: Lesson,
@@ -22,12 +22,15 @@ export default function Lesson() {
   const lesson: LessonType = Route.useLoaderData()
   const ids: Ids = Route.useSearch()
 
-  const children = [Explanation, Video, Deck]
-  const [index, setIndex] = useState(0)
-  const Current = children[index]
+  const children = [Explanation, Video]
+  const [componentIndex, setComponentIndex] = useState(0)
+
   return (
-    <div className="lesson-overview">
-      {Current && <Current setIndex={setIndex} lesson={lesson} ids={ids} />}
+    <div className="fit-all grandient-background lesson-container">
+      {children.map((Child, index) => <Child childIndex={index}
+        index={componentIndex} setIndex={setComponentIndex}
+        lesson={lesson} ids={ids} />
+      )}
     </div>
   )
 } 

@@ -1,12 +1,11 @@
 import { useContext } from "react"
 import type { DeckContextType } from "../types/deck.ts"
 import type { FlashcardType, StateSetter } from "../types/index.ts"
-import { DeckContext } from "./flashcardComponents/deck.tsx"
+import { DeckReactContext } from "./flashcardComponents/DeckContext.tsx"
 
-export default function assignDifficulty({ setHasFinished }: { setHasFinished: StateSetter<boolean> }) {
+export default function AssignDifficulty({ setHasFinished }: { setHasFinished: StateSetter<boolean> }) {
 
-    if (!DeckContext) return
-    const { offset, setCards, setOffset, cards, isLastCard } = useContext(DeckContext) as DeckContextType
+    const { offset, setCards, setOffset, cards, isLastCard } = useContext(DeckReactContext) as DeckContextType
 
 
     const addDifficulty = (diff: FlashcardType["difficulty"]) => {

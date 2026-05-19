@@ -7,6 +7,7 @@ import { useGoogleUser, useProfileData } from "../../userStore.ts"
 import { nanoid } from "nanoid"
 import type { decksSearchSchema } from "../../schemas/searchParams.ts"
 import type z from "zod"
+import Welcome from "../../components/welcome.tsx"
 
 export const Route = createFileRoute('/dashboard/')({
     component: DashBoardOverview,
@@ -25,7 +26,7 @@ export const Route = createFileRoute('/dashboard/')({
         const lessons = rawProfile.ok ? await rawLesson.json() : []
 
         const res = await fetch("https://api-o37g4y27ua-uc.a.run.app/lessons/allVideos")
-        const {lessonVideos, playlistId} = await res.json()
+        const { lessonVideos, playlistId } = await res.json()
         return { storedProfile: storedProfile, lessons: lessons, lessonVideos: lessonVideos, playlistId }
     },
 })
@@ -37,15 +38,17 @@ function DashBoardOverview() {
     const user = useGoogleUser((state) => state.googleUser)
     if (!user) return
 
-    const data = localStorage.getItem('toastFired')
-    const toastFired = data ? JSON.parse(data) : false
+    const localData = localStorage.getItem('toastFired')
+    const toastFired = localData ? JSON.parse(localData) : false
+
+    const sessionData = sessionStorage.getItem("welcomeFired")
+    const welcomeFired = sessionData ? JSON.parse(sessionData) : false
+
     return (
         <DashboardLogic storedProfile={storedProfile}>
             <div className="dashboard-wrapper">
                 {profileData.level === 1 && !toastFired ? <Toast toastFired={toastFired} className="toast" msg="agora você já pode encontrar o deck da sua lição na área de flashcards!" /> : null}
-                <div className="welcome">
-                    <p><span className="message">Welcome,</span><br /> <span className="name">{user.displayName?.slice(0, user.displayName.indexOf(' '))}!</span></p>
-                </div>
+                {!welcomeFired && <Welcome />}
                 <main className="main grandient-background">
                     <div key={nanoid()} className="card has-background studying-illustration">
                         <Link to={`/decks/${user.uid}`} search={{ level: profileData.level ?? 0 } satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>

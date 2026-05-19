@@ -1,15 +1,14 @@
 import { Link } from "@tanstack/react-router"
 import { useContext } from "react"
 import type { DeckContextType } from "../../types/deck.ts"
-import { DeckContext } from "./deck.tsx"
+import { DeckReactContext } from "./DeckContext.tsx"
 import type { FlashcardType } from "../../types/index.ts"
 import { putDeck } from "../../utils.ts"
 import { useGoogleUser } from "../../userStore.ts"
 
 export default function SkipToNext() {
 
-    if (!DeckContext) return
-    const { setOffset, isLastCard, deck, cards, saveNewLevel } = useContext(DeckContext) as DeckContextType
+    const { setOffset, isLastCard, deck, cards, saveNewLevel } = useContext(DeckReactContext) as DeckContextType
     const user = useGoogleUser((state) => state.googleUser)
 
     return (

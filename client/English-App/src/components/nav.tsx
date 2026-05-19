@@ -17,7 +17,7 @@ export default function Nav() {
                     <Link to={`/decks/${user.uid}`} search={{ level: profileData.level ?? 0 }}>decks</Link>
                 </li>
                 <li>
-                    <Link to={'/chat'}>lições</Link>
+                    <Link to={'/chat'}>chat</Link>
                 </li>
             </ul>
         </nav>

@@ -1,8 +1,9 @@
 import type { DeckCardType, DeckType, FlashcardType } from "../../../../shared-types/deck.ts";
-import type { StateSetter } from "./index.ts";
+import type { LessonType, StateSetter } from "./index.ts";
 
 export interface DeckContextType {
     isCorrect: boolean | null,
+    lesson: LessonType | undefined,
     setIsCorrect: StateSetter<boolean | null>,
     isLastCard: boolean,
     showAnswer: boolean,
@@ -12,6 +13,7 @@ export interface DeckContextType {
     setCards: StateSetter<FlashcardType[]>,
     isMultipleOption: boolean,
     selectedOption: HTMLButtonElement | null,
+    setSelectedOption: StateSetter<HTMLButtonElement | null>,
     offset: number,
     setOffset: StateSetter<number>,
     saveNewLevel: (() => void) | null
