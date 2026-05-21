@@ -12,7 +12,6 @@ export default function Video(props: VideoProps) {
 
     const lesson = props?.lesson
     const setIndex = props?.setIndex
-    const formattedText = useFormatText(lesson?.videoScript ?? '', null, speak)
     const navigate = useNavigate({})
 
     return (

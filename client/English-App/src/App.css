@@ -577,8 +577,8 @@ a:has(.add-symbol):hover .add-symbol {
   width: fit-content;
   max-width: 50%;
   margin-left: auto;
+  box-shadow: var(--frutiger-shadow);
 }
-
 
 
 .AI-words {
@@ -594,6 +594,16 @@ a:has(.add-symbol):hover .add-symbol {
 .visible {
   opacity: 1;
 }
+
+.english-word {
+text-decoration: underline dotted var(--secondary-color);
+color: var(--secondary-color)
+}
+
+i:has(.english-word) {
+  cursor: pointer;
+}
+
 
 
 .flashcard-wrapper {

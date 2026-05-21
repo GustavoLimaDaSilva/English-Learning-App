@@ -11,13 +11,13 @@ export default function Explanation(props: ExplanationProps) {
 
     const lesson = props?.lesson
     const setIndex = props?.setIndex
-    const formattedExplanation = useFormatText(lesson?.explanation ?? '', null, null)
+    const textFormattor = useFormatText()
     const navigate = useNavigate()
 
   
     return (
         <div className={props.childIndex === props.index ? "lesson-el current" : "lesson-el previous-el non-clickable"}>
-            <p>{formattedExplanation}</p>
+            <p>{textFormattor(lesson?.explanation)}</p>
             <div className="align-buttons">
                 <button onClick={() => navigate({ to: '/dashboard' })}>Voltar</button>
                 <button onClick={() => setIndex ? setIndex((prev: number) => prev + 1) : undefined}>Avançar</button>

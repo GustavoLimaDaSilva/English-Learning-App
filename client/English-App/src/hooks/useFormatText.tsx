@@ -1,7 +1,9 @@
-import { useEffect, useRef, type JSX, type Ref, type RefObject } from "react"
+import { useEffect, useRef } from "react"
 import type { MessageOrigin } from "../types/AI.ts"
+import { nanoid } from "nanoid"
+import { speak } from "../utils.ts"
 
-export default function useFormatText(raw: string, from: MessageOrigin | null, callback: Function | null) {
+export default function useFormatText(from?: MessageOrigin) {
 
     const pRef = useRef<HTMLParagraphElement | null>(null)
 
@@ -12,18 +14,18 @@ export default function useFormatText(raw: string, from: MessageOrigin | null, c
         flowingTextEffect(pRef.current)
     }, [pRef.current])
 
-    return formatText(raw)
+    return textFormattor
 
 
 
-    function formatText(raw: string) {
+    function textFormattor(raw: string) {
 
         return raw.split(/\n+/)
-            .map((para, i) => {
+            .map((para) => {
 
                 if (para === '\n') return
 
-                const el = <p key={i} ref={pRef}>{
+                const el = <p key={nanoid()} ref={pRef}>{
                     formatTextStyling(
                         para
                     )}
@@ -72,16 +74,33 @@ export default function useFormatText(raw: string, from: MessageOrigin | null, c
                 return <i key={i}>{spanCharacters(w.slice(1, -1))}</i>;
             }
 
+            else if (w.startsWith('<i>') && w.endsWith('</i>',
+                w.endsWith("</i>") ? w.length + 1 : w.length - 1)) {
+
+                const hasPunctuation = !w.endsWith("</i>")
+                return <i key={i}>
+                    {spanCharacters(w.slice(3, hasPunctuation ? -5 : -4),
+                        hasPunctuation ? w[w.length - 1] : '',
+                        true)}</i>;
+            }
             return spanCharacters(w);
         });
     }
 
-    function spanCharacters(word: string) {
-
-        return <span onClick={callback && word !== ' ' ?
-            () => callback(word) : undefined}
-            className={from === 'AI' ? 'AI-words' : ''}>
-            {word}
-        </span>
+    function spanCharacters(word: string, punctuation?: string, isEnglish?: boolean) {
+        console.log(word)
+        return (
+            <>
+                <span onClick={word !== ' ' && isEnglish ?
+                    () => speak(word) : undefined}
+                    className={from === 'AI' && isEnglish ? "AI-words english-word" :
+                        isEnglish ? "english-word" : from === "AI" ? "AI-words" : ''}>
+                    {word}
+                </span>
+                <span>
+                    {punctuation}
+                </span>
+            </>
+        )
     }
 }

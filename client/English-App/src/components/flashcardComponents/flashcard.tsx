@@ -4,6 +4,7 @@ import { useContext, type RefObject } from "react";
 import type { DeckContextType } from "../../types/deck.ts";
 import { DeckReactContext } from "./DeckContext.tsx";
 import ConfirmButton from "./ConfirmButton.tsx";
+import useFormatText from "../../hooks/useFormatText.tsx";
 
 
 export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HTMLDivElement | null> }) {
@@ -11,12 +12,13 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
     const { cards, offset, lesson, isCorrect, setShowAnswer, selectedOption, isMultipleOption } = useContext(DeckReactContext) as DeckContextType
     const card = cards[offset]
     const navigate = useNavigate({})
+    const textFormattor = useFormatText()
     if (!card) return
 
     return (
         <>
             <div className="front">
-                {card.cardFront && <p>{card.cardFront}</p>}
+                {card.cardFront && <p>{textFormattor(card.cardFront)}</p>}
                 {card.imageUrl && <img src={card.imageUrl} />}
                 {isMultipleOption ? <p>assinale a alternativa correta: </p> : <button className="flashcard-btn" onClick={() => {
                     setShowAnswer(true)
@@ -39,7 +41,7 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
                 </>
                 :
                 <div className="back">
-                    <p className='answer'>{card?.options['a']}</p>
+                    <p className='answer'>{textFormattor(card?.options['a'])}</p>
                 </div>
             }
         </>
@@ -57,7 +59,7 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
                 <button key={opt} data-key={opt} className={opt === selectedOption?.dataset.key && isCorrect !== null ?
                     isCorrect ? 'flashcard-opts correct' : 'flashcard-opts wrong'
                     : 'flashcard-opts'}>
-                    {card.options[opt]}
+                    {textFormattor(card.options[opt])}
                 </button>)
         }
         return optButtons
