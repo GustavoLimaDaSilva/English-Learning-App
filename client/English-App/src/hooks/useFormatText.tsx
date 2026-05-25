@@ -88,7 +88,6 @@ export default function useFormatText(from?: MessageOrigin) {
     }
 
     function spanCharacters(word: string, punctuation?: string, isEnglish?: boolean) {
-        console.log(word)
         return (
             <>
                 <span onClick={word !== ' ' && isEnglish ?

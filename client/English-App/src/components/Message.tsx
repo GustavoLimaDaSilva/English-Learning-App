@@ -1,7 +1,8 @@
 import type { ChatMessage } from "../types/AI.ts"
 import useFormatAIMessage from "../hooks/useFormatText.tsx"
+import { memo } from "react"
 
-export default function Message({ content, from }: ChatMessage) {
+export default memo(function Message({ content, from }: ChatMessage) {
 
     const textFormattor = useFormatAIMessage(from)
 
@@ -10,4 +11,4 @@ export default function Message({ content, from }: ChatMessage) {
             {textFormattor(content)}
         </div>
     )
-}
+})

@@ -32,10 +32,14 @@ body {
 }
 
 body {
-  font-family: "Chiron Hei HK", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   color: var(--dark-contrast)
+}
+
+body * {
+  font-family: "Chiron Hei HK", sans-serif;
+  font-size: 1rem;
 }
 
 #root {
@@ -596,8 +600,8 @@ a:has(.add-symbol):hover .add-symbol {
 }
 
 .english-word {
-text-decoration: underline dotted var(--secondary-color);
-color: var(--secondary-color)
+  text-decoration: underline dotted var(--secondary-color);
+  color: var(--secondary-color)
 }
 
 i:has(.english-word) {
@@ -956,22 +960,32 @@ label:has(.switch) {
   bottom: 5vh;
   left: 50%;
   transform: translateX(-50%);
+  background-color: var(--light-contrast);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding-right: .5em;
+  box-shadow: var(--frutiger-shadow);
 }
 
-.chat-input-area input {
-  box-shadow: var(--frutiger-shadow);
-  width: 40vw;
-  height: 5vh;
-  border-radius: 20px;
+.chat-input {
+  width: 30vw;
+  min-height: 7vh;
+  border: none;
+  background-color:#efeeee00;
+  border-radius: inherit;
+  field-sizing: content;
+  resize: none;
   position: relative;
+  padding: 1em .5em;
+}
+
+.chat-input:focus {
+  outline: none;
 }
 
 .chat-input-area button {
   border-radius: 50%;
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: .9em;
+  padding: .5em;
   display: flex;
 }

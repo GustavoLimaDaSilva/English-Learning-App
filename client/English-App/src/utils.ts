@@ -113,9 +113,14 @@ export async function postPersonalDeck(formData: { deckDescription: string | nul
 
 export function rightPhraseCartao(cardLength: number) {
 
-        if(cardLength === 0) return "nenhum cartão ainda!"
-        
-        if(cardLength === 1) return `${cardLength} cartão`
-        
-        if(cardLength > 1) return `${cardLength} cartões`        
+    if (cardLength === 0) return "nenhum cartão ainda!"
+
+    if (cardLength === 1) return `${cardLength} cartão`
+
+    if (cardLength > 1) return `${cardLength} cartões`
+}
+
+export function scrollToBottom(el: HTMLElement) {
+
+    el.scrollTo({top: el.scrollHeight, behavior:"smooth"});
 }
