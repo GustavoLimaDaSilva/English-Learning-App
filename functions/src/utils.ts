@@ -44,7 +44,7 @@ export async function getPlaylistVideos(apiKey: string | undefined, playlistId: 
   if (!apiKey || !playlistId) return
 
   try {
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${apiKey}`)
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}`)
     const data = await res.json()
     return data.items as LessonVideo[]
   } catch (err) {
