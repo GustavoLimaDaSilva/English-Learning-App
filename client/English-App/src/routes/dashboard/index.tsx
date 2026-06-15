@@ -37,7 +37,7 @@ function DashBoardOverview() {
     const profileData = useProfileData((state) => state.profileData)
     const user = useGoogleUser((state) => state.googleUser)
     if (!user) return
-
+    console.log(lessonVideos)
     const localData = localStorage.getItem('toastFired')
     const toastFired = localData ? JSON.parse(localData) : false
 
@@ -59,16 +59,18 @@ function DashBoardOverview() {
                     <section className="lessons-container">
                         <h2>Lições</h2>
                         <ul>
-                            {lessons && lessons.map((l, index) => {
-                                const thisVideo = lessonVideos[index]?.snippet
-                                return <li className="lesson" >
-                                    <Link to={`/lessons/${l.id}`} search={{ videoId: thisVideo?.resourceId.videoId, playlistId: playlistId }} key={nanoid()}>
-                                        <span>{l.name}</span>
-                                        <img src={thisVideo?.thumbnails.medium?.url ?? undefined} />
-                                    </Link>
-                                </li>
-                            }
-                            )}
+                            {lessons &&
+                                lessons.toSorted((curr, acc) => curr.requiredLevel - acc.requiredLevel)
+                                    .map((l, index) => {
+                                        const thisVideo = lessonVideos[index]?.snippet
+                                        return <li className="lesson" >
+                                            <Link to={`/lessons/${l.id}`} search={{ videoId: thisVideo?.resourceId.videoId, playlistId: playlistId }} key={nanoid()}>
+                                                <span>{l.name}</span>
+                                                <img src={thisVideo?.thumbnails.medium?.url ?? undefined} />
+                                            </Link>
+                                        </li>
+                                    }
+                                    )}
                         </ul>
                     </section>
                 </main>
