@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import type { LessonType, LessonVideo, ProfileData } from "../../types/index.ts"
+import type { ProfileData } from "../../types/index.ts"
 import Toast from "../../components/toast.tsx"
 import DashboardLogic from "../../components/dashboardLogic.tsx"
 import { createFileRoute } from "@tanstack/react-router"
@@ -8,6 +8,7 @@ import { nanoid } from "nanoid"
 import type { decksSearchSchema } from "../../schemas/searchParams.ts"
 import type z from "zod"
 import Welcome from "../../components/welcome.tsx"
+import LessonsTable from "../../components/lessonsTable.tsx"
 
 export const Route = createFileRoute('/dashboard/')({
     component: DashBoardOverview,
@@ -33,11 +34,11 @@ export const Route = createFileRoute('/dashboard/')({
 
 function DashBoardOverview() {
 
-    const { storedProfile, lessons, lessonVideos, playlistId } = Route.useLoaderData() satisfies { storedProfile: ProfileData, lessons: LessonType[], lessonVideos: LessonVideo[], playlistId: string }
+    const { storedProfile } = Route.useLoaderData() satisfies { storedProfile: ProfileData }
     const profileData = useProfileData((state) => state.profileData)
     const user = useGoogleUser((state) => state.googleUser)
     if (!user) return
-    console.log(lessonVideos)
+
     const localData = localStorage.getItem('toastFired')
     const toastFired = localData ? JSON.parse(localData) : false
 
@@ -56,23 +57,7 @@ function DashBoardOverview() {
                     <div key={nanoid()} className="card has-background AI-illustration">
                         <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>
                     </div>
-                    <section className="lessons-container">
-                        <h2>Lições</h2>
-                        <ul>
-                            {lessons &&
-                                lessons.toSorted((curr, acc) => curr.requiredLevel - acc.requiredLevel)
-                                    .map((l, index) => {
-                                        const thisVideo = lessonVideos[index]?.snippet
-                                        return <li className="lesson" >
-                                            <Link to={`/lessons/${l.id}`} search={{ videoId: thisVideo?.resourceId.videoId, playlistId: playlistId }} key={nanoid()}>
-                                                <span>{l.name}</span>
-                                                <img src={thisVideo?.thumbnails.medium?.url ?? undefined} />
-                                            </Link>
-                                        </li>
-                                    }
-                                    )}
-                        </ul>
-                    </section>
+                    <LessonsTable />
                 </main>
             </div>
         </DashboardLogic >
