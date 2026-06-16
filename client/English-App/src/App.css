@@ -4,11 +4,12 @@
   --login-animation-duration: 1.2s;
   --login-animation-iteration: 1;
   --dark-contrast: #343434;
+  --dark-contrast-hover: var(--accent-color);
   --light-contrast: #efeeee;
   --primary-color: #6dc8e9;
-  --secondary-color: #D04E1F;
+  --accent-color: #D04E1F;
   --tertiary-color: #ffffff;
-  --accent-color: #44952b;
+  --secondary-color: #44952b;
   --incorrect-color: #972020;
   --welcome-size: 2.5rem;
   --border-radius-average: 10px;
@@ -183,7 +184,7 @@ button {
   cursor: pointer;
   border-radius: 15px;
   color: #efeeee;
-  background-color: var(--accent-color);
+  background-color: var(--secondary-color);
   border: none;
   padding: 1em;
   transition: background-color .3s ease-in-out;
@@ -232,12 +233,12 @@ button:disabled {
 }
 
 .nav a {
-  color: var(--accent-color);
+  color: var(--secondary-color);
   text-decoration: none;
 }
 
 .nav a:hover {
-  text-decoration: underline var(--accent-color) 2px;
+  text-decoration: underline var(--secondary-color) 2px;
 }
 
 
@@ -261,7 +262,7 @@ button:disabled {
   transform: translate(-50%, -50%);
   box-shadow: 1px 1px 2px 1px gray;
   border-radius: 10px;
-  background-image: linear-gradient(to left, #6dc8e9, var(--light-contrast), var(--secondary-color))
+  background-image: linear-gradient(to left, #6dc8e9, var(--light-contrast), var(--accent-color))
 }
 
 
@@ -298,7 +299,7 @@ button:disabled {
   justify-content: center;
   align-items: center;
   gap: .3em;
-  background-color: var(--accent-color);
+  background-color: var(--secondary-color);
   color: var(--light-contrast);
   border: none;
   grid-row: 3;
@@ -462,7 +463,7 @@ a:has(.add-symbol):hover .add-symbol {
 }
 
 .studying-illustration:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--accent-color);
 }
 
 .AI-illustration {
@@ -510,14 +511,24 @@ a:has(.add-symbol):hover .add-symbol {
 
 
 .lessons-container {
+  grid-column: span 2;
   background-color: var(--light-contrast);
   box-shadow: 1px 1px 2px gray;
   border-radius: var(--border-radius-average);
   overflow-y: scroll;
-  padding-inline: 1rem;
+  overflow-x: hidden;
   border: 1px solid var(--dark-contrast);
   height: 33vh;
-  grid-column: span 2;
+  padding-block: 0;
+}
+
+.lessons-container h2,
+li {
+  padding-inline: 1rem;
+}
+
+.lessons-container h2 {
+  font-size: 1.5em;
 }
 
 ::-webkit-scrollbar {
@@ -526,7 +537,6 @@ a:has(.add-symbol):hover .add-symbol {
 
 
 .lessons-container::-webkit-scrollbar-track {
-  /* background: rgb(76, 76, 76);  */
   border-radius: var(--border-radius-average);
   padding: 1px;
 }
@@ -542,29 +552,67 @@ a:has(.add-symbol):hover .add-symbol {
   background: #555;
 }
 
+.lessons-container>ul {
+  display: flex;
+  flex-direction: column;
+}
+
 .lesson {
-  border: gray;
+  position: relative;
+  padding: 0;
   list-style: none;
-  padding-block: 1rem;
+  background-image: linear-gradient(rgb(207, 206, 206), rgb(207, 206, 206));
+  background-position: 30% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 0%;
+  transition: background-size .3s, color .5s;
+}
+
+.lesson:hover {
+  text-decoration: underline;
+  color: var(--secondary-color);
+  background-size: 100% 100%;
+}
+.lesson:hover span {
+
+  color: var(--dark-contrast-hover)
+}
+
+.unavailable {
+  pointer-events: none;
+}
+
+.unavailable::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(128, 128, 128, 0.623);
 }
 
 .lesson:not(:last-of-type) {
   border-bottom: 1px solid var(--dark-contrast);
-
 }
 
 .lesson a {
+  --lesson-inner-padding: 1em;
+  padding: var(--lesson-inner-padding);
   color: var(--dark-contrast);
   border-radius: 10px;
   font-weight: bold;
   text-decoration: none;
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
 }
 
 .lesson>a>span {
-  width: 90%;
+  font-weight: 500;
+  width: calc(90% - (var(--lesson-inner-padding) + .5em));
 }
 
 .lesson>a>img {
@@ -573,7 +621,7 @@ a:has(.add-symbol):hover .add-symbol {
 }
 
 .user-msg {
-  background-color: var(--accent-color);
+  background-color: var(--secondary-color);
   color: var(--light-contrast);
   padding: 10px;
   border-radius: 20px;
@@ -600,8 +648,8 @@ a:has(.add-symbol):hover .add-symbol {
 }
 
 .english-word {
-  text-decoration: underline dotted var(--secondary-color);
-  color: var(--secondary-color)
+  text-decoration: underline dotted var(--accent-color);
+  color: var(--accent-color)
 }
 
 i:has(.english-word) {
@@ -743,7 +791,7 @@ label:has(.switch) {
 }
 
 .turn-on-background {
-  background-color: var(--accent-color);
+  background-color: var(--secondary-color);
 }
 
 .switch+input {
@@ -765,7 +813,7 @@ label:has(.switch) {
   border: none;
   padding: 1em;
   margin-block: 7vh;
-  background-color: var(--accent-color);
+  background-color: var(--secondary-color);
 }
 
 .flashcard-btn:focus {
@@ -881,11 +929,11 @@ label:has(.switch) {
 
 .correct {
 
-  background-color: var(--accent-color);
+  background-color: var(--secondary-color);
 }
 
 .green-highlight {
-  color: var(--accent-color)
+  color: var(--secondary-color)
 }
 
 .red-highlight {
@@ -972,7 +1020,7 @@ label:has(.switch) {
   width: 30vw;
   min-height: 7vh;
   border: none;
-  background-color:#efeeee00;
+  background-color: #efeeee00;
   border-radius: inherit;
   field-sizing: content;
   resize: none;

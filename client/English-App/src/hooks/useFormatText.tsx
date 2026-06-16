@@ -56,9 +56,9 @@ export default function useFormatText(from?: MessageOrigin) {
 
     function formatTextStyling(raw: string) {
 
-        const words = raw.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|[^\s]+)/g);
+        const words = raw.split(/(<i>.*?<\/i>|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|[^\s\w<>]|[\w]+)/g);
 
-        return words.map((w, i) => {
+        const parsedText = words.map((w, i) => {
 
             if ((w.startsWith('***') && w.endsWith('***'))) {
 
@@ -74,32 +74,29 @@ export default function useFormatText(from?: MessageOrigin) {
                 return <i key={i}>{spanCharacters(w.slice(1, -1))}</i>;
             }
 
-            else if (w.startsWith('<i>') && w.endsWith('</i>',
-                w.endsWith("</i>") ? w.length + 1 : w.length - 1)) {
+            else if (w.match(/<i>(.*?)/)) {
 
-                const hasPunctuation = !w.endsWith("</i>")
-                return <i key={i}>
-                    {spanCharacters(w.slice(3, hasPunctuation ? -5 : -4),
-                        hasPunctuation ? w[w.length - 1] : '',
-                        true)}</i>;
+                const closingTagIndex = words.slice(i).findIndex(el => el.match(/<\/i>/g)) + 1
+                const englishSentence = words.slice(i, closingTagIndex + i).join("")
+                    .split(/<i>(.*?)<\/i>/)
+                    .join("")
+
+
+                return <i key={nanoid()}>{spanCharacters(englishSentence, true)}</i>
             }
             return spanCharacters(w);
         });
+        return parsedText
     }
 
-    function spanCharacters(word: string, punctuation?: string, isEnglish?: boolean) {
+    function spanCharacters(word: string, isEnglish?: boolean) {
         return (
-            <>
                 <span onClick={word !== ' ' && isEnglish ?
                     () => speak(word) : undefined}
                     className={from === 'AI' && isEnglish ? "AI-words english-word" :
                         isEnglish ? "english-word" : from === "AI" ? "AI-words" : ''}>
                     {word}
                 </span>
-                <span>
-                    {punctuation}
-                </span>
-            </>
         )
     }
 }
