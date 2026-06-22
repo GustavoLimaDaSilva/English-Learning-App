@@ -11,7 +11,7 @@ type props = {
 export default function DeckCard({ deckInfo, uid }: props) {
 
     return (
-        <div className="card deck-link">
+        <div className="card deck-link average-width">
             <Link to={`../${uid ? uid : "lessonDecks"}/${deckInfo.id}`} key={nanoid()}></Link>
             <h3>{deckInfo.name}</h3>
             <p className="deck-link-description">{deckInfo.deckDescription}</p>

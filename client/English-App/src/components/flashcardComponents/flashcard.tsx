@@ -59,7 +59,7 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
                 <button key={opt} data-key={opt} className={opt === selectedOption?.dataset.key && isCorrect !== null ?
                     isCorrect ? 'flashcard-opts correct' : 'flashcard-opts wrong'
                     : 'flashcard-opts'}>
-                    {textFormattor(card.options[opt])}
+                    {card.options[opt]}
                 </button>)
         }
         return optButtons

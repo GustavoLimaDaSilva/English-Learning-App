@@ -7,15 +7,16 @@ import type { DeckContextType } from "../../types/deck.ts";
 
 export default function DeckFooter() {
 
-    const { isCorrect, showAnswer, isLastCard } = useContext(DeckReactContext) as DeckContextType
+    const { isCorrect, showAnswer, isLastCard, saveNewLevel } = useContext(DeckReactContext) as DeckContextType
     const [hasFinished, setHasFinished] = useState(false)
-
+console.log(saveNewLevel)
     return (
         <div className="feedback-wrapper">
             <DisplayFeedback />
+            <div className="difficulty-options">
             {
                 isCorrect || showAnswer ?
-                    <>
+                <>
                         {isLastCard && hasFinished ?
                             <SkipToNext />
                             :
@@ -23,7 +24,8 @@ export default function DeckFooter() {
                     </>
                     :
                     <SkipToNext />
-            }
+                }
+                </div>
         </div>
     )
 }

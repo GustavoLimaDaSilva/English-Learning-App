@@ -22,13 +22,13 @@ export default function AssignDifficulty({ setHasFinished }: { setHasFinished: S
     }
 
     return (
-        <div className="difficulty-options">
+        <>
             <button className="easy" onClick={() => addDifficulty('easy')}>fácil</button>
             <button className="medium" onClick={() => addDifficulty('medium')}>médio</button>
             <button className="hard" onClick={() => {
                 addDifficulty('hard')
                 setOffset(cards.length - 1)
             }}>difícil</button>
-        </div>
+        </>
     )
 }

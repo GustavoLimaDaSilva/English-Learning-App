@@ -12,7 +12,7 @@ export default function Deck() {
 
     return (
         <>
-            <div className="flashcard" ref={flashcardRef} onClick={(e) => select(e.target as HTMLElement)}>
+            <div className="flashcard average-width" ref={flashcardRef} onClick={(e) => select(e.target as HTMLElement)}>
                 <Flashcard flashcardRef={flashcardRef} />
             </div>
             {

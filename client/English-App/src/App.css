@@ -11,9 +11,14 @@
   --accent-color: #D04E1F;
   --tertiary-color: #ffffff;
   --secondary-color: #44952b;
+  --lighter-secondary-color: #56bd36;
+  --acqua-color: #118d8d;
+  --lighter-acqua-color: #16bbbb;
   --incorrect-color: #972020;
+  --lighter-incorrect-color: #c12929;
   --welcome-size: 2.5rem;
   --border-radius-average: 10px;
+  --flashcard-children-bm: 3vh;
   --frutiger-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.3),
     0 8px 24px rgba(0, 0, 0, 0.4);
 }
@@ -262,6 +267,10 @@ button:disabled {
 
 .grandient-background:has(.lesson-container) {
   min-height: 100vh;
+}
+
+.average-width {
+  width: clamp(250px, 60vw, 400px);
 }
 
 .nav {
@@ -575,7 +584,7 @@ a:has(.add-symbol):hover .add-symbol {
 }
 
 .card {
-  width: 18%;
+  width: clamp(200px, 20%, 700px);
   background-color: var(--light-contrast);
   border-radius: 10px;
   list-style: none;
@@ -791,6 +800,10 @@ li {
   color: var(--accent-color)
 }
 
+.english-word:hover {
+  color: var(--lighter-accent-color)
+}
+
 i:has(.english-word) {
   cursor: pointer;
 }
@@ -809,7 +822,6 @@ i:has(.english-word) {
   background-color: var(--light-contrast);
   margin-inline: auto;
   border-radius: 10px;
-  width: 30%;
   box-shadow: var(--frutiger-shadow);
   transition: .8s ease-in-out transform;
   transform-style: preserve-3d;
@@ -988,12 +1000,15 @@ label:has(.switch) {
   justify-content: center;
 }
 
+.front p {
+  margin-block: var(--flashcard-children-bm);
+}
+
 .opts-wrapper {
   display: flex;
   justify-content: center;
-  gap: 5%;
-  margin-inline: 5%;
-  /* border:1px solid blue */
+  flex-wrap: wrap;
+  gap: calc(var(--flashcard-children-bm) / 2) 5%;
 }
 
 .flashcard-opts {
@@ -1001,7 +1016,15 @@ label:has(.switch) {
   background-color: var(--light-contrast);
   border: 2px solid rgb(151, 151, 151);
   box-shadow: 1px 2px 3px gray;
-  width: 25%;
+  width: 35%;
+  padding: 2% 1.5%;
+  font-weight: 500;
+  transition: none;
+  line-height: 2.5ch;
+}
+
+.flashcard-opts:hover {
+  background-color: var(--lighter-secondary-color);
 }
 
 .flashcard .align-buttons {
@@ -1010,14 +1033,13 @@ label:has(.switch) {
 
 .flashcard>.confirm {
 
-  margin-block: 5vh 0;
+  margin-block: var(--flashcard-children-bm) 0;
   width: 100%;
   border-radius: 10px;
 }
 
 .selected {
-
-  background-color: aqua;
+  background-color: var(--lighter-secondary-color)
 }
 
 .feedback-wrapper {
@@ -1025,27 +1047,27 @@ label:has(.switch) {
   bottom: 0;
   width: 100%;
   display: flex;
-  align-items: center;
-  gap: 30%;
-  padding: 6vh 0;
+  padding: 2em;
   background-color: #7b929aa0
 }
 
-.feedback-wrapper>* {
-  margin-inline: auto;
+
+.feedback-wrapper>button {
+  /* width: 10%; */
+  margin-left: auto;
 }
 
-.feedback-wrapper button {
-
-  width: 10%;
+.feedback-wrapper h2 {
+  font-size: 2rem;
 }
-
 
 .difficulty-options {
+  margin-left: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10%;
+  padding-right: calc(2em + 20px);
+  gap: 20px;
   min-width: 20%;
 }
 
@@ -1055,15 +1077,27 @@ label:has(.switch) {
 }
 
 .easy {
-  background-color: rgb(17, 141, 141);
+  background-color: var(--acqua-color);
+}
+
+.easy:hover {
+  background-color: var(--lighter-acqua-color);
 }
 
 .medium {
   background-color: var(--secondary-color);
 }
 
+.medium:hover {
+  background-color: var(--lighter-secondary-color)
+}
+
 .hard {
   background-color: var(--incorrect-color);
+}
+
+.hard:hover {
+  background-color: var(--lighter-incorrect-color);
 }
 
 .correct {
