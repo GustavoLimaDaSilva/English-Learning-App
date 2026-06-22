@@ -1,6 +1,7 @@
 :root {
   --AI-msg-width: unset;
   --nav-z-index: 10;
+  --login-margin-top: 3rem;
   --login-animation-duration: 1.2s;
   --login-animation-iteration: 1;
   --dark-contrast: #343434;
@@ -386,15 +387,17 @@ nav .profile-area {
   width: 100vw;
   height: 100vh;
   display: grid;
-  position: absolute;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 8rem 47vh 1fr;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  grid-template-columns: 50vw 50vw;
+  grid-template-rows: 20vh 40vh 40vh;
   background-image: linear-gradient(to bottom, #6dc8e9, var(--light-contrast))
 }
 
+.login-wrapper p,
+span,
+button,
+small {
+  font-size: clamp(.7rem, 1.1vw, 24px);
+}
 
 .login-wrapper>div {
   display: flex;
@@ -409,8 +412,9 @@ nav .profile-area {
 }
 
 .login-actions h1 {
-  font-size: 2rem;
-  margin-bottom: 5rem;
+  font-size: clamp(20px, 5vw, 2rem);
+  padding:0;
+  margin-block: var(--login-margin-top);
   font-weight: 500;
 }
 
@@ -418,7 +422,6 @@ nav .profile-area {
   display: inline-block;
   margin-bottom: 2rem;
 }
-
 
 
 .login-button {
@@ -433,6 +436,9 @@ nav .profile-area {
   color: var(--light-contrast);
   border: none;
   grid-row: 3;
+}
+.login-button:hover {
+  background-color: var(--lighter-accent-color);
 }
 
 
@@ -456,11 +462,10 @@ nav .profile-area {
 }
 
 .sliding-image {
-  height: 100%;
+  height: clamp(150px, 40vh, 42.3vw);
   margin: auto;
   grid-column: 2;
   grid-row: 2;
-  width: fit-content;
   object-fit: contain;
   object-position: top;
   animation: slideup ease-in-out forwards;
@@ -1207,4 +1212,20 @@ label:has(.switch) {
   border-radius: 50%;
   padding: .5em;
   display: flex;
+}
+
+
+@media screen and (max-width: 580px) {
+  .login-wrapper {
+    grid-template-columns: 42.5vw 42.5vw;
+    column-gap: 5vw;
+    padding-inline: 5vw;
+  }
+}
+
+@media screen and (max-width: 310px) {
+  .login-wrapper {
+    grid-template-rows: 20vh 40vh 40vh;
+    row-gap: 5vh;
+  }
 }
