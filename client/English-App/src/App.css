@@ -392,9 +392,8 @@ nav .profile-area {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 1px 1px 2px 1px gray;
   border-radius: 10px;
-  background-image: linear-gradient(to left, #6dc8e9, var(--light-contrast), var(--accent-color))
+  background-image: linear-gradient(to bottom, #6dc8e9, var(--light-contrast), var(--secondary-color))
 }
 
 
@@ -411,6 +410,7 @@ nav .profile-area {
 }
 
 .login-actions h1 {
+  font-size: 2rem;
   margin-bottom: 5rem;
   font-weight: 500;
 }
@@ -423,7 +423,6 @@ nav .profile-area {
 
 
 .login-button {
-  font-family: "Chiron Hei HK", sans-serif;
   margin-inline: auto;
   display: flex;
   width: fit-content;
@@ -431,7 +430,7 @@ nav .profile-area {
   justify-content: center;
   align-items: center;
   gap: .3em;
-  background-color: var(--secondary-color);
+  background-color: var(--accent-color);
   color: var(--light-contrast);
   border: none;
   grid-row: 3;
