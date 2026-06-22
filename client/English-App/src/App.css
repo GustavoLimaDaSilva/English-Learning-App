@@ -392,8 +392,7 @@ nav .profile-area {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
-  background-image: linear-gradient(to bottom, #6dc8e9, var(--light-contrast), var(--secondary-color))
+  background-image: linear-gradient(to bottom, #6dc8e9, var(--light-contrast))
 }
 
 
