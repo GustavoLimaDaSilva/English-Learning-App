@@ -3,6 +3,8 @@ import type { LessonType, LessonVideo } from "../types/index.ts"
 import { useProfileData } from "../userStore.ts"
 import { nanoid } from "nanoid"
 import { Route } from "../routes/dashboard/index.tsx"
+import Loading from "./loading.tsx"
+import Spinner from "./spinner.tsx"
 
 type LessonData = {
     lessons: LessonType[],
@@ -24,7 +26,7 @@ export default function LessonsTable() {
                     lessons.toSorted((curr, acc) => curr.requiredLevel - acc.requiredLevel)
                         .map((l, index) => {
                             const thisVideo = lessonVideos[index]?.snippet
-                            return <li className={l.requiredLevel > profileData.level ? "lesson unavailable" : "lesson"} >
+                            return <li className={l.requiredLevel > profileData.level ? "lesson unavailable animated-background" : "lesson animated-background"} >
                                 <Link to={`/lessons/${l.id}`} search={{ videoId: thisVideo?.resourceId.videoId, playlistId: playlistId }} key={nanoid()}>
                                     <span>{l.name}</span>
                                     <img src={thisVideo?.thumbnails.medium?.url ?? undefined} />
@@ -33,6 +35,7 @@ export default function LessonsTable() {
                         }
                         )}
             </ul>
+            {!lessons && <Spinner/>}
         </section>
     )
 }

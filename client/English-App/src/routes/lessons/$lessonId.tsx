@@ -26,7 +26,7 @@ export default function Lesson() {
   const [componentIndex, setComponentIndex] = useState(0)
 
   return (
-    <div className="fit-all grandient-background lesson-container">
+    <div className="lesson-container">
       {children.map((Child, index) => <Child childIndex={index}
         index={componentIndex} setIndex={setComponentIndex}
         lesson={lesson} ids={ids} />
