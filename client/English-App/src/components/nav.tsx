@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useGoogleUser, useProfileData } from "../userStore.ts";
+import { getNameFirstLetters } from "../utils.ts";
+import ProfileArea from "./profileArea.tsx";
 
 export default function Nav() {
 
@@ -19,6 +21,7 @@ export default function Nav() {
                 <li>
                     <Link to={'/chat'}>chat</Link>
                 </li>
+               <ProfileArea />
             </ul>
         </nav>
     )
