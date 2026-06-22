@@ -4,20 +4,20 @@ import type { ProfileData } from './types/index.ts'
 
 type UseGoogleUser = {
     googleUser: null | User,
-    setGoogleUser: (params: User) => void
+    setGoogleUser: (params: User | null) => void
 }
 
 type UseProfileData = {
-    profileData: ProfileData,
-    setProfileData: (params: ProfileData) => void
+    profileData: null | ProfileData,
+    setProfileData: (params: ProfileData | null) => void
 }
 
 export const useGoogleUser = create<UseGoogleUser>((set) => ({
     googleUser: null,
-    setGoogleUser: (actualUser: User) => set({ googleUser: actualUser }),
+    setGoogleUser: (actualUser: User | null) => set({ googleUser: actualUser }),
 }))
 
 export const useProfileData = create<UseProfileData>((set) => ({
     profileData: { uid: '', level: 0 },
-    setProfileData: (actualData: ProfileData) => set({ profileData: actualData })
+    setProfileData: (actualData: ProfileData | null) => set({ profileData: actualData })
 }))

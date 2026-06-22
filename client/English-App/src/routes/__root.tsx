@@ -7,6 +7,8 @@ import { useNavigate } from '@tanstack/react-router'
 import { useGoogleUser } from '../userStore.ts'
 import type { TanstackRouterContext } from '../types/tanstack.ts'
 import Nav from '../components/nav.tsx'
+import useBeforeRefresh from '../hooks/useBeforeRefresh.tsx'
+import Loading from '../components/loading.tsx'
 
 export const Route = createRootRouteWithContext<TanstackRouterContext>()({
     component: RootComponent
@@ -15,16 +17,17 @@ export const Route = createRootRouteWithContext<TanstackRouterContext>()({
 function RootComponent() {
 
     const user = useGoogleUser((state) => state.googleUser)
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        user ? navigate({ to: '/dashboard' }) : navigate({ to: '/login' })
-    }, [user])
+    const isLoading = useBeforeRefresh()
 
     return (
         <React.Fragment>
-            <Nav/>
-            <Outlet />
+            {user && <Nav />}
+            <div className="grandient-background">
+                {isLoading ?
+                    <Loading />
+                    :
+                    <Outlet />}
+            </div>
             <TanStackRouterDevtools />
         </React.Fragment>
     )

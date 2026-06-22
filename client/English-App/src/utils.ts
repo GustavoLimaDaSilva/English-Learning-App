@@ -122,5 +122,20 @@ export function rightPhraseCartao(cardLength: number) {
 
 export function scrollToBottom(el: HTMLElement) {
 
-    el.scrollTo({top: el.scrollHeight, behavior:"smooth"});
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+}
+
+export function getNameFirstLetters(username: string | null) {
+
+    if (username) {
+
+        return username.charAt(0) + username[username?.indexOf(" ") + 1]
+    }
+}
+
+export async function getStoredProfile(uid: string) {
+    
+    const rawProfile = await fetch(`https://api-o37g4y27ua-uc.a.run.app/users/${uid}`)
+    const storedProfile: ProfileData = await rawProfile.json()
+    return storedProfile
 }
