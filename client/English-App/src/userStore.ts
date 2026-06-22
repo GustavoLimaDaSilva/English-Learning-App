@@ -8,8 +8,8 @@ type UseGoogleUser = {
 }
 
 type UseProfileData = {
-    profileData: null | ProfileData,
-    setProfileData: (params: ProfileData | null) => void
+    profileData: ProfileData,
+    setProfileData: (params: ProfileData) => void
 }
 
 export const useGoogleUser = create<UseGoogleUser>((set) => ({
@@ -19,5 +19,5 @@ export const useGoogleUser = create<UseGoogleUser>((set) => ({
 
 export const useProfileData = create<UseProfileData>((set) => ({
     profileData: { uid: '', level: 0 },
-    setProfileData: (actualData: ProfileData | null) => set({ profileData: actualData })
+    setProfileData: (actualData: ProfileData) => set({ profileData: actualData })
 }))

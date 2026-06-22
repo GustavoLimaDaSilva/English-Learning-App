@@ -1,9 +1,8 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { useGoogleUser, useProfileData } from "../userStore.ts"
 import { getNameFirstLetters } from "../utils.ts"
 import { useNavigate } from "@tanstack/react-router"
 import useClickOutside from "../hooks/useClickOutside.tsx"
-import type { StateSetter } from "../types/index.ts"
 
 export default function ProfileArea() {
 
@@ -25,7 +24,7 @@ return (<>
                     <li>
                         <button className="dropdown-btn danger-zone" onClick={() => {
                             setGoogleUser(null)
-                            setProfileData(null)
+                            setProfileData({ uid: '', level: 0 })
                             navigate({ to: "/login" })
                             sessionStorage.clear()
                         }}>Sair</button>

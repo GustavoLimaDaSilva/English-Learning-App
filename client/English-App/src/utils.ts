@@ -1,6 +1,6 @@
 import type { UseNavigateResult } from "@tanstack/react-router"
 import type { decksSearchSchema } from "./schemas/searchParams.ts"
-import type { DeckType, FlashcardType, ProfileData } from "./types/index.ts"
+import type { DeckType, ProfileData } from "./types/index.ts"
 import type { FlashcardSchema } from "./schemas/deckForm.ts"
 import type z from "zod"
 let LengthParamsTurple: [number, { error: string }]
@@ -134,7 +134,7 @@ export function getNameFirstLetters(username: string | null) {
 }
 
 export async function getStoredProfile(uid: string) {
-    
+
     const rawProfile = await fetch(`https://api-o37g4y27ua-uc.a.run.app/users/${uid}`)
     const storedProfile: ProfileData = await rawProfile.json()
     return storedProfile
