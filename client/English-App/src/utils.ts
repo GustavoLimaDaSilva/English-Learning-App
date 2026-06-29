@@ -23,7 +23,7 @@ export function speak(word: string) {
 
 export function isEmpty<T extends object>(obj: T): obj is T & Record<string, unknown> {
 
-    if (!obj) return
+    if (!obj) return true
 
     return Object.keys(obj).length === 0
 }
