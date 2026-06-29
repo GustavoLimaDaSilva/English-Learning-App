@@ -23,6 +23,8 @@ export function speak(word: string) {
 
 export function isEmpty<T extends object>(obj: T): obj is T & Record<string, unknown> {
 
+    if (!obj) return
+
     return Object.keys(obj).length === 0
 }
 
@@ -133,9 +135,26 @@ export function getNameFirstLetters(username: string | null) {
     }
 }
 
+export function getFromStorage<T>(item: string): T | undefined {
+
+    const localData = localStorage.getItem(item)
+
+    if (localData) {
+
+        return JSON.parse(localData)
+    }
+
+    const sessionData = sessionStorage.getItem(item)
+
+    if (sessionData) {
+        return JSON.parse(sessionData)
+    }
+}
+
+
 export async function getStoredProfile(uid: string) {
 
     const rawProfile = await fetch(`https://api-o37g4y27ua-uc.a.run.app/users/${uid}`)
-    const storedProfile: ProfileData = await rawProfile.json()
+    const storedProfile: ProfileData | Record<string, never> = await rawProfile.json()
     return storedProfile
 }

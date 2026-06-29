@@ -24,7 +24,7 @@ return (<>
                     <li>
                         <button className="dropdown-btn danger-zone" onClick={() => {
                             setGoogleUser(null)
-                            setProfileData({ uid: '', level: 0 })
+                            setProfileData({...profileData, uid: '', level: 0 })
                             navigate({ to: "/login" })
                             sessionStorage.clear()
                         }}>Sair</button>

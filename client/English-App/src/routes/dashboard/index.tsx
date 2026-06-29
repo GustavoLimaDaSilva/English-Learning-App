@@ -9,7 +9,8 @@ import type { decksSearchSchema } from "../../schemas/searchParams.ts"
 import type z from "zod"
 import Welcome from "../../components/welcome.tsx"
 import LessonsTable from "../../components/lessonsTable.tsx"
-import { getStoredProfile } from "../../utils.ts"
+import { getFromStorage, getStoredProfile, isEmpty } from "../../utils.ts"
+import Tutorial from "../../components/tutorial.tsx"
 
 export const Route = createFileRoute('/dashboard/')({
     component: DashBoardOverview,
@@ -22,7 +23,6 @@ export const Route = createFileRoute('/dashboard/')({
             return { storedProfile: null }
         }
         const storedProfile = await getStoredProfile(user.uid)
-
         const rawLesson = await fetch('https://api-o37g4y27ua-uc.a.run.app/lessons')
         const lessons = await rawLesson.json()
 
@@ -34,25 +34,29 @@ export const Route = createFileRoute('/dashboard/')({
 
 function DashBoardOverview() {
 
-    const { storedProfile } = Route.useLoaderData() satisfies { storedProfile: ProfileData }
+    const { storedProfile } = Route.useLoaderData() satisfies { storedProfile: ProfileData | Record<string, never> }
     const profileData = useProfileData((state) => state.profileData)
     const user = useGoogleUser((state) => state.googleUser)
+
+    const tutorialToastFired = getFromStorage<boolean | undefined>("tutorialToastFired")
+    const toastFired = getFromStorage("toastFired")
+    const welcomeFired = getFromStorage("welcomeFired")
     if (!user) return
-
-    const localData = localStorage.getItem('toastFired')
-    const toastFired = localData ? JSON.parse(localData) : false
-
-    const sessionData = sessionStorage.getItem("welcomeFired")
-    const welcomeFired = sessionData ? JSON.parse(sessionData) : false
-
+    
     return (
         <DashboardLogic storedProfile={storedProfile}>
             <div className="dashboard-wrapper">
-                {profileData.level === 1 && !toastFired ? <Toast toastFired={toastFired} className="toast" msg="agora você já pode encontrar o deck da sua lição na área de flashcards!" /> : null}
-                {!welcomeFired && <Welcome />}
+                {profileData.level === 1 && !toastFired ? <Toast className="toast" msg={<p>agora você já pode encontrar o deck da sua lição na área de flashcards!</p>} /> : null}
+                {isEmpty(storedProfile) && !tutorialToastFired ?
+                    <Tutorial />
+                    : null
+                }
+                {!isEmpty(storedProfile) && !welcomeFired ?
+                    !tutorialToastFired && <Welcome />
+                    : null}
                 <main className="main">
                     <div key={nanoid()} className="card has-background studying-illustration">
-                        <Link to={`/decks/${user.uid}`} search={{ level: profileData.level} satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
+                        <Link to={`/decks/${user.uid}`} search={{ level: profileData.level } satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
                     </div>
                     <div key={nanoid()} className="card has-background AI-illustration">
                         <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>

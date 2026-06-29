@@ -1,16 +1,15 @@
 import * as React from 'react'
 import '../App.css'
-import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext, useLocation } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import { useEffect } from 'react'
-import { useNavigate } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 import { useGoogleUser } from '../userStore.ts'
 import type { TanstackRouterContext } from '../types/tanstack.ts'
 import Nav from '../components/nav.tsx'
 import useBeforeRefresh from '../hooks/useBeforeRefresh.tsx'
 import Loading from '../components/loading.tsx'
 
-export const Route = createRootRouteWithContext<TanstackRouterContext>()({
+export const Route = createRootRouteWithContext()({
     component: RootComponent
 })
 
@@ -21,7 +20,7 @@ function RootComponent() {
 
     return (
         <React.Fragment>
-            {user && <Nav />}
+            {!isLoading && <Nav />}
             <div className="grandient-background">
                 {isLoading ?
                     <Loading />

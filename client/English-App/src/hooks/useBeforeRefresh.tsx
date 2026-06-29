@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { browserSessionPersistence, getAuth, type Auth } from "firebase/auth";
 import { useGoogleUser, useProfileData } from "../userStore.ts";
-import { getStoredProfile } from "../utils.ts";
+import { getStoredProfile, isEmpty } from "../utils.ts";
 
 export default function useBeforeRefresh() {
 
@@ -14,6 +14,7 @@ export default function useBeforeRefresh() {
 
     const location = useLocation()
     sessionStorage.setItem("location", JSON.stringify(`${location.href}`))
+
     const navigate = useNavigate({})
 
     useEffect(() => {
@@ -24,7 +25,9 @@ export default function useBeforeRefresh() {
             const persistedUser = getPersistedUser(auth)
             if (persistedUser) {
                 const storedProfile = await getStoredProfile(persistedUser.uid)
-                setProfileData(storedProfile)
+                if (!isEmpty(storedProfile)) {
+                    setProfileData(storedProfile)
+                }
             }
             setGoogleUser(persistedUser)
             setIsLoading(false)

@@ -1,6 +1,7 @@
 :root {
   --AI-msg-width: unset;
   --nav-z-index: 10;
+  --unavailability-z-index: 50;
   --login-margin-top: 3rem;
   --login-animation-duration: 1.2s;
   --login-animation-iteration: 1;
@@ -280,6 +281,7 @@ button:disabled {
   box-shadow: var(--frutiger-shadow);
   position: relative;
   z-index: var(--nav-z-index);
+  opacity: 1
 }
 
 .nav>ul {
@@ -413,7 +415,7 @@ small {
 
 .login-actions h1 {
   font-size: clamp(20px, 5vw, 2rem);
-  padding:0;
+  padding: 0;
   margin-block: var(--login-margin-top);
   font-weight: 500;
 }
@@ -437,6 +439,7 @@ small {
   border: none;
   grid-row: 3;
 }
+
 .login-button:hover {
   background-color: var(--lighter-accent-color);
 }
@@ -473,28 +476,78 @@ small {
   animation-iteration-count: var(--login-animation-iteration);
 }
 
-.welcome {
-  padding: 4vh;
-  width: 100%;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  background-color: var(--light-contrast);
-  color: var(--secondary-color);
-  position: absolute;
-  top: -100vh;
-  z-index: calc(var(--nav-z-index) - 1);
+
+@keyframes falling-ball {
+
+  0% {
+    transform: translateY(-50vh);
+  }
+
+  10% {
+    transform: translateY(-30vh);
+  }
+
+  20% {
+    transform: translateY(8vh);
+  }
+
+  25% {
+    transform: translateY(-4vh);
+  }
+
+  30% {
+    transform: translateY(8vh);
+  }
+
+  35% {
+    transform: translateY(0vh);
+  }
+
+  40% {
+    transform: translateY(6vh);
+  }
+
+  44% {
+    transform: translateY(4vh);
+  }
+
+  48% {
+    transform: translateY(8vh);
+  }
+
+  50% {
+    transform: translateY(7vh);
+  }
+
+  52% {
+    transform: translateY(8vh);
+  }
+
+  90% {
+    transform: translateY(8vh);
+  }
+
+
+  100% {
+    transform: translateY(-50vh);
+  }
 }
 
-.welcome .message {
-  font-size: var(--welcome-size);
+.welcome-letter {
+  transform: translateY(-50vh);
+  font-size: 2vw;
+  color: var(--accent-color);
+  display: inline-block;
+  padding: 1.5vh 2vw;
+  margin-right: 1vw;
+  box-shadow: var(--frutiger-shadow);
+  border-radius: 50%;
+  animation: falling-ball forwards 3s ease-in-out
 }
 
-.welcome .name {
-  font-size: calc(var(--welcome-size) * 2);
-}
-
-.animate {
-  animation: welcome-slide-bottom .8s ease-in-out forwards, welcome-slide-up .8s 2s ease-in forwards;
+.welcome-message {
+  margin-inline: auto;
+  width: fit-content;
 }
 
 .main {
@@ -510,6 +563,76 @@ small {
 }
 
 
+.dashboard-wrapper:has(>.unavailable),
+.nav:has(+ .grandient-background .dashboard-wrapper > .unavailable) {
+  pointer-events: none;
+}
+
+.dashboard-wrapper:has(.lessons-available) .lessons-container {
+  z-index: calc(var(--unavailability-z-index) + 1);
+}
+
+.dashboard-wrapper:has(.decks-available) .studying-illustration {
+  z-index: calc(var(--unavailability-z-index) + 1);
+  background-color: var(--accent-color);
+}
+
+.dashboard-wrapper:has(.AI-available) .AI-illustration {
+  z-index: calc(var(--unavailability-z-index) + 1);
+  background-color: var(--primary-color);
+}
+
+.lesson-container:has(.unavailable) .lesson-el  .english-word {
+  position: relative;
+  z-index: calc(var(--unavailability-z-index) + 1);
+}
+
+.lesson-container:has(>.unavailable),
+.nav:has(+ .grandient-background .lesson-container .unavailable) {
+  pointer-events: none;
+}
+
+.lesson-container:has(.unavailable) .lesson-el .english-word::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline:50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  padding-inline: .1vw;
+  background-color: white;
+  color: var(--lighter-accent-color);
+  z-index: -1;
+  pointer-events: all;
+}
+
+.toast {
+  inset: 10vh 70% 0 2%;
+  width: clamp(200px, 50ch, 60vw);
+  height: fit-content;
+  background-color: var(--light-contrast);
+  border-radius: 10px;
+  line-height: 24px;
+  z-index: 90;
+  padding: .5em;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  pointer-events: all;
+  font-size: clamp(5px, 2vw, 18px);
+  box-shadow: var(--frutiger-shadow);
+}
+
+.toast p {
+  margin: 0;
+}
+
+.toast button {
+  padding: 1em;
+  width: fit-content;
+  margin-left: auto;
+}
 
 a:has(.add-symbol) {
   text-decoration: none;
@@ -662,6 +785,7 @@ a:has(.add-symbol):hover .add-symbol {
   border: 1px solid var(--dark-contrast);
   height: 33vh;
   padding-block: 0;
+  position: relative;
 }
 
 
@@ -737,10 +861,11 @@ li {
   content: "";
   position: absolute;
   left: 0;
+  pointer-events: none;
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: var(--unavailability-z-index);
   background-color: rgba(128, 128, 128, 0.623);
 }
 
@@ -805,6 +930,10 @@ li {
 
 .english-word:hover {
   color: var(--lighter-accent-color)
+}
+
+.toast .english-word:hover {
+  color: var(--accent-color);
 }
 
 i:has(.english-word) {
