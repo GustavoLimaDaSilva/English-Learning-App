@@ -25,6 +25,7 @@ export default function useBeforeRefresh() {
             const persistedUser = getPersistedUser(auth)
             if (persistedUser) {
                 const storedProfile = await getStoredProfile(persistedUser.uid)
+
                 if (!isEmpty(storedProfile)) {
                     setProfileData(storedProfile)
                 }

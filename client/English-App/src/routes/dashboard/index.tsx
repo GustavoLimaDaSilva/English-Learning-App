@@ -11,6 +11,7 @@ import Welcome from "../../components/welcome.tsx"
 import LessonsTable from "../../components/lessonsTable.tsx"
 import { getFromStorage, getStoredProfile, isEmpty } from "../../utils.ts"
 import Tutorial from "../../components/tutorial.tsx"
+import Loading from "../../components/loading.tsx"
 
 export const Route = createFileRoute('/dashboard/')({
     component: DashBoardOverview,
@@ -41,29 +42,30 @@ function DashBoardOverview() {
     const tutorialToastFired = getFromStorage<boolean | undefined>("tutorialToastFired")
     const toastFired = getFromStorage("toastFired")
     const welcomeFired = getFromStorage("welcomeFired")
-    if (!user) return
-    
+console.log(storedProfile)
     return (
-        <DashboardLogic storedProfile={storedProfile}>
-            <div className="dashboard-wrapper">
-                {profileData.level === 1 && !toastFired ? <Toast className="toast" msg={<p>agora você já pode encontrar o deck da sua lição na área de flashcards!</p>} /> : null}
-                {isEmpty(storedProfile) && !tutorialToastFired ?
-                    <Tutorial />
-                    : null
-                }
-                {!isEmpty(storedProfile) && !welcomeFired ?
-                    !tutorialToastFired && <Welcome />
-                    : null}
-                <main className="main">
-                    <div key={nanoid()} className="card has-background studying-illustration">
-                        <Link to={`/decks/${user.uid}`} search={{ level: profileData.level } satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
-                    </div>
-                    <div key={nanoid()} className="card has-background AI-illustration">
-                        <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>
-                    </div>
-                    <LessonsTable />
-                </main>
-            </div>
-        </DashboardLogic >
+        storedProfile === null || !user ? <Loading />
+            :
+            <DashboardLogic storedProfile={storedProfile}>
+                <div className="dashboard-wrapper">
+                    {profileData.level === 1 && !toastFired ? <Toast className="toast" msg={<p>agora você já pode encontrar o deck da sua lição na área de flashcards!</p>} /> : null}
+                    {isEmpty(storedProfile) && !tutorialToastFired ?
+                        <Tutorial />
+                        : null
+                    }
+                    {!isEmpty(storedProfile) && !welcomeFired ?
+                        !tutorialToastFired && <Welcome />
+                        : null}
+                    <main className="main">
+                        <div key={nanoid()} className="card has-background studying-illustration">
+                            <Link to={`/decks/${user.uid}`} search={{ level: profileData.level } satisfies z.infer<typeof decksSearchSchema>}>Ver Flashcards</Link>
+                        </div>
+                        <div key={nanoid()} className="card has-background AI-illustration">
+                            <Link to={'/chat'}> Converse com a nossa IA em inglês</Link>
+                        </div>
+                        <LessonsTable />
+                    </main>
+                </div>
+            </DashboardLogic >
     )
 }

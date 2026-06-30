@@ -50,6 +50,5 @@ export default function DashboardLogic({ children, storedProfile }: { children: 
             return
         }
         setProfileData(storedProfile)
-        storedProfile = {}
     }
 }
