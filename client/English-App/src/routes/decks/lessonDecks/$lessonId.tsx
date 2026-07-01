@@ -15,6 +15,6 @@ export default function DeckLoader() {
     const data = Route.useLoaderData()
 
     return (
-        <DeckContext setIndex={null} loaderDeck={data} />
+        <DeckContext setIndex={null} lesson={data} />
     )
 }

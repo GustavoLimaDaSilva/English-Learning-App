@@ -15,6 +15,7 @@ export default function SkipToNext() {
         <button onClick={() => {
             if (isLastCard) {
                 updateCards()
+
                 if (saveNewLevel) saveNewLevel()
                 return
             }

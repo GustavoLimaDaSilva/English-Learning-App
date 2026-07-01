@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { isEmpty, postNewLevel, postProfile } from "../utils.ts";
+import { isEmpty, postProfile } from "../utils.ts";
 import type { ProfileData } from "../types/index.ts";
 import { useGoogleUser, useProfileData } from "../userStore.ts";
 
@@ -8,29 +8,14 @@ export default function DashboardLogic({ children, storedProfile }: { children: 
     const user = useGoogleUser((state) => state.googleUser)
     const profileData = useProfileData((state) => state.profileData)
     const setProfileData = useProfileData((state) => state.setProfileData)
-
-    const data = localStorage.getItem('new_level')
-
-    const newLevel: number | null =
-        data !== null ? JSON.parse(data) : null
-
+   
     useEffect(() => {
 
-        if (newLevel) return
+        const levelUp = profileData.level > storedProfile.level
+        if (levelUp) return
 
         initializeProfile()
     }, [storedProfile])
-
-    useEffect(() => {
-        if (!newLevel) return
-
-        if (newLevel > profileData.level) {
-
-            setProfileData({ ...profileData, level: newLevel })
-            postNewLevel({ ...profileData, level: newLevel })
-        }
-        localStorage.removeItem('new_level')
-    }, [newLevel])
 
     return (
         <>

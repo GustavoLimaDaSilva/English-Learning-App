@@ -1256,12 +1256,13 @@ label:has(.switch) {
   border-radius: 10px;
   width: min(93.75vw, 40ch);
   min-height: 60vh;
+  height: fit-content;
   padding-inline: 1em;
   line-height: 1.5em;
   margin-inline: auto;
   margin-block: 5vh;
   display: grid;
-  grid-template-rows: 70% 30%;
+  grid-template-rows: minmax(60%, auto) 17%;
   position: absolute;
   inset: 20vh 0;
   opacity: 0;

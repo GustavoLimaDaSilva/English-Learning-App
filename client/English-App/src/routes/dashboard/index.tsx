@@ -42,10 +42,9 @@ function DashBoardOverview() {
     const tutorialToastFired = getFromStorage<boolean | undefined>("tutorialToastFired")
     const toastFired = getFromStorage("toastFired")
     const welcomeFired = getFromStorage("welcomeFired")
-console.log(storedProfile)
     return (
         storedProfile === null || !user ? <Loading />
-            :
+        :
             <DashboardLogic storedProfile={storedProfile}>
                 <div className="dashboard-wrapper">
                     {profileData.level === 1 && !toastFired ? <Toast className="toast" msg={<p>agora você já pode encontrar o deck da sua lição na área de flashcards!</p>} /> : null}

@@ -25,7 +25,7 @@ router.get("/:uid", async (req, res) => {
   try {
 
     const q = query(collection(req.db, "lessons"),
-      where("requiredLevel", "<=", Number(level)))
+      where("requiredLevel", Number(level) === 11 ? "<=" : "<", Number(level)))
     const snapshot = await getDocs(q)
     snapshot.forEach((doc) => {
       const lesson = doc.data()
@@ -77,10 +77,10 @@ router.get("/lessonDecks/:lessonId", async (req, res) => {
   const lessonId = req.params.lessonId
 
   const lessonRef = doc(req.db, "lessons", lessonId);
-  const deck = (await getDoc(lessonRef)).data()?.flashcardDeck
+  const lessonData = (await getDoc(lessonRef)).data()
 
-  if (deck) {
-    return res.json(deck);
+  if (lessonData) {
+    return res.json(lessonData);
   }
   return res.json([]);
 });

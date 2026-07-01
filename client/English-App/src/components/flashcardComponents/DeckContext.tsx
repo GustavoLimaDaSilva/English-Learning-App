@@ -1,8 +1,9 @@
-import { useEffect, useState, createContext } from "react"
+import { useEffect, useState, createContext, useTransition } from "react"
 import type { DeckType, FlashcardType, LessonType, StateSetter } from "../../types/index.ts"
 import { useProfileData } from "../../userStore.ts"
 import type { DeckContextType } from "../../types/deck.ts"
 import Deck from "./deck.tsx"
+import { postNewLevel } from "../../utils.ts"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const DeckReactContext = createContext<DeckContextType | null>(null)
@@ -16,15 +17,24 @@ type DeckProps = {
 export default function DeckContext({ loaderDeck, lesson }: DeckProps) {
 
     const profileData = useProfileData((state) => state.profileData)
-
+    const setProfileData = useProfileData((state) => state.setProfileData)
+    const [isPending, startTransition] = useTransition()
+    
+    const [cards, setCards] = useState<FlashcardType[]>(lesson?.flashcardDeck.cards ?? (loaderDeck!.cards))
     const [offset, setOffset] = useState(0)
+    
     const [selectedOption, setSelectedOption] = useState<HTMLButtonElement | null>(null)
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
-    const [cards, setCards] = useState<FlashcardType[]>(lesson?.flashcardDeck.cards ?? (loaderDeck!.cards))
+    
     const [showAnswer, setShowAnswer] = useState(false)
     const isMultipleOption = cards[offset]?.options ?? undefined ? Object.keys(cards[offset]?.options ?? {}).length > 1 : false
-    const saveNewLevel = () => localStorage.setItem('new_level', JSON.stringify(profileData.level + 1))
 
+    const saveNewLevel = () => {
+        postNewLevel({ ...profileData, level: profileData.level + 1 })
+        startTransition(() => {
+            setProfileData({ ...profileData, level: profileData.level + 1 })
+        })
+    }
     useEffect(() => {
 
         if (cards[offset] && isCorrect === false) {
@@ -63,7 +73,7 @@ export default function DeckContext({ loaderDeck, lesson }: DeckProps) {
             isMultipleOption: isMultipleOption,
             selectedOption: selectedOption,
             setSelectedOption: setSelectedOption,
-            saveNewLevel: (lesson?.requiredLevel ?? 0) > profileData.level ? saveNewLevel : null
+            saveNewLevel: (lesson?.requiredLevel ?? 0) >= profileData.level ? saveNewLevel : null
         }}>
             <Deck />
         </DeckReactContext>
