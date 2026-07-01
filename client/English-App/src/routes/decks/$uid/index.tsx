@@ -29,7 +29,7 @@ export default function FlashcardsIndex() {
     const { uid } = Route.useParams()
 
     return (
-        <div className="grandient-background fit-all">
+        <div className="fit-all">
             <section className="section-margin">
                 <h2>Decks desbloqueados</h2>
                 <div className="inline-elements">

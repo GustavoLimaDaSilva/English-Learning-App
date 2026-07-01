@@ -265,9 +265,6 @@ button:disabled {
 
 .grandient-background {
   background-image: linear-gradient(to bottom, var(--tertiary-color), var(--primary-color));
-}
-
-.grandient-background:has(.lesson-container) {
   min-height: 100vh;
 }
 
@@ -952,7 +949,8 @@ i:has(.english-word) {
 .flashcard {
   position: relative;
   background-color: var(--light-contrast);
-  margin-inline: auto;
+  margin: 15vh auto;
+  padding-inline: 1em;
   border-radius: 10px;
   box-shadow: var(--frutiger-shadow);
   transition: .8s ease-in-out transform;

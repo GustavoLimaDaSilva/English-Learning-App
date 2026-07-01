@@ -12,6 +12,7 @@ import LessonsTable from "../../components/lessonsTable.tsx"
 import { getFromStorage, getStoredProfile, isEmpty } from "../../utils.ts"
 import Tutorial from "../../components/tutorial.tsx"
 import Loading from "../../components/loading.tsx"
+import FirstLevelUp from "../../components/firstLevelUp.tsx"
 
 export const Route = createFileRoute('/dashboard/')({
     component: DashBoardOverview,
@@ -40,14 +41,17 @@ function DashBoardOverview() {
     const user = useGoogleUser((state) => state.googleUser)
 
     const tutorialToastFired = getFromStorage<boolean | undefined>("tutorialToastFired")
-    const toastFired = getFromStorage("toastFired")
+    const levelUpToastFired = getFromStorage("levelUpToastFired")
     const welcomeFired = getFromStorage("welcomeFired")
     return (
         storedProfile === null || !user ? <Loading />
-        :
+            :
             <DashboardLogic storedProfile={storedProfile}>
                 <div className="dashboard-wrapper">
-                    {profileData.level === 1 && !toastFired ? <Toast className="toast" msg={<p>agora você já pode encontrar o deck da sua lição na área de flashcards!</p>} /> : null}
+                    {profileData.level === 1 && !levelUpToastFired ?
+                        <FirstLevelUp />
+                        : null
+                    }
                     {isEmpty(storedProfile) && !tutorialToastFired ?
                         <Tutorial />
                         : null

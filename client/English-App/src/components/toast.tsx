@@ -4,9 +4,9 @@ type ToastProps = {
     toastFired?: boolean,
     msg: ReactElement<HTMLParagraphElement>,
     className: string,
-    buttonText?: string,
-    cb?: () => void
-}
+    buttonText: string,
+    cb: () => void
+} 
 export default function Toast({ msg, className, cb, buttonText }: ToastProps) {
 
     return (
