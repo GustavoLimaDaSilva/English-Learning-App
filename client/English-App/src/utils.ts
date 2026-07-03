@@ -52,6 +52,13 @@ export async function postProfile(profileData: ProfileData | {}) {
     })
 }
 
+export default async function deleteProfile(uid: string) {
+
+    await fetch(`https://api-o37g4y27ua-uc.a.run.app/users/${uid}`, {
+         method: 'DELETE'
+    })
+}
+
 export function postNewLevel(profileData: ProfileData) {
 
     if (isEmpty(profileData)) return

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { ProfileData } from "../types/index.js";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 // eslint-disable-next-line new-cap
 const router = Router();
 
@@ -61,5 +61,12 @@ router.put("/:uid", async (req, res) => {
     return res.status(404).json({ message: "User not found", err });
   }
 });
+
+router.delete("/:uid", (req, res) => {
+
+    const uid = req.params.uid
+
+  deleteDoc(doc(req.db, "users", uid));
+})
 
 export default router;

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useGoogleUser, useProfileData } from "../userStore.ts"
-import { getNameFirstLetters } from "../utils.ts"
+import deleteProfile, { getNameFirstLetters } from "../utils.ts"
 import { useNavigate } from "@tanstack/react-router"
 import useClickOutside from "../hooks/useClickOutside.tsx"
 
@@ -15,7 +15,7 @@ export default function ProfileArea() {
     const elRef = useClickOutside<HTMLUListElement>(setShowDropdown)
     if (!user) return
 
-return (<>
+    return (<>
         <li className="profile-area">
             <p className="level-display">{profileData?.level}</p>
             <button className="profile-btn" onClick={() => setShowDropdown(prev => !prev)}>{getNameFirstLetters(user.displayName)}</button>
@@ -23,14 +23,14 @@ return (<>
                 <ul className="dropdown" ref={elRef}>
                     <li>
                         <button className="dropdown-btn danger-zone" onClick={() => {
-                            setGoogleUser(null)
-                            setProfileData({...profileData, uid: '', level: 0 })
-                            navigate({ to: "/login" })
-                            sessionStorage.clear()
+                            reset()
                         }}>Sair</button>
                     </li>
                     <li>
-                        <button className="dropdown-btn danger-zone">
+                        <button onClick={() => {
+                            deleteProfile(profileData.uid)
+                            reset()
+                        }} className="dropdown-btn danger-zone">
                             Excluir conta
                         </button>
                     </li>
@@ -39,4 +39,11 @@ return (<>
         </li>
     </>
     )
+
+    function reset() {
+        setGoogleUser(null)
+        setProfileData({ ...profileData, uid: '', level: 0 })
+        navigate({ to: "/login" })
+        sessionStorage.clear()
+    }
 }
