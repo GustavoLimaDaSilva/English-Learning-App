@@ -57,7 +57,7 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
         for (const opt of Object.keys(card.options)) {
 
             if (!isCardOptions(opt)) return
-            
+
             optButtons.push(
                 <button key={opt} data-key={opt} className={opt === selectedOption?.dataset.key && isCorrect !== null ?
                     isCorrect ? 'flashcard-opts correct' : 'flashcard-opts wrong'
