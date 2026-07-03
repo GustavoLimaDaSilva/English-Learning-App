@@ -35,7 +35,6 @@ export default function ChatWithAI() {
     }, [keyEvent])
 
     return (
-        <div className='grandient-background chat-wrapper'>
             <div className="chat-container" ref={chatContainerRef}>
                 {messages.map(msg => {
 
@@ -50,7 +49,6 @@ export default function ChatWithAI() {
                     </span></button>
                 </div>
             </div>
-        </div >
     )
 
     function sendPrompt() {

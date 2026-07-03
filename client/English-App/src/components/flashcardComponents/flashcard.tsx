@@ -5,14 +5,20 @@ import type { DeckContextType } from "../../types/deck.ts";
 import { DeckReactContext } from "./DeckContext.tsx";
 import ConfirmButton from "./ConfirmButton.tsx";
 import useFormatText from "../../hooks/useFormatText.tsx";
+import { useGoogleUser, useProfileData } from "../../userStore.ts";
 
 
 export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HTMLDivElement | null> }) {
 
-    const { cards, offset, lesson, isCorrect, setShowAnswer, selectedOption, isMultipleOption } = useContext(DeckReactContext) as DeckContextType
+    const { cards, offset, isCorrect, setShowAnswer, selectedOption, isMultipleOption } = useContext(DeckReactContext) as DeckContextType
     const card = cards[offset]
+    
     const navigate = useNavigate({})
     const textFormattor = useFormatText()
+    
+    const googleUser = useGoogleUser((state) => state.googleUser)
+    const profileData = useProfileData((state) => state.profileData)
+
     if (!card) return
     
     return (
@@ -27,17 +33,13 @@ export default function Flashcard({ flashcardRef }: { flashcardRef: RefObject<HT
             </div>
             {isMultipleOption ?
                 <>
-                    <div className="opts-wrapper">
+                    <div className="flashcard-opts-wrapper">
                         {renderOptions()}
                     </div>
-                    {lesson ?
                         <div className="align-buttons">
-                            <button onClick={() => navigate({ to: '/' })}>Voltar</button>
+                            <button onClick={() => navigate({ to: `/decks/${googleUser?.uid}`, search: {level: profileData.level} })}>Voltar</button>
                             <ConfirmButton />
                         </div>
-                        :
-                        <ConfirmButton />
-                    }
                 </>
                 :
                 <div className="back">

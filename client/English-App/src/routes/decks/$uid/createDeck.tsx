@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { postPersonalDeck } from "../../../utils.ts"
+import { postPersonalDeck, rightPhraseCartao } from "../../../utils.ts"
 import { deckSchema } from "../../../schemas/deckForm.ts"
 import { useNavigate } from "@tanstack/react-router"
 import type { DeckSchema, FlashcardSchema } from "../../../schemas/deckForm.ts"
@@ -32,8 +32,7 @@ export default function CreateNewDeck() {
         <main className="grandient-background form-wrapper">
             <form className={cardForm ? "translate-left deck-form" : "deck-form"} id="form" onSubmit={handleSubmit((formData) => postPersonalDeck(formData, profileData, flashcardData, navigate))}>
                 <h1>Deck</h1>
-                <p className="card-count">{
-                }</p>
+                <p className="card-count">{rightPhraseCartao(flashcardData.length)}</p>
                 <label htmlFor="name">Nome do deck</label>
                 <br />
                 <input type="text" id="name" placeholder="coloque um nome" {...register("name")} />

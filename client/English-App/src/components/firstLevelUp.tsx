@@ -1,13 +1,11 @@
 import Toast from "./toast.tsx";
 
 export default function FirstLevelUp() {
-
     
     return (
         <div className="unavailable decks-available">
-        <Toast className="toast"
-            msg={<p>agora você já pode encontrar o deck da sua lição na área de flashcards!</p>}
-            cb={() => localStorage.setItem("levelUpToastFired", JSON.stringify("true"))}
+        <Toast className="toast levelUp-toast"
+            msg={<p>Muito bem! Agora clique em <b>ver flashcards</b> para acessar o quiz da lição que você acabou de completar!</p>}
             />
             </div>
     )

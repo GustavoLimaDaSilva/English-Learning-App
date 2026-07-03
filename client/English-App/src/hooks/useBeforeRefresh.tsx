@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { browserSessionPersistence, getAuth, type Auth } from "firebase/auth";
 import { useGoogleUser, useProfileData } from "../userStore.ts";
-import { getStoredProfile, isEmpty } from "../utils.ts";
+import { getPastLocation, getStoredProfile, isEmpty } from "../utils.ts";
 
 export default function useBeforeRefresh() {
 
@@ -53,14 +53,6 @@ export default function useBeforeRefresh() {
     }, [googleUser, isLoading])
 
     return isLoading
-}
-
-function getPastLocation() {
-    const raw = sessionStorage.getItem("location")
-    if (!raw) return
-
-    const pastLocation = JSON.parse(raw)
-    return pastLocation
 }
 
 function getPersistedUser(auth: Auth) {

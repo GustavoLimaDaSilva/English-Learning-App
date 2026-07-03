@@ -57,7 +57,8 @@ function DashBoardOverview() {
                         : null
                     }
                     {!isEmpty(storedProfile) && !welcomeFired ?
-                        !tutorialToastFired && <Welcome />
+                        !tutorialToastFired && 
+                        <Welcome />
                         : null}
                     <main className="main">
                         <div key={nanoid()} className="card has-background studying-illustration">
