@@ -14,8 +14,7 @@ export const Route = createFileRoute('/login')({
 function Login() {
 
     const setUser = useGoogleUser((state) => state.setGoogleUser)
-    const googleUser = useGoogleUser((state) => state.googleUser)
-    const profileData = useProfileData((state) => state.profileData)
+   
 
     const [animatedEl] = useAnimate(loginElements)
 
