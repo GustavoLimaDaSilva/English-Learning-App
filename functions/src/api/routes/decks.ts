@@ -112,9 +112,14 @@ router.post("/personalDecks/:uid", async (req, res) => {
     const user = (await getDoc(userRef)).data()
     const existingDecks = user?.flashcardDecks
 
-    await updateDoc(doc(req.db, "users", uid), {
-      flashcardDecks: [...existingDecks, { ...formData, id: createHexId() }]
-    });
+    if (existingDecks) {
+      await updateDoc(doc(req.db, "users", uid), {
+        flashcardDecks: [...existingDecks, { ...formData, id: createHexId() }]
+      });
+    } else {
+      await updateDoc(doc(req.db, "users", uid), {
+        flashcardDecks: { ...formData, id: createHexId() }})
+    }
     return res.status(201).json("Deck created successfully")
 
   } catch (err) {
