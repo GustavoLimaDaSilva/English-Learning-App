@@ -1316,7 +1316,7 @@ label:has(.switch) {
   padding-inline: 1em;
   line-height: 1.5em;
   margin-inline: auto;
-  margin-block: 5vh;
+  margin-top: -6vh;
   display: grid;
   grid-template-rows: minmax(60%, auto) 17%;
   position: absolute;
