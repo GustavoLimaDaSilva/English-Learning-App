@@ -5,12 +5,19 @@ import { useGoogleUser } from '../userStore.ts'
 import useAnimate from '../hooks/useAnimate.tsx'
 import loginElements from '../toBeAnimated/loginElements.tsx'
 import googleIcon from "../assets/icons8-google-logo.svg"
+import { useEffect } from 'react'
 
 export const Route = createFileRoute('/login')({
     component: Login
 })
 
 function Login() {
+
+    useEffect(() => {
+
+        location.reload()
+
+    },[])
 
     const setUser = useGoogleUser((state) => state.setGoogleUser)
     const [animatedEl] = useAnimate(loginElements)
