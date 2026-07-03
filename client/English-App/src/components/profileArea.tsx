@@ -42,7 +42,7 @@ export default function ProfileArea() {
 
     function reset() {
         setGoogleUser(null)
-        setProfileData({ ...profileData, uid: '', level: 0 })
+        setProfileData({uid: '', level: 0 })
         navigate({ to: "/login" })
         sessionStorage.clear()
     }

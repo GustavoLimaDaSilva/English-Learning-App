@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '../../../../firebaseConfig.ts'
-import { useGoogleUser } from '../userStore.ts'
+import { useGoogleUser, useProfileData } from '../userStore.ts'
 import useAnimate from '../hooks/useAnimate.tsx'
 import loginElements from '../toBeAnimated/loginElements.tsx'
 import googleIcon from "../assets/icons8-google-logo.svg"
@@ -13,13 +13,10 @@ export const Route = createFileRoute('/login')({
 
 function Login() {
 
-    useEffect(() => {
-
-        location.reload()
-
-    },[])
-
     const setUser = useGoogleUser((state) => state.setGoogleUser)
+    const googleUser = useGoogleUser((state) => state.googleUser)
+    const profileData = useProfileData((state) => state.profileData)
+
     const [animatedEl] = useAnimate(loginElements)
 
     return (
