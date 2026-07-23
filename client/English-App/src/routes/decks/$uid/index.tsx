@@ -13,7 +13,6 @@ export const Route = createFileRoute('/decks/$uid/')({
     loaderDeps: ({ search: { level } }) => ({
         level //adicionar validação com zod
     }),
-    errorComponent: () => <div>this is a custom error component</div>,
     loader: async ({ params, deps: { level } }) => {
 
         if (level === undefined || level === null) return
@@ -50,7 +49,7 @@ export default function FlashcardsIndex() {
             <section className="section-margin">
                 <h2>Decks desbloqueados</h2>
                 <div className="inline-elements">
-                    {decksData.lessonDecksData.map(d => <DeckCard deckInfo={d}
+                    {decksData.lessonDecksData && decksData.lessonDecksData.map(d => <DeckCard deckInfo={d}
                         animationEnded={animationEnded}
                     />)}
                 </div>
@@ -59,7 +58,7 @@ export default function FlashcardsIndex() {
                 <h2>Seus decks personalizados</h2>
                 <div className="inline-elements">
                     <Link to={`createDeck`} className='add-deck-button'><span className="add-symbol">+</span>criar deck</Link>
-                    {decksData.personalDecksData.map(d => <DeckCard deckInfo={d} uid={uid} />)}
+                    {decksData.personalDecksData?.map(d => <DeckCard deckInfo={d} uid={uid} />)}
                 </div>
             </section>
         </div>)
