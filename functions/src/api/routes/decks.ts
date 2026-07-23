@@ -43,7 +43,7 @@ router.get("/:uid", async (req, res) => {
     })
 
   } catch (err) {
-    return res.status(500).json({ error: "Couldn't get any lesson decks. ", err })
+    return res.status(404).json([])
   }
 
   try {
@@ -65,7 +65,7 @@ router.get("/:uid", async (req, res) => {
     }) ?? []
 
   } catch (err) {
-    return res.status(500).json({ error: "Couldn't get any user decks. ", err })
+    return res.status(404).json([])
   }
   return res.status(200).json({
     lessonDecksData: lessonDecksData,
