@@ -3,7 +3,6 @@ import type { LessonType, LessonVideo } from "../types/index.ts"
 import { useProfileData } from "../userStore.ts"
 import { nanoid } from "nanoid"
 import { Route } from "../routes/dashboard/index.tsx"
-import Loading from "./loading.tsx"
 import Spinner from "./spinner.tsx"
 
 type LessonData = {

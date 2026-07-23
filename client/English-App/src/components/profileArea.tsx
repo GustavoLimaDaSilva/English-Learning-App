@@ -8,11 +8,13 @@ export default function ProfileArea() {
 
     const user = useGoogleUser((state) => state.googleUser)
     const setGoogleUser = useGoogleUser((state) => state.setGoogleUser)
+   
     const profileData = useProfileData((state) => state.profileData)
     const setProfileData = useProfileData((state) => state.setProfileData)
-    const navigate = useNavigate({})
+   
     const [showDropdown, setShowDropdown] = useState(false)
     const elRef = useClickOutside<HTMLUListElement>(setShowDropdown)
+   
     if (!user) return
 
     return (<>
@@ -29,6 +31,7 @@ export default function ProfileArea() {
                     <li>
                         <button onClick={() => {
                             deleteProfile(profileData.uid)
+                            localStorage.clear()
                             reset()
                         }} className="dropdown-btn danger-zone">
                             Excluir conta
@@ -42,8 +45,7 @@ export default function ProfileArea() {
 
     function reset() {
         setGoogleUser(null)
-        setProfileData({uid: '', level: 0 })
-        navigate({ to: "/login" })
+        setProfileData({ uid: '', level: 0 })
         sessionStorage.clear()
     }
 }
