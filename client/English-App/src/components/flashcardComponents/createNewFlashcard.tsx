@@ -22,8 +22,6 @@ export default function CreateNewFlashcard({ setFlashcardData, cardForm, setCard
     const options = useWatch({ name: 'options', control })
     const imageFile = useWatch({ name: "imageFile", control })
     
-    console.log(imageFile)
-
     const optionInputs = Opts.map((o, index) => {
         return <AnswerOption key={index} index={index} hasBeenSelected={hasBeenSelected} register={register} value={o} />
 
