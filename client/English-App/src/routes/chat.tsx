@@ -35,20 +35,20 @@ export default function ChatWithAI() {
     }, [keyEvent])
 
     return (
-            <div className="chat-container" ref={chatContainerRef}>
-                {messages.map(msg => {
+        <div className="chat-container" ref={chatContainerRef}>
+            {messages.map(msg => {
 
-                    return <Message from={msg.from} content={msg.content} />
-                })}
-                <div className='chat-input-area'>
-                    <textarea className='chat-input' onChange={e => setInputIsEmpty(e.target.value === '')} placeholder="chat about anything..." ref={promptRef}
-                        contentEditable={true}
-                    />
-                    <button disabled={inputIsEmpty} onClick={sendPrompt}><span className="material-symbols-outlined">
-                        arrow_upward
-                    </span></button>
-                </div>
+                return <Message role={msg.role} content={msg.content} />
+            })}
+            <div className='chat-input-area'>
+                <textarea className='chat-input' onChange={e => setInputIsEmpty(e.target.value === '')} placeholder="chat about anything..." ref={promptRef}
+                    contentEditable={true}
+                />
+                <button disabled={inputIsEmpty} onClick={sendPrompt}><span className="material-symbols-outlined">
+                    arrow_upward
+                </span></button>
             </div>
+        </div>
     )
 
     function sendPrompt() {
@@ -60,7 +60,7 @@ export default function ChatWithAI() {
 
         if (prompt) {
             setMessages(prevMessages => [...prevMessages, {
-                from: 'user',
+                role: 'user',
                 content: prompt
             }])
             reply(prompt)
@@ -70,10 +70,19 @@ export default function ChatWithAI() {
     async function reply(prompt: string) {
 
         const result = await model.generateContent({
-            contents: [{
-                role: 'user',
-                parts: [{ text: prompt }]
-            }],
+            contents: [
+                ...messages.map(message => {
+                    return {
+                        role: message.role,
+                        parts: [{ text: message.content }]
+                    }
+                }),
+                {
+                    role: 'user',
+                    parts: [{ text: prompt }]
+                }
+            ],
+
             generationConfig: {
                 responseMimeType: ""
             }
@@ -83,7 +92,7 @@ export default function ChatWithAI() {
         const text = response.text()
 
         setMessages(prevMessages => [...prevMessages, {
-            from: 'AI',
+            role: 'model',
             content: text
         }])
     }

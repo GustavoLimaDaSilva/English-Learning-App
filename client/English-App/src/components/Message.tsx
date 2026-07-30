@@ -2,12 +2,12 @@ import type { ChatMessage } from "../types/AI.ts"
 import useFormatAIMessage from "../hooks/useFormatText.tsx"
 import { memo } from "react"
 
-export default memo(function Message({ content, from }: ChatMessage) {
+export default memo(function Message({ content, role }: ChatMessage) {
 
-    const textFormattor = useFormatAIMessage(from)
+    const textFormattor = useFormatAIMessage(role)
 
     return (
-        <div className={from === 'user' ? 'user-msg' : 'AI-msg'}>
+        <div className={role === 'user' ? 'user-msg' : 'AI-msg'}>
             {textFormattor(content)}
         </div>
     )

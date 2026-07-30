@@ -3,13 +3,13 @@ import type { MessageOrigin } from "../types/AI.ts"
 import { nanoid } from "nanoid"
 import { speak } from "../utils.ts"
 
-export default function useFormatText(from?: MessageOrigin) {
+export default function useFormatText(role?: MessageOrigin) {
 
     const pRef = useRef<HTMLParagraphElement | null>(null)
 
     useEffect(() => {
 
-        if (!pRef.current || from === 'user' || !from) return
+        if (!pRef.current || role === 'user' || !role) return
 
         flowingTextEffect(pRef.current)
     }, [pRef.current])
@@ -93,8 +93,8 @@ export default function useFormatText(from?: MessageOrigin) {
         return (
                 <span onClick={word !== ' ' && isEnglish ?
                     () => speak(word) : undefined}
-                    className={from === 'AI' && isEnglish ? "AI-words english-word" :
-                        isEnglish ? "english-word" : from === "AI" ? "AI-words" : ''}>
+                    className={role === 'model' && isEnglish ? "AI-words english-word" :
+                        isEnglish ? "english-word" : role === "model" ? "AI-words" : ''}>
                     {word}
                 </span>
         )
