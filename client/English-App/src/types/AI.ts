@@ -1,5 +1,5 @@
-export type MessageOrigin = 'user' | 'AI'
+export type MessageOrigin = 'user' | 'model'
 export interface ChatMessage {
-    from: MessageOrigin,
+    role: MessageOrigin,
     content: string
 }
