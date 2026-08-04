@@ -18,10 +18,13 @@ const deckFormSchemaShape = {
 
   options: z.object({
     a: z.string().min(1, { error: 'faltou aqui' }),
-    b: z.string().min(1, { error: 'faltou aqui' }).optional(),
-    c: z.string().min(1, { error: 'faltou aqui' }).optional(),
-    d: z.string().min(1, { error: 'faltou aqui' }).optional()
-  }),
+    b: z.string().optional(),
+    c: z.string().optional(),
+    d: z.string().optional()
+  }).refine(data => Object.values(data).filter(v => v !== '').length > 1, {
+  message: "escreva pelo menos mais uma alternativa",
+  path: [],
+}),
 
   correctAnswer: z.string()
     .nullable()
