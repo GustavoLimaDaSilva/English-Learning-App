@@ -35,20 +35,23 @@ export default function ChatWithAI() {
     }, [keyEvent])
 
     return (
+        <>
         <div className="chat-container" ref={chatContainerRef}>
             {messages.map(msg => {
 
                 return <Message role={msg.role} content={msg.content} />
             })}
-            <div className='chat-input-area'>
-                <textarea className='chat-input' onChange={e => setInputIsEmpty(e.target.value === '')} placeholder="chat about anything..." ref={promptRef}
+            
+        </div>
+        <div className='chat-input-area'>
+        <textarea className='chat-input' onChange={e => setInputIsEmpty(e.target.value === '')} placeholder="chat about anything..." ref={promptRef}
                     contentEditable={true}
                 />
                 <button disabled={inputIsEmpty} onClick={sendPrompt}><span className="material-symbols-outlined">
                     arrow_upward
                 </span></button>
-            </div>
-        </div>
+                </div>
+        </>
     )
 
     function sendPrompt() {
